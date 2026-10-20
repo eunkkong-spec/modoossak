@@ -165,9 +165,13 @@ $issues = foreach ($item in $list.SelectNodes('//items/item')) {
   }
 }
 
-$json = [ordered]@{ source = '농촌진흥청 농사로 주간농사정보'; issues = @($issues) } | ConvertTo-Json -Depth 8
-$prev = if (Test-Path $outFile) { [IO.File]::ReadAllText($outFile, [Text.Encoding]::UTF8) } else { '' }
-if ($json -ne $prev) {
+$data = [ordered]@{ source = '농촌진흥청 농사로 주간농사정보'; issues = @($issues) }
+$json = $data | ConvertTo-Json -Depth 8
+# PowerShell 버전마다 들여쓰기가 달라서, 줄 맞춤을 뺀 내용끼리 비교함
+$prev = if ((Test-Path $outFile) -and (Get-Item $outFile).Length -gt 0) {
+  [IO.File]::ReadAllText($outFile, [Text.Encoding]::UTF8) | ConvertFrom-Json | ConvertTo-Json -Depth 8 -Compress
+} else { '' }
+if (($data | ConvertTo-Json -Depth 8 -Compress) -ne $prev) {
   [IO.File]::WriteAllText($outFile, $json, (New-Object Text.UTF8Encoding $false))
   Write-Host "저장했습니다: $outFile (최신 $($issues[0].subject))"
 } else {
