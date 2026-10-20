@@ -16,7 +16,7 @@
   <!-- 헤더: 메인과 같은 메뉴, 서브페이지용(흰 배경·컬러 로고) -->
   <header class="site-header site-header--sub">
     <div class="site-header__inner">
-      <a class="brand" href="index.html" aria-label="나라바이오 홈"><img src="images/common/logo_color.png" alt="나라바이오"></a>
+      <a class="brand" href="index.html" aria-label="나라바이오 홈"><img src="images/common/logo_color_transparent.png" alt="나라바이오"></a>
       <nav class="primary-nav" id="primary-nav" aria-label="주 메뉴">
         <button type="button" class="primary-nav__item" aria-expanded="false" data-menu-index="0">회사소개</button>
         <button type="button" class="primary-nav__item" aria-expanded="false" data-menu-index="1">기술</button>
@@ -60,21 +60,21 @@
     </nav>
 
     <div class="inner farm-body">
-      <!-- 작물 선택: 세 탭이 함께 사용 -->
-      <section class="crop-select" aria-label="작물 선택">
-        <form class="crop-search" role="search" action="farm.html">
-          <label class="blind" for="crop-search-input">작물 이름으로 검색</label>
-          <input id="crop-search-input" type="search" name="crop" placeholder="작물 이름으로 검색 (예: 감자, 딸기)">
+      <!-- 병해충 검색 + 사진 상담: 검색하면 병해충 정보 탭으로 이동 -->
+      <section class="crop-select" aria-label="병해충 검색">
+        <form class="crop-search" role="search" action="farm.html#pests" data-pest-search>
+          <label class="blind" for="pest-search-input">병해충 이름으로 검색</label>
+          <input id="pest-search-input" type="search" name="q" placeholder="병해충 이름으로 검색 (예: 노균병, 총채벌레)">
+          <button type="submit" class="crop-search__btn">검색</button>
         </form>
-        <div class="crop-chips">
-          <strong class="crop-chips__label">주력 작물</strong>
-          <button type="button" class="crop-chip" aria-pressed="true" data-crop="고추">고추</button>
-          <button type="button" class="crop-chip" aria-pressed="false" data-crop="마늘">마늘</button>
-          <button type="button" class="crop-chip" aria-pressed="false" data-crop="배추">배추</button>
-          <button type="button" class="crop-chip" aria-pressed="false" data-crop="과수">과수</button>
-          <button type="button" class="crop-chip" aria-pressed="false" data-crop="벼">벼</button>
+        <div class="photo-consult">
+          <div>
+            <strong>원인을 찾지 못하셨나요?</strong>
+            <p>피해 부위 사진을 카카오톡으로 보내주시면 원인과 방제 방법을 상담해 드립니다.</p>
+          </div>
+          <!-- TODO: 나라바이오 카카오톡 채널 주소로 교체 (예: https://pf.kakao.com/_xxxxx/chat) -->
+          <a class="photo-consult__btn" href="#" target="_blank" rel="noopener">카카오톡 사진 상담</a>
         </div>
-        <button type="button" class="crop-all" aria-expanded="false">전체 작물 36종 보기</button>
       </section>
 
       <!-- ① 주간농사정보 : data/weekly.json (농촌진흥청 주간농사정보 API → 매주 자동 갱신) -->
@@ -107,7 +107,7 @@
           </div>
 
           <div class="field-board">
-            <p class="field-board__notice" data-weekly-notice>이번 주 주간농사정보에는 고추 관련 지침이 없습니다. 고추 농작업은 재배력에서 확인하세요. <a href="#calendar">고추 재배력 보기 →</a></p>
+            <p class="field-board__notice" data-weekly-notice>이번 주 주간농사정보에 없는 작물은 작물재배력을 확인하세요. <a href="#calendar">작물재배력 보기 →</a></p>
             <div data-weekly-fields>
               <section class="field-row">
                 <h4 class="field-row__tag field-row__tag--veg">채소</h4>
@@ -162,9 +162,42 @@
         <h2 class="farm-title">작물재배력</h2>
       </section>
 
-      <!-- ③ 병해충 정보 : data/pest.json (다음 단계에서 작업) -->
+      <!-- ③ 병해충 정보 : data/pest.json (농촌진흥청 병해충 발생정보 API → 매달 자동 갱신) -->
       <section class="farm-panel pests" id="pests" role="tabpanel" aria-labelledby="tab-pests" hidden>
-        <h2 class="farm-title">병해충 정보</h2>
+        <div class="weekly-nav">
+          <button type="button" class="weekly-nav__btn" data-pest-prev>‹ 지난호</button>
+          <div class="weekly-nav__title">
+            <h2 data-pest-title>병해충 발생정보</h2>
+            <p><time data-pest-period></time> · 매달 초, 새 호로 자동 갱신</p>
+          </div>
+          <button type="button" class="weekly-nav__btn" data-pest-next disabled>다음 호 ›</button>
+        </div>
+
+        <section class="pest-summary" aria-labelledby="pest-summary-title">
+          <div class="farm-title-row">
+            <div>
+              <h3 id="pest-summary-title" class="farm-title">발생 예보 요약</h3>
+              <p class="farm-title-desc">경보 · 주의보 · 예보 순으로 확인하세요.</p>
+            </div>
+            <a class="farm-outline-btn" href="#" target="_blank" rel="noopener" data-pest-pdf hidden>원문 보기 (PDF) ↓</a>
+          </div>
+          <div class="pest-summary__grid" data-pest-summary></div>
+        </section>
+
+        <section class="pest-detail" aria-labelledby="pest-detail-title">
+          <div class="farm-title-row">
+            <div>
+              <h3 id="pest-detail-title" class="farm-title">병해충별 발생 상황과 방제</h3>
+              <p class="farm-title-desc" data-pest-desc></p>
+            </div>
+          </div>
+          <div class="pest-filter" role="group" aria-label="분야 선택" data-pest-filter></div>
+          <div class="pest-list" data-pest-list></div>
+          <ul class="farm-note">
+            <li>농촌진흥청 병해충 발생정보(PDF)를 매달 자동으로 가져와 정리합니다.</li>
+            <li>약제는 작물별 등록 약제만 사용하고, 농약 안전사용기준을 지키세요.</li>
+          </ul>
+        </section>
       </section>
 
       <!-- 상담 배너: 세 탭 공통 -->

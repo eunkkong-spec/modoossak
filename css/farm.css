@@ -1,0 +1,193 @@
+/* 영농정보 (farm.html) */
+.page-farm [hidden] { display: none !important; }
+
+/* 서브 히어로: 원본(1024×435)을 높이에 맞춰 오른쪽에 두어 산은 멀게, 고추·밭은 다 보이게.
+   왼쪽 빈 곳은 같은 이미지를 흐리게 깔고, 글자 쪽은 그늘로 가독성 확보 */
+.sub-hero { position: relative; height: 380px; overflow: hidden; background: var(--c-forest); color: #fff; }
+.sub-hero::before { position: absolute; inset: -20px; background: url("../images/farm/_03_Sub_Hero_Bg.png") left 70% / cover; filter: blur(4px); content: ""; }
+.sub-hero::after { position: absolute; inset: 0; background: linear-gradient(90deg, rgb(22 38 30 / 45%) 0%, rgb(22 38 30 / 22%) 40%, rgb(22 38 30 / 0%) 65%); content: ""; }
+.sub-hero__bg { position: absolute; right: 0; bottom: 0; width: auto; max-width: none; height: 135%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%); mask-image: linear-gradient(90deg, transparent, #000 18%); }
+.sub-hero__inner { position: relative; z-index: 1; display: flex; height: 100%; flex-direction: column; justify-content: center; text-shadow: 0 1px 3px rgb(10 20 15 / 45%), 0 2px 12px rgb(10 20 15 / 35%); }
+.breadcrumb ol { display: flex; flex-wrap: wrap; color: rgb(255 255 255 / 85%); font: 400 15px/1.4 var(--f-title); }
+.breadcrumb li + li::before { margin: 0 8px; content: "›"; }
+.breadcrumb a:hover, .breadcrumb a:focus-visible { color: #fff; text-decoration: underline; }
+.sub-hero h1 { margin: 10px 0 14px; font: 900 48px/1.25 var(--f-title); letter-spacing: -.02em; }
+.sub-hero__lead { font: 400 20px/1.6 var(--f-title); }
+
+/* 탭 */
+.farm-tabs { border-bottom: 1px solid var(--c-line); background: #fff; }
+.farm-tabs__inner { display: flex; justify-content: center; }
+.farm-tabs__item { padding: 20px 32px 17px; border-bottom: 3px solid transparent; color: var(--c-text-muted); font: 700 18px/1.4 var(--f-title); }
+.farm-tabs__item:hover { color: var(--c-forest); }
+.farm-tabs__item[aria-selected="true"] { border-bottom-color: var(--c-gold); color: var(--c-forest); }
+
+.farm-body { display: grid; gap: 40px; padding-top: 40px; padding-bottom: 96px; }
+
+/* 병해충 검색 + 사진 상담 */
+.crop-select { padding: 24px 28px; border: 1px solid var(--c-line); border-radius: var(--radius); background: #fff; }
+.crop-search { display: flex; gap: 8px; }
+.crop-search input { width: 100%; min-width: 0; height: 54px; padding: 0 24px; border: 1px solid var(--c-line); border-radius: 999px; background: var(--c-bg-soft); font: 400 17px/1.4 var(--f-title); }
+.crop-search__btn { flex: none; padding: 0 28px; border-radius: 999px; background: var(--c-forest); color: #fff; font: 700 17px/1.2 var(--f-title); }
+.crop-search__btn:hover { background: var(--c-green-3); }
+.photo-consult { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 18px; padding: 16px 20px; border-radius: var(--radius); background: var(--c-bg-soft); }
+.photo-consult strong { color: var(--c-forest); font: 700 17px/1.4 var(--f-title); }
+.photo-consult p { margin-top: 2px; color: var(--c-text-sub); font: 400 16px/1.5 var(--f-title); }
+.photo-consult__btn { flex: none; padding: 12px 22px; border-radius: 999px; background: #fee500; color: #191919; font: 700 16px/1.2 var(--f-title); white-space: nowrap; }
+.photo-consult__btn:hover { background: #f5dc00; }
+
+/* 공통 제목 · 버튼 */
+.farm-title { margin-bottom: 16px; color: var(--c-forest); font: 700 24px/1.4 var(--f-title); }
+.farm-title-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.farm-title-row .farm-title { margin-bottom: 4px; }
+.farm-title-desc { color: var(--c-text-muted); font: 400 16px/1.5 var(--f-title); }
+.farm-outline-btn { display: inline-flex; flex: none; align-items: center; padding: 10px 20px; border: 1px solid var(--c-forest); border-radius: 999px; color: var(--c-forest); font: 700 16px/1.2 var(--f-title); }
+.farm-outline-btn:hover, .farm-outline-btn:focus-visible { background: var(--c-forest); color: #fff; }
+
+/* ① 주간농사정보 */
+.weekly { display: grid; gap: 40px; }
+.weekly-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; border-radius: var(--radius); background: var(--c-forest); color: #fff; }
+.weekly-nav__title { text-align: center; }
+.weekly-nav__title h2 { font: 700 28px/1.35 var(--f-title); }
+.weekly-nav__title p { margin-top: 4px; color: #cfdacf; font: 400 15px/1.5 var(--f-title); }
+.weekly-nav__btn { flex: none; padding: 10px 18px; border: 1px solid rgb(255 255 255 / 45%); border-radius: 999px; font: 700 16px/1.2 var(--f-title); }
+.weekly-nav__btn:hover:not(:disabled) { background: #fff; color: var(--c-forest); }
+.weekly-nav__btn:disabled { opacity: .35; cursor: default; }
+
+.weather-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.weather-card { padding: 22px 24px; border: 1px solid var(--c-line); border-top: 4px solid var(--card-color); border-radius: var(--radius); background: #fff; }
+.weather-card--temp { --card-color: var(--c-gold); --card-bg: #f8edd3; }
+.weather-card--rain { --card-color: var(--c-sage); --card-bg: #e0ebe7; }
+.weather-card--alert { --card-color: #b5573b; --card-bg: #f5e3da; }
+.weather-card__tag { display: inline-block; padding: 3px 12px; border-radius: 999px; background: var(--card-bg); color: var(--c-text); font: 700 14px/1.5 var(--f-title); }
+.weather-card strong { display: block; margin: 12px 0 6px; color: var(--c-forest); font: 700 22px/1.4 var(--f-title); }
+.weather-card p { color: var(--c-text-sub); font: 400 16px/1.6 var(--f-title); }
+
+.field-board { overflow: hidden; border: 1px solid var(--c-line); border-radius: var(--radius); background: #fff; }
+.field-board__notice { padding: 14px 28px; border-left: 4px solid var(--c-gold); background: #fbf3df; font: 400 16px/1.6 var(--f-title); }
+.field-board__notice a { margin-left: 4px; color: var(--c-forest); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.field-row { display: grid; grid-template-columns: 120px 1fr; gap: 24px; padding: 24px 28px; }
+.field-row + .field-row { border-top: 1px solid var(--c-line); }
+.field-row__tag { align-self: start; padding: 6px 0; border-radius: 999px; background: var(--tag-color); color: #fff; font: 700 17px/1.4 var(--f-title); text-align: center; }
+.field-row__tag--veg { --tag-color: var(--c-olive); }
+.field-row__tag--fruit { --tag-color: #b5573b; }
+.field-row__tag--rice { --tag-color: #b88a1e; }
+.field-row__tag--field { --tag-color: var(--c-brown); }
+.field-row__tag--special { --tag-color: var(--c-sage); }
+.field-row dl > div { display: grid; grid-template-columns: 150px 1fr; gap: 16px; padding: 12px 0; }
+.field-row dl > div:first-child { padding-top: 4px; }
+.field-row dl > div + div { border-top: 1px dashed var(--c-line); }
+.field-row dt { color: var(--c-forest); font: 700 18px/1.7 var(--f-title); }
+.field-row dd { font: 400 18px/1.7 var(--f-title); }
+.field-row dd b { color: var(--c-forest); font-weight: 700; }
+.field-points li { position: relative; padding-left: 16px; }
+.field-points li + li { margin-top: 4px; }
+.field-points li::before { position: absolute; top: .8em; left: 2px; width: 5px; height: 5px; border-radius: 50%; background: var(--c-olive); content: ""; }
+.field-note { display: block; margin-top: 4px; color: var(--c-text-muted); font-size: 15px; }
+
+.farm-note { display: grid; gap: 4px; margin-top: 16px; color: var(--c-text-muted); font: 400 15px/1.6 var(--f-title); }
+.farm-note li { position: relative; padding-left: 14px; }
+.farm-note li::before { position: absolute; left: 0; content: "·"; }
+
+/* ③ 병해충 정보 */
+.pests { display: grid; gap: 40px; }
+.pest-level { display: inline-block; flex: none; padding: 3px 12px; border-radius: 999px; color: #fff; font: 700 14px/1.5 var(--f-title); }
+.pest-level--alert { background: #b83a2b; }
+.pest-level--caution { background: #d07a1f; }
+.pest-level--forecast { background: var(--c-sage); }
+
+.pest-summary__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.pest-sum { padding: 22px 24px; border: 1px solid var(--c-line); border-radius: var(--radius); background: #fff; }
+.pest-sum h4 { margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--c-line); color: var(--c-forest); font: 700 20px/1.4 var(--f-title); }
+.pest-sum dl > div + div { margin-top: 14px; }
+.pest-sum dt { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: var(--c-text-sub); font: 700 15px/1.4 var(--f-title); }
+.pest-sum dd { display: flex; flex-wrap: wrap; gap: 6px; }
+.pest-name { padding: 4px 12px; border-radius: 6px; background: var(--c-bg-soft); font: 400 16px/1.5 var(--f-title); }
+.pest-name.is-match { background: var(--c-light-green); color: var(--c-forest); font-weight: 700; }
+
+.pest-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.pest-filter__btn { padding: 8px 20px; border: 1px solid var(--c-line); border-radius: 999px; background: #fff; font: 500 16px/1.4 var(--f-title); }
+.pest-filter__btn:hover { border-color: var(--c-olive); }
+.pest-filter__btn[aria-pressed="true"] { border-color: var(--c-forest); background: var(--c-forest); color: #fff; }
+
+.pest-list { display: grid; gap: 12px; }
+.pest-card { overflow: hidden; border: 1px solid var(--c-line); border-left: 4px solid var(--card-color); border-radius: var(--radius); background: #fff; }
+.pest-card--alert { --card-color: #b83a2b; }
+.pest-card--caution { --card-color: #d07a1f; }
+.pest-card--forecast { --card-color: var(--c-sage); }
+.pest-card summary { display: flex; align-items: center; gap: 10px; padding: 18px 24px; cursor: pointer; list-style: none; }
+.pest-card summary::-webkit-details-marker { display: none; }
+.pest-card summary::after { margin-left: auto; color: var(--c-text-muted); font-size: 14px; content: "펼치기 ▾"; white-space: nowrap; }
+.pest-card[open] summary::after { content: "접기 ▴"; }
+.pest-card summary strong { color: var(--c-forest); font: 700 20px/1.4 var(--f-title); }
+.pest-card__thumb { width: 56px; height: 56px; flex: none; border: 3px solid var(--c-light-green); border-radius: 50%; object-fit: cover; }
+.pest-photos { display: grid; grid-column: 1 / -1; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.pest-photos img { width: 100%; height: 200px; border-radius: 8px; background: var(--c-bg-soft); object-fit: contain; }
+.pest-photos a:hover img { outline: 3px solid var(--c-light-green); }
+.pest-photos figcaption { margin-top: 6px; color: var(--c-text-muted); font: 400 15px/1.4 var(--f-title); text-align: center; }
+.pest-card__cat { flex: none; color: var(--c-text-muted); font: 500 15px/1.4 var(--f-title); }
+.pest-card__body { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 32px; padding: 4px 24px 24px; }
+.pest-card__body h5 { margin-bottom: 8px; color: var(--c-forest); font: 700 17px/1.4 var(--f-title); }
+.pest-card__body section:only-of-type { grid-column: 1 / -1; }
+.pest-points li { position: relative; padding-left: 16px; font: 400 17px/1.7 var(--f-title); }
+.pest-points li + li { margin-top: 6px; }
+.pest-points li::before { position: absolute; top: .8em; left: 2px; width: 5px; height: 5px; border-radius: 50%; background: var(--c-olive); content: ""; }
+.pest-points b { color: var(--c-forest); }
+.pest-notes { grid-column: 1 / -1; color: var(--c-text-muted); font: 400 15px/1.6 var(--f-title); }
+.pest-more { justify-self: center; margin-top: 8px; padding: 12px 36px; border: 1px solid var(--c-forest); border-radius: 999px; background: #fff; color: var(--c-forest); font: 700 17px/1.2 var(--f-title); }
+.pest-more:hover { background: var(--c-forest); color: #fff; }
+.pest-empty { padding: 24px; color: var(--c-text-muted); text-align: center; }
+
+/* 상담 배너 */
+.farm-consult { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 32px 40px; border-radius: var(--radius); background: var(--c-forest); color: #fff; }
+.farm-consult h2 { font: 700 26px/1.4 var(--f-title); }
+.farm-consult p { margin-top: 4px; color: #cfdacf; font: 400 16px/1.6 var(--f-title); }
+.farm-consult__actions { display: flex; flex: none; gap: 12px; }
+.farm-consult__actions a { padding: 14px 24px; border-radius: 999px; font: 700 17px/1.2 var(--f-title); white-space: nowrap; }
+.farm-consult__dealer { border: 1px solid rgb(255 255 255 / 50%); }
+.farm-consult__dealer:hover { background: rgb(255 255 255 / 12%); }
+.farm-consult__call { background: var(--c-gold); color: var(--c-charcoal); }
+.farm-consult__call:hover { background: #e2b54d; }
+
+@media (max-width: 900px) {
+  .field-row { grid-template-columns: 1fr; gap: 12px; }
+  .field-row__tag { justify-self: start; padding: 4px 18px; }
+  .farm-consult { align-items: flex-start; flex-direction: column; }
+  .pest-card__body { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .sub-hero { height: 240px; }
+  .sub-hero__bg { right: -60px; height: 120%; }
+  .sub-hero::after { background: linear-gradient(90deg, rgb(22 38 30 / 55%) 0%, rgb(22 38 30 / 25%) 70%, rgb(22 38 30 / 10%) 100%); }
+  .sub-hero h1 { margin: 6px 0 8px; font-size: 32px; }
+  .sub-hero__lead { font-size: 16px; }
+  .farm-tabs__inner { padding: 0; }
+  .farm-tabs__item { flex: 1; padding: 16px 4px 13px; font-size: 16px; text-align: center; }
+  .farm-body { gap: 28px; padding-top: 24px; padding-bottom: 64px; }
+  .crop-select { padding: 18px 16px; }
+  .crop-search input { padding: 0 18px; font-size: 16px; }
+  .crop-search__btn { padding: 0 20px; }
+  .photo-consult { align-items: stretch; flex-direction: column; }
+  .photo-consult__btn { text-align: center; }
+  .weekly, .pests { gap: 32px; }
+  .pest-summary__grid { grid-template-columns: 1fr; }
+  .pest-card summary { flex-wrap: wrap; padding: 16px; }
+  .pest-card summary strong { width: 100%; order: 1; font-size: 18px; }
+  .pest-card__body { padding: 0 16px 20px; }
+  .pest-card__thumb { width: 44px; height: 44px; }
+  .pest-photos { grid-template-columns: 1fr; }
+  .weekly-nav { flex-wrap: wrap; padding: 16px; }
+  .weekly-nav__title { order: -1; width: 100%; }
+  .weekly-nav__title h2 { font-size: 22px; }
+  .weekly-nav__btn { flex: 1; }
+  .farm-title { font-size: 21px; }
+  .farm-title-row { align-items: flex-start; flex-direction: column; }
+  .field-board__notice { padding: 14px 16px; }
+  .field-row { padding: 20px 16px; }
+  .field-row dl > div { grid-template-columns: 1fr; gap: 2px; }
+  .field-row dt, .field-row dd { font-size: 17px; }
+  .farm-consult { padding: 24px 20px; }
+  .farm-consult h2 { font-size: 21px; }
+  .farm-consult__actions { width: 100%; flex-direction: column; }
+  .farm-consult__actions a { text-align: center; }
+}

@@ -111,6 +111,24 @@ address { font-style: normal; }
 .brand { display: inline-flex; flex: 0 0 auto; align-items: center; color: inherit; white-space: nowrap; }
 .brand img { width: clamp(142px, 15vw, 190px); height: auto; object-fit: contain; }
 
+/* 서브페이지 헤더: 흰 바탕 · 컬러 로고. 로고와 메뉴를 본문 폭(.inner) 안에 두고 메뉴는 오른쪽 끝 정렬
+   (메인 헤더는 main.css. 이 규칙은 .site-header--sub에만 적용) */
+.site-header--sub { position: relative; z-index: 10; height: var(--header-h); border-bottom: 1px solid var(--c-line); background: #fff; color: var(--c-text); }
+.site-header--sub .site-header__inner { display: flex; align-items: center; gap: 32px; max-width: calc(var(--inner) + var(--gutter) * 2); height: 100%; margin: 0 auto; padding: 0 var(--gutter); }
+.site-header--sub .brand img { width: 168px; }
+/* 메뉴 글씨는 메인(main.css)과 같은 서체·크기·간격, 색만 어둡게 */
+.site-header--sub .primary-nav { display: flex; flex: 1; align-items: center; justify-content: flex-end; gap: calc(clamp(18px, 3.2vw, 48px) + 1em); color: var(--c-text); font: 700 17px/1.2 var(--f-title); }
+.site-header--sub .primary-nav__item { position: relative; padding: 14px 0; white-space: nowrap; }
+.site-header--sub .primary-nav__item::after { position: absolute; right: 0; bottom: 3px; left: 0; height: 2px; background: var(--c-gold); content: ""; transform: scaleX(0); transition: transform .18s ease; }
+.site-header--sub .primary-nav__item:hover::after, .site-header--sub .primary-nav__item:focus-visible::after, .site-header--sub .primary-nav__item[aria-expanded="true"]::after, .site-header--sub .primary-nav__item.is-current::after { transform: scaleX(1); }
+.site-header--sub .primary-nav__item.is-current { color: var(--c-forest); }
+.site-header--sub .menu-toggle { display: grid; width: 44px; height: 44px; flex: none; align-content: center; justify-items: center; gap: 7px; border: 1px solid var(--c-line); border-radius: 50%; }
+.site-header--sub .menu-toggle span { display: block; width: 20px; height: 2px; border-radius: 2px; background: currentColor; }
+.mega-menu[hidden] { display: none; }
+@media (max-width: 900px) {
+  .site-header--sub .primary-nav { gap: 12px; font-size: 15px; }
+}
+
 /* 푸터 (전 페이지 공통) */
 .site-footer { background: #1e2b24; color: #fff; }
 .footer-main { display: flex; align-items: center; gap: 56px; padding: 36px 0; }
@@ -128,6 +146,10 @@ address { font-style: normal; }
 
 @media (max-width: 640px) {
   .brand img { width: 142px; }
+  .site-header--sub { height: 64px; }
+  .site-header--sub .brand img { width: 136px; }
+  .site-header--sub .primary-nav { display: none; }
+  .site-header--sub .menu-toggle { margin-left: auto; }
   .footer-main { align-items: flex-start; flex-direction: column; gap: 20px; padding: 28px 0; }
   .footer-info { font-size: 13px; }
   .footer-info p { flex-direction: column; }
