@@ -1,0 +1,32 @@
+# 주간농사정보 자동 갱신
+# 농촌진흥청이 보통 목요일에 다음 주 호를 올리므로 목·금요일에 확인하고, 바뀐 경우에만 커밋합니다.
+# 필요한 설정: 저장소 Settings → Secrets and variables → Actions → NONGSARO_API_KEY
+
+name: 주간농사정보 갱신
+
+on:
+  schedule:
+    - cron: '0 1,9 * * 4,5'  # 목·금 오전 10시, 오후 6시 (한국 시간)
+  workflow_dispatch:          # Actions 탭에서 수동 실행
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 주간농사정보 가져오기
+        shell: pwsh
+        env:
+          NONGSARO_API_KEY: ${{ secrets.NONGSARO_API_KEY }}
+        run: ./scripts/fetch-weekly.ps1
+
+      - name: 바뀌었으면 커밋
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/weekly.json
+          git diff --cached --quiet || (git commit -m "주간농사정보 갱신" && git push)

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>영농정보 | 나라바이오 모두싹</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/farm.css">
+</head>
+<body class="page-farm" id="top">
+  <!-- 헤더: 메인과 같은 메뉴, 서브페이지용(흰 배경·컬러 로고) -->
+  <header class="site-header site-header--sub">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html" aria-label="나라바이오 홈"><img src="images/common/logo_color.png" alt="나라바이오"></a>
+      <nav class="primary-nav" id="primary-nav" aria-label="주 메뉴">
+        <button type="button" class="primary-nav__item" aria-expanded="false" data-menu-index="0">회사소개</button>
+        <button type="button" class="primary-nav__item" aria-expanded="false" data-menu-index="1">기술</button>
+        <button type="button" class="primary-nav__item" aria-expanded="false" data-menu-index="2">제품</button>
+        <button type="button" class="primary-nav__item is-current" aria-expanded="false" data-menu-index="3">영농정보</button>
+        <button type="button" class="primary-nav__item" aria-expanded="false" data-menu-index="4">소식 · 고객지원</button>
+      </nav>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sitemap-panel" aria-label="전체 메뉴 열기"><span></span><span></span></button>
+    </div>
+    <nav class="mega-menu" id="sitemap-panel" aria-label="전체 사이트 메뉴" hidden>
+      <div class="mega-menu__inner">
+        <section class="mega-menu__group" data-menu-group="0"><h2>회사소개</h2><a href="index.html#technology">인사말 · 비전</a><a href="index.html#technology">회사소개 · 연혁</a><a href="index.html#technology-stats">인증 · 특허</a><a href="index.html#news">오시는 길</a></section>
+        <section class="mega-menu__group" data-menu-group="1"><h2>기술</h2><a href="index.html#technology">제독 유황이란</a><a href="index.html#technology">현장 검증</a><a href="index.html#technology-stats">저탄소 농업</a></section>
+        <section class="mega-menu__group" data-menu-group="2"><h2>제품</h2><a href="index.html#products">전체 제품</a><a href="index.html#products">전문 농가용</a><a href="index.html#for-you">텃밭 입문용</a></section>
+        <section class="mega-menu__group" data-menu-group="3"><h2>영농정보</h2><a href="farm.html#weekly">주간농사정보</a><a href="farm.html#calendar">작물재배력</a><a href="farm.html#pests">병해충 정보</a><a href="index.html#stories">현장 재배 이야기</a></section>
+        <section class="mega-menu__group" data-menu-group="4"><h2>소식 · 고객지원</h2><a href="index.html#news">공지 · 뉴스</a><a href="index.html#stories">모두싹TV</a><a href="index.html#news">대리점 찾기</a><a href="tel:15227008">상담 · FAQ</a></section>
+      </div>
+    </nav>
+  </header>
+
+  <main id="content">
+    <!-- 서브 히어로: 배경 이미지 + HTML 글자 (경로는 탭에 따라 바뀜) -->
+    <section class="sub-hero">
+      <img class="sub-hero__bg" src="images/farm/_03_Sub_Hero_Bg.png" alt="">
+      <div class="inner sub-hero__inner">
+        <nav class="breadcrumb" aria-label="현재 위치">
+          <ol><li><a href="index.html">홈</a></li><li>영농정보</li><li aria-current="page" data-breadcrumb-current>주간농사정보</li></ol>
+        </nav>
+        <h1>영농정보</h1>
+        <p class="sub-hero__lead">작물별 농사 시기와 병해충 정보를 한곳에서 확인하세요.</p>
+      </div>
+    </section>
+
+    <!-- 탭: 주간농사정보 / 작물재배력 / 병해충 정보 -->
+    <nav class="farm-tabs" aria-label="영농정보 메뉴">
+      <div class="inner farm-tabs__inner" role="tablist">
+        <a class="farm-tabs__item" href="#weekly" role="tab" id="tab-weekly" aria-controls="weekly" aria-selected="true">주간농사정보</a>
+        <a class="farm-tabs__item" href="#calendar" role="tab" id="tab-calendar" aria-controls="calendar" aria-selected="false">작물재배력</a>
+        <a class="farm-tabs__item" href="#pests" role="tab" id="tab-pests" aria-controls="pests" aria-selected="false">병해충 정보</a>
+      </div>
+    </nav>
+
+    <div class="inner farm-body">
+      <!-- 작물 선택: 세 탭이 함께 사용 -->
+      <section class="crop-select" aria-label="작물 선택">
+        <form class="crop-search" role="search" action="farm.html">
+          <label class="blind" for="crop-search-input">작물 이름으로 검색</label>
+          <input id="crop-search-input" type="search" name="crop" placeholder="작물 이름으로 검색 (예: 감자, 딸기)">
+        </form>
+        <div class="crop-chips">
+          <strong class="crop-chips__label">주력 작물</strong>
+          <button type="button" class="crop-chip" aria-pressed="true" data-crop="고추">고추</button>
+          <button type="button" class="crop-chip" aria-pressed="false" data-crop="마늘">마늘</button>
+          <button type="button" class="crop-chip" aria-pressed="false" data-crop="배추">배추</button>
+          <button type="button" class="crop-chip" aria-pressed="false" data-crop="과수">과수</button>
+          <button type="button" class="crop-chip" aria-pressed="false" data-crop="벼">벼</button>
+        </div>
+        <button type="button" class="crop-all" aria-expanded="false">전체 작물 36종 보기</button>
+      </section>
+
+      <!-- ① 주간농사정보 : data/weekly.json (농촌진흥청 주간농사정보 API → 매주 자동 갱신) -->
+      <section class="farm-panel weekly" id="weekly" role="tabpanel" aria-labelledby="tab-weekly">
+        <div class="weekly-nav">
+          <button type="button" class="weekly-nav__btn" data-weekly-prev>‹ 지난주</button>
+          <div class="weekly-nav__title">
+            <h2 data-weekly-title>10월 2주 주간농사정보 (제41호)</h2>
+            <p><time data-weekly-period>2026.10.12 – 10.18</time> · 매주 목요일, 다음 주 정보로 자동 갱신</p>
+          </div>
+          <button type="button" class="weekly-nav__btn" data-weekly-next disabled>다음 주 ›</button>
+        </div>
+
+        <section class="weekly-weather" aria-labelledby="weekly-weather-title">
+          <h3 id="weekly-weather-title" class="farm-title">이번 주 날씨와 주의할 점</h3>
+          <ul class="weather-cards" data-weekly-weather>
+            <li class="weather-card weather-card--temp"><span class="weather-card__tag">기온</span><strong>평년보다 높겠음</strong><p>평년 13.8~15.0℃ · 이동성 고기압의 영향</p></li>
+            <li class="weather-card weather-card--rain"><span class="weather-card__tag">강수</span><strong>평년과 비슷하겠음</strong><p>평년 1.7~10.7mm · 다음 주부터 비 잦아질 전망</p></li>
+            <li class="weather-card weather-card--alert"><span class="weather-card__tag">가뭄</span><strong>저수율 48.2% (평년의 70%)</strong><p>최근 한 달 비가 평년의 12%뿐, 물 관리에 신경 쓰세요</p></li>
+          </ul>
+        </section>
+
+        <section class="weekly-fields" aria-labelledby="weekly-fields-title">
+          <div class="farm-title-row">
+            <div>
+              <h3 id="weekly-fields-title" class="farm-title">이번 주 분야별 핵심</h3>
+              <p class="farm-title-desc" data-weekly-source>농촌진흥청 주간농사정보 제41호 요약입니다. 모두싹과 관련 있는 분야만 골라 보여드립니다.</p>
+            </div>
+            <a class="farm-outline-btn" href="#" target="_blank" rel="noopener" data-weekly-pdf>원문 보기 (PDF) ↓</a>
+          </div>
+
+          <div class="field-board">
+            <p class="field-board__notice" data-weekly-notice>이번 주 주간농사정보에는 고추 관련 지침이 없습니다. 고추 농작업은 재배력에서 확인하세요. <a href="#calendar">고추 재배력 보기 →</a></p>
+            <div data-weekly-fields>
+              <section class="field-row">
+                <h4 class="field-row__tag field-row__tag--veg">채소</h4>
+                <dl>
+                  <div><dt>마늘 · 양파</dt><dd>본밭에서 뿌리가 잘 내리고 양분을 잘 빨아들이도록 물 관리를 알맞게 합니다.</dd></div>
+                  <div><dt>시설채소</dt><dd>10월~11월 상순은 바이러스를 옮기는 해충이 하우스로 들어오기 쉬우니 집중 예방합니다.</dd></div>
+                  <div><dt>딸기</dt><dd>밤 기온이 10℃ 아래로 떨어지면 보온을 시작하고, 15℃를 넘지 않게 관리합니다.</dd></div>
+                </dl>
+              </section>
+              <section class="field-row">
+                <h4 class="field-row__tag field-row__tag--fruit">과수</h4>
+                <dl>
+                  <div><dt>수확</dt><dd>익은 정도에 따라 2~3번 나누어, 기온이 낮을 때와 비가 그친 뒤에 수확합니다.</dd></div>
+                  <div><dt>배</dt><dd>중만생종은 수확 직후부터 낙엽 전까지 가을거름을 주고, 가을 전정으로 짧은 가지를 키웁니다.</dd></div>
+                </dl>
+              </section>
+              <section class="field-row">
+                <h4 class="field-row__tag field-row__tag--rice">벼</h4>
+                <dl>
+                  <div><dt>적기 수확</dt><dd>이삭 팬 뒤 조생종 45~50일, 중생종 50~55일, 중만생종 55~60일에 거둡니다.</dd></div>
+                  <div><dt>건조 · 저장</dt><dd>일반용은 45~50℃, 종자용은 40℃ 이하로 말리고, 수분 15%로 저장합니다.</dd></div>
+                  <div><dt>땅심 높이기</dt><dd>볏짚을 3~4토막 내어 10a당 400~600kg 넣고 깊이갈이합니다.</dd></div>
+                </dl>
+              </section>
+              <section class="field-row">
+                <h4 class="field-row__tag field-row__tag--field">밭작물</h4>
+                <dl>
+                  <div><dt>콩</dt><dd>꼬투리가 노랗거나 갈색으로 변하면 수확하고, 콤바인은 수분 18~20%일 때 씁니다.</dd></div>
+                  <div><dt>가을 감자</dt><dd>12~15℃에서 1주일 예비 저장 뒤, 3~4℃ · 습도 80~85%에서 본 저장합니다.</dd></div>
+                  <div><dt>보리 · 밀</dt><dd>지역별 파종 시기를 지키고, 파종 전 종자 소독으로 병을 막습니다.</dd></div>
+                </dl>
+              </section>
+              <section class="field-row">
+                <h4 class="field-row__tag field-row__tag--special">특작</h4>
+                <dl>
+                  <div><dt>인삼</dt><dd>수확 예정 시기를 생각해 파종 밀도를 조절하고, 되도록 가을에 파종합니다.</dd></div>
+                  <div><dt>약용작물</dt><dd>황금 · 더덕을 가을에 뿌릴 때는 종자 크기에 맞춰 흙 덮는 깊이를 조절합니다.</dd></div>
+                </dl>
+              </section>
+            </div>
+          </div>
+
+          <ul class="farm-note">
+            <li>날씨 · 분야별 핵심은 농촌진흥청 주간농사정보(hwpx)를 매주 자동으로 가져와 요약합니다.</li>
+            <li>지역과 작형에 따라 시기가 다를 수 있으니, 궁금한 점은 상담으로 확인하세요.</li>
+          </ul>
+        </section>
+      </section>
+
+      <!-- ② 작물재배력 : data/calendar.json (다음 단계에서 작업) -->
+      <section class="farm-panel calendar" id="calendar" role="tabpanel" aria-labelledby="tab-calendar" hidden>
+        <h2 class="farm-title">작물재배력</h2>
+      </section>
+
+      <!-- ③ 병해충 정보 : data/pest.json (다음 단계에서 작업) -->
+      <section class="farm-panel pests" id="pests" role="tabpanel" aria-labelledby="tab-pests" hidden>
+        <h2 class="farm-title">병해충 정보</h2>
+      </section>
+
+      <!-- 상담 배너: 세 탭 공통 -->
+      <aside class="farm-consult">
+        <div>
+          <h2>우리 밭에 맞는 농작업이 궁금하다면</h2>
+          <p>가까운 대리점이나 전화로 방제 방법을 안내해 드립니다.</p>
+        </div>
+        <div class="farm-consult__actions">
+          <a class="farm-consult__dealer" href="index.html#news">대리점 찾기</a>
+          <a class="farm-consult__call" href="tel:15227008">☎ 전화 상담 1522-7008</a>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer"><div class="inner footer-main"><a class="brand" href="index.html" aria-label="나라바이오 홈"><img src="images/common/imgi_5_logo.png" alt="나라바이오"></a><div class="footer-info"><p><span><b>상호명</b>나라바이오 주식회사</span><span><b>대표자</b>김경수</span><span><b>사업자등록번호</b>317-81-08010</span></p><p><span><b>주소</b>전라북도 군산시 서수면 231</span><span><b>이메일</b><a href="mailto:narabio@narabio.com">narabio@narabio.com</a></span></p></div><div class="footer-cs"><span>고객센터</span><a class="footer-phone" href="tel:15227008">1522-7008</a><p>평일 09:00–18:00</p></div></div><div class="footer-bottom">이용약관 · 개인정보처리방침 · 찾아오시는 길 <span>© NARABIO. All rights reserved.</span></div></footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/farm.js"></script>
+</body>
+</html>

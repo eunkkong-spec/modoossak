@@ -1,0 +1,138 @@
+:root {
+  /* 컬러 시스템 (Figma 07) */
+  --c-forest: #2f4a3a;   /* MAIN · 신뢰 — 헤더·제목·푸터, 전문 농가(모두싹) */
+  --c-olive: #6b8e4e;    /* SUB · 안전 — 아이콘·강조 텍스트, 친환경 인증 */
+  --c-brown: #9a7550;    /* SUB · 친근함 — 텃밭 입문(왕잘커), 재배 이야기·후기 */
+  --c-sage: #5b7f73;     /* SUB · 지속가능 — 기술·저탄소, 데이터·인포그래픽 */
+  --c-gold: #d6a63a;     /* POINT · 제독 유황 — 구매·문의·상담 버튼, 핵심 수치 */
+
+  --c-cream: #f7f4ee;    /* 페이지 배경 */
+  --c-white: #fff;       /* 카드·콘텐츠 박스 */
+  --c-light-green: #dce5d0; /* 선택·강조 배경 */
+  --c-charcoal: #26332b; /* 본문 텍스트 */
+
+  --c-text: #26332b;
+  --c-text-sub: #4a5a50;
+  --c-text-muted: #5f6a61;
+  --c-lead: #4e6b57;
+
+  --c-green-1: #5a7a63;
+  --c-green-2: #4a6953;
+  --c-green-3: #3b5745;
+  --c-green-4: #2f4a3a;
+  --c-green-5: #22352a;
+
+  --c-accent: #d6a63a;
+  --c-bg-soft: #f3f1ea;
+  --c-line: #e5e1d8;
+
+  --c-footer: #26332b;
+  --c-footer-bar: #1e2822;
+  --c-footer-text: #afb8b0;
+
+  --f-title: 'Noto Sans KR', sans-serif;
+  --f-body: 'Gowun Dodum', 'Noto Sans KR', sans-serif;
+
+  /* 텍스트 스타일 (Figma Desktop/*) — font: weight size/line-height family */
+  --t-h1: 900 64px/1.25 var(--f-title);       /* 히어로 제목 · 자간 -2% */
+  --t-h2: 700 40px/1.3 var(--f-title);        /* 섹션 제목 · 자간 -1% */
+  --t-h3: 700 26px/1.4 var(--f-title);        /* 카드 제목 */
+  --t-number: 900 48px/1.2 var(--f-title);    /* 수치 · 자간 -1% */
+  --t-label: 700 18px/1.4 var(--f-title);     /* 라벨 */
+  --t-button: 700 18px/1.2 var(--f-title);    /* 버튼 */
+  --t-body: 400 18px/1.7 var(--f-body);       /* 본문 */
+  --t-caption: 400 16px/1.5 var(--f-title);   /* 보조 정보 */
+  --t-quick: 700 14px/1.2 var(--f-title);     /* 퀵메뉴 */
+
+  --radius: 12px;
+
+  --inner: 1280px;
+  --gutter: 20px;
+  --header-h: 80px;
+  --header-h-scrolled: 64px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font: var(--t-body);
+  color: var(--c-text);
+  background: var(--c-cream);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--f-title);
+}
+
+img, svg, video {
+  display: block;
+  max-width: 100%;
+}
+
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+input { font: inherit; }
+address { font-style: normal; }
+
+:focus-visible {
+  outline: 3px solid var(--c-accent);
+  outline-offset: 2px;
+}
+
+.inner {
+  width: 100%;
+  max-width: calc(var(--inner) + var(--gutter) * 2);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.blind {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* 로고 (헤더·푸터 공통) */
+.brand { display: inline-flex; flex: 0 0 auto; align-items: center; color: inherit; white-space: nowrap; }
+.brand img { width: clamp(142px, 15vw, 190px); height: auto; object-fit: contain; }
+
+/* 푸터 (전 페이지 공통) */
+.site-footer { background: #1e2b24; color: #fff; }
+.footer-main { display: flex; align-items: center; gap: 56px; padding: 36px 0; }
+.footer-main .brand { flex: none; }
+.footer-info { display: grid; flex: 1; gap: 6px; color: #bdc7bf; font: 400 15px/1.6 var(--f-title); }
+.footer-info p { display: flex; flex-wrap: wrap; row-gap: 4px; }
+.footer-info span + span::before { display: inline-block; width: 1px; height: 12px; margin: 0 14px; background: rgb(255 255 255 / 22%); content: ""; vertical-align: -1px; }
+.footer-info b { margin-right: 8px; color: #fff; font-weight: 700; }
+.footer-info a:hover, .footer-info a:focus-visible { color: #fff; text-decoration: underline; }
+.footer-cs { flex: none; text-align: right; }
+.footer-cs > span { display: block; color: #bdc7bf; font: 700 14px/1.4 var(--f-title); }
+.footer-phone { display: block; margin: 2px 0 4px; font: 900 30px/1.2 var(--f-title); }
+.footer-cs p { color: #bdc7bf; font: 400 14px/1.4 var(--f-title); }
+.footer-bottom { display: flex; justify-content: space-between; padding: 14px max(24px, calc((100% - 1280px)/2)); background: #17211c; color: #aab4ac; font: 400 13px/1.4 var(--f-title); }
+
+@media (max-width: 640px) {
+  .brand img { width: 142px; }
+  .footer-main { align-items: flex-start; flex-direction: column; gap: 20px; padding: 28px 0; }
+  .footer-info { font-size: 13px; }
+  .footer-info p { flex-direction: column; }
+  .footer-info span + span::before { display: none; }
+  .footer-cs { text-align: left; }
+  .footer-phone { font-size: 26px; }
+  .footer-bottom { gap: 8px; flex-direction: column; padding: 14px 20px; font-size: 12px; }
+}
