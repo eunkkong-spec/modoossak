@@ -1,0 +1,78 @@
+/* 제품 (product.html) */
+.page-product [hidden] { display: none !important; }
+
+/* 서브 히어로 배경 (공통 스타일은 common.css): 토마토밭에서 웃는 아이들 사진을 꽉 채우고 왼쪽 글자 쪽만 그늘. 아이들이 글자에 걸리지 않게 사진을 오른쪽으로 15% 밀어 둠 */
+.page-product .sub-hero__bg { right: -15%; width: 115%; height: 100%; object-fit: cover; object-position: center 52%; -webkit-mask-image: none; mask-image: none; }
+.page-product .sub-hero::after { background: linear-gradient(90deg, rgb(22 38 30 / 68%) 0%, rgb(22 38 30 / 38%) 35%, rgb(22 38 30 / 0%) 60%); }
+@media (max-width: 640px) {
+  .page-product .sub-hero__bg { right: 0; width: 100%; object-position: 60% 35%; }
+  .page-product .sub-hero::after { background: rgb(22 38 30 / 45%); }
+}
+
+/* 탭 */
+.product-tabs { border-bottom: 1px solid var(--c-line); background: #fff; }
+.product-tabs__inner { display: flex; justify-content: center; }
+.product-tabs__item { padding: 20px 32px 17px; border-bottom: 3px solid transparent; color: var(--c-text-muted); font: 700 18px/1.4 var(--f-title); }
+.product-tabs__item:hover { color: var(--c-forest); }
+.product-tabs__item[aria-current="page"] { border-bottom-color: var(--c-gold); color: var(--c-forest); }
+
+.product-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 56px; padding-top: 48px; padding-bottom: 96px; }
+.product-list { display: grid; gap: 56px; }
+.product-empty { padding: 40px 0; color: var(--c-text-muted); font: 400 17px/1.6 var(--f-title); text-align: center; }
+
+/* 분류별 묶음 */
+.product-group__title { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; color: var(--c-forest); font: 700 26px/1.4 var(--f-title); }
+.product-group__title span { display: inline-grid; min-width: 28px; height: 28px; place-items: center; padding: 0 8px; border-radius: 999px; background: var(--c-light-green); color: var(--c-forest); font: 700 14px/1 var(--f-title); }
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+
+/* 제품 카드 */
+.product-item { display: flex; overflow: hidden; flex-direction: column; border: 1px solid var(--c-line); border-radius: var(--radius); background: #fff; }
+.product-item__photo { aspect-ratio: 16 / 10; overflow: hidden; margin: 0; background: var(--c-bg-soft); }
+.product-item__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.product-item__photo.is-contain img { padding: 16px; object-fit: contain; }
+.product-item__body { display: flex; flex: 1; flex-direction: column; gap: 10px; padding: 22px 24px 24px; }
+.product-item__group { color: var(--c-olive); font: 700 14px/1.4 var(--f-title); }
+.product-item h3 { color: var(--c-forest); font: 700 24px/1.35 var(--f-title); }
+.product-item__summary { color: var(--c-text-sub); font: 400 16px/1.6 var(--f-title); }
+.product-item__crops { margin-top: 4px; }
+.product-item__crops strong { display: block; margin-bottom: 8px; color: var(--c-text); font: 700 14px/1.4 var(--f-title); }
+.product-item__crops ul { display: flex; flex-wrap: wrap; gap: 6px; }
+.product-item__crops a { display: inline-block; padding: 5px 12px; border: 1px solid var(--c-line); border-radius: 999px; color: var(--c-text-sub); font: 500 14px/1.3 var(--f-title); }
+.product-item__crops a:hover, .product-item__crops a:focus-visible { border-color: var(--c-forest); background: var(--c-forest); color: #fff; }
+.product-item__uses { margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--c-line); }
+.product-item__uses summary { padding: 6px 0; color: var(--c-forest); font: 700 15px/1.4 var(--f-title); cursor: pointer; }
+.product-item__uses ul { display: grid; max-height: 280px; overflow-y: auto; gap: 10px; margin-top: 8px; padding-right: 6px; }
+.product-item__uses li { display: grid; gap: 2px; padding: 10px 12px; border-radius: 8px; background: var(--c-bg-soft); font: 400 14px/1.55 var(--f-title); }
+.product-item__uses b { color: var(--c-forest); font-weight: 700; }
+.product-item__uses span { color: var(--c-text-sub); }
+.product-item__uses mark { padding: 0 2px; border-radius: 3px; background: #f6e7bd; color: var(--c-text); font-weight: 700; }
+
+/* 상담 배너 */
+.product-consult { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 32px 40px; border-radius: var(--radius); background: var(--c-forest); color: #fff; }
+.product-consult h2 { font: 700 26px/1.4 var(--f-title); }
+.product-consult p { margin-top: 4px; color: #cfdacf; font: 400 16px/1.6 var(--f-title); }
+.product-consult__actions { display: flex; flex: none; gap: 10px; }
+.product-consult__actions a { padding: 14px 24px; border-radius: 999px; font: 700 16px/1.2 var(--f-title); }
+.product-consult__dealer { border: 1px solid rgb(255 255 255 / 60%); }
+.product-consult__dealer:hover { background: #fff; color: var(--c-forest); }
+.product-consult__call { background: var(--c-gold); color: var(--c-charcoal); }
+.product-consult__call:hover { background: #e2b54d; }
+
+@media (max-width: 900px) {
+  .product-consult { align-items: flex-start; flex-direction: column; }
+}
+
+@media (max-width: 640px) {
+  .product-tabs__inner { padding: 0; }
+  .product-tabs__item { flex: 1; padding: 16px 4px 13px; font-size: 16px; text-align: center; }
+  .product-body, .product-list { gap: 40px; }
+  .product-body { padding-top: 28px; padding-bottom: 64px; }
+  .product-group__title { font-size: 22px; }
+  .product-grid { grid-template-columns: 1fr; }
+  .product-item__body { padding: 18px 18px 20px; }
+  .product-item h3 { font-size: 21px; }
+  .product-consult { padding: 24px 20px; }
+  .product-consult h2 { font-size: 21px; }
+  .product-consult__actions { width: 100%; flex-direction: column; }
+  .product-consult__actions a { text-align: center; }
+}

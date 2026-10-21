@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>모두싹TV | 나라바이오 모두싹</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/tv.css">
+</head>
+<body class="page-tv" id="top">
+  <!-- 헤더: 메인과 같은 메뉴, 서브페이지용(흰 배경·컬러 로고) -->
+  <header class="site-header site-header--sub">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html" aria-label="나라바이오 홈"><img src="images/common/logo_color_transparent.png" alt="나라바이오"></a>
+      <nav class="primary-nav" id="primary-nav" aria-label="주 메뉴">
+        <button type="button" class="primary-nav__item" aria-expanded="false" data-menu-index="0">회사소개</button>
+        <button type="button" class="primary-nav__item" aria-expanded="false" data-menu-index="1">기술</button>
+        <button type="button" class="primary-nav__item" aria-expanded="false" data-menu-index="2">제품</button>
+        <button type="button" class="primary-nav__item" aria-expanded="false" data-menu-index="3">영농정보</button>
+        <button type="button" class="primary-nav__item is-current" aria-expanded="false" data-menu-index="4">소식 · 고객지원</button>
+      </nav>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sitemap-panel" aria-label="전체 메뉴 열기"><span></span><span></span></button>
+    </div>
+    <nav class="mega-menu" id="sitemap-panel" aria-label="전체 사이트 메뉴" hidden>
+      <div class="mega-menu__inner">
+        <section class="mega-menu__group" data-menu-group="0"><h2>회사소개</h2><a href="company.html#greeting">인사말 · 비전</a><a href="company.html#history">회사 연혁</a><a href="company.html#cert">인증 · 특허</a><a href="company.html#location">오시는 길</a></section>
+        <section class="mega-menu__group" data-menu-group="1"><h2>기술</h2><a href="index.html#technology">제독 유황이란</a><a href="index.html#technology">현장 검증</a><a href="index.html#technology-stats">저탄소 농업</a></section>
+        <section class="mega-menu__group" data-menu-group="2"><h2>제품</h2><a href="product.html#all">전체 제품</a><a href="product.html#pro">전문 농가용</a><a href="product.html#garden">텃밭 입문용</a></section>
+        <section class="mega-menu__group" data-menu-group="3"><h2>영농정보</h2><a href="farm.html#weekly">주간농사정보</a><a href="farm.html#calendar">작물재배력</a><a href="farm.html#pests">병해충 정보</a></section>
+        <section class="mega-menu__group" data-menu-group="4"><h2>소식 · 고객지원</h2><a href="index.html#news">공지 · 뉴스</a><a href="tv.html">모두싹TV</a><a href="index.html#news">대리점 찾기</a><a href="tel:15227008">상담 · FAQ</a></section>
+      </div>
+    </nav>
+  </header>
+
+  <main id="content">
+    <!-- 서브 히어로: 황금빛 논과 농부 사진 -->
+    <section class="sub-hero sub-hero--tv">
+      <img class="sub-hero__bg" src="images/tv/_05_TV_Hero_Bg.jpg" alt="">
+      <div class="inner sub-hero__inner">
+        <nav class="breadcrumb" aria-label="현재 위치">
+          <ol><li><a href="index.html">홈</a></li><li>소식 · 고객지원</li><li aria-current="page">모두싹TV</li></ol>
+        </nav>
+        <h1 class="tv-hero__title"><img src="images/tv/_05_TV_Logo.png" alt="모두싹TV" width="455" height="279"></h1>
+        <p class="sub-hero__lead">농민들이 묻고 답하는 농사 채널, 모두싹TV</p>
+      </div>
+    </section>
+
+    <!-- 영상 : data/tv.json (유튜브 @SsakTV 채널 영상 목록) -->
+    <div class="inner tv-body">
+      <section class="tv-player" aria-labelledby="tv-now-title">
+        <div class="tv-player__frame">
+          <iframe data-tv-frame title="모두싹TV 영상" src="about:blank" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="tv-player__info">
+          <img class="tv-player__logo" src="images/tv/_05_TV_Logo.png" alt="" width="455" height="279">
+          <p class="tv-player__label" data-tv-now-category>최신 영상</p>
+          <h2 id="tv-now-title" data-tv-now-title>모두싹TV</h2>
+          <div class="tv-player__actions">
+            <a class="tv-player__yt" href="https://www.youtube.com/@SsakTV" target="_blank" rel="noopener" data-tv-now-link>유튜브에서 보기 ↗</a>
+            <a class="tv-player__sub" href="https://www.youtube.com/@SsakTV?sub_confirmation=1" target="_blank" rel="noopener">▶ 모두싹TV 구독하기</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="tv-list" aria-labelledby="tv-list-title">
+        <div class="tv-list__head">
+          <h2 id="tv-list-title" class="tv-list__title"><img src="images/tv/_05_TV_Logo.png" alt="" width="455" height="279">전체 영상</h2>
+          <div class="tv-filter" role="group" aria-label="영상 분류" data-tv-filter></div>
+        </div>
+        <ul class="tv-grid" data-tv-grid></ul>
+        <p class="tv-more"><a href="https://www.youtube.com/@SsakTV/videos" target="_blank" rel="noopener">유튜브 채널에서 더 많은 영상 보기 ↗</a></p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer"><div class="inner footer-main"><a class="brand" href="index.html" aria-label="나라바이오 홈"><img src="images/common/imgi_5_logo.png" alt="나라바이오"></a><div class="footer-info"><p><span><b>상호명</b>나라바이오 주식회사</span><span><b>대표자</b>김일호</span><span><b>사업자등록번호</b>197-88-00980</span><span><b>통신판매신고번호</b>제 2019-전주덕진-0259호</span></p><p><span><b>주소</b>전라북도 군산시 서해로 237</span><span><b>이메일</b><a href="mailto:narabio@narabio.com">narabio@narabio.com</a></span></p></div><div class="footer-cs"><span>고객센터</span><a class="footer-phone" href="tel:15227008">1522-7008</a><p>평일 09:00–18:00</p></div></div><div class="footer-bottom">이용약관 · 개인정보처리방침 · 찾아오시는 길 <span>© NARABIO. All rights reserved.</span></div></footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/tv.js"></script>
+</body>
+</html>

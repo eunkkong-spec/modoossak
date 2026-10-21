@@ -24,6 +24,9 @@
       const panel = document.getElementById(tab.hash.slice(1));
       if (panel) panel.hidden = !selected;
     });
+    // 위쪽 검색 영역: 주간농사정보·재배력은 작물 검색, 병해충 정보는 병해충 검색
+    const active = current.hash.slice(1);
+    document.querySelectorAll('[data-tab-for]').forEach((box) => { box.hidden = !box.dataset.tabFor.split(' ').includes(active); });
     if (breadcrumb) breadcrumb.textContent = current.textContent;
   };
   tabs.forEach((tab) => tab.addEventListener('click', (event) => {
@@ -38,6 +41,31 @@
   });
   showTab(location.hash.slice(1));
 
+  // 작물 선택: 위쪽 주력 작물 버튼·작물 검색을 주간농사정보와 작물재배력이 함께 사용
+  const chips = [...document.querySelectorAll('.crop-chip')];
+  const cropWatchers = [];
+  let crop = chips.find((chip) => chip.getAttribute('aria-pressed') === 'true')?.dataset.crop || '';
+  const selectCrop = (name) => {
+    crop = name;
+    chips.forEach((chip) => chip.setAttribute('aria-pressed', String(chip.dataset.crop === name)));
+    cropWatchers.forEach((watch) => watch());
+  };
+  chips.forEach((chip) => chip.addEventListener('click', () => selectCrop(chip.dataset.crop)));
+  const cropForm = document.querySelector('[data-crop-search]');
+  cropForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const name = cropForm.elements.crop.value.trim();
+    if (name) selectCrop(name);
+  });
+  // farm.html?crop=마늘 처럼 주소로 작물을 정해서 열 수 있음
+  const cropParam = new URLSearchParams(location.search).get('crop');
+  if (cropParam) {
+    selectCrop(cropParam.trim());
+    if (cropForm) cropForm.elements.crop.value = cropParam.trim();
+  }
+  // 정보가 없을 때 안내 (TODO: 문자 상담 번호를 받으면 sms: 링크 추가)
+  const noInfo = (what) => `${what} 정보가 없습니다. 궁금하신 작물이 있으시면 상담전화나 문자 주시면 상세히 상담해드리겠습니다. <a href="tel:15227008">☎ 1522-7008</a>`;
+
   // ① 주간농사정보: data/weekly.json (scripts/fetch-weekly.ps1이 매주 갱신)
   (() => {
     const panel = document.getElementById('weekly');
@@ -48,7 +76,7 @@
     const $ = (name) => panel.querySelector(`[data-weekly-${name}]`);
     const els = {
       prev: $('prev'), next: $('next'), title: $('title'), period: $('period'), weather: $('weather'),
-      source: $('source'), pdf: $('pdf'), fields: $('fields'),
+      source: $('source'), pdf: $('pdf'), notice: $('notice'), fields: $('fields'),
     };
     let issues = [];
     let index = 0;
@@ -74,6 +102,17 @@
       .map(([name, tag]) => ({ tag, ...issue.fields.find((f) => f.name === name) }))
       .filter((f) => f.name && f.items.length);
 
+    const renderNotice = () => {
+      const issue = issues[index];
+      if (!issue || !els.notice) return;
+      const mentioned = !crop || shownFields(issue).some((f) => f.name.includes(crop)
+        || f.items.some((item) => `${item.topic} ${item.text}`.includes(crop)));
+      els.notice.hidden = mentioned;
+      if (!mentioned) {
+        els.notice.innerHTML = noInfo(`이번 주 ${esc(crop)} 농작업`);
+      }
+    };
+
     const render = () => {
       const issue = issues[index];
       const label = issue.start ? weekLabel(issue.start) : '';
@@ -97,16 +136,228 @@
           <h4 class="field-row__tag field-row__tag--${field.tag}">${esc(field.name)}</h4>
           <dl>${field.items.map((item) => `<div><dt>${esc(item.topic || field.name)}</dt><dd>${itemBody(item)}</dd></div>`).join('')}</dl>
         </section>`).join('');
+
+      renderNotice();
     };
 
     els.prev.addEventListener('click', () => { if (index < issues.length - 1) { index += 1; render(); } });
     els.next.addEventListener('click', () => { if (index > 0) { index -= 1; render(); } });
+
+    cropWatchers.push(renderNotice);
 
     // 불러오지 못하면 HTML에 적힌 내용을 그대로 둠
     loadJson('data/weekly.json')
       .then((data) => {
         issues = (data.issues || []).filter((issue) => issue.fields?.length);
         if (issues.length) render();
+      })
+      .catch(() => {});
+  })();
+
+  // ② 작물재배력: data/calendar.json (images/calendar 재배력 그림을 옮겨 적은 데이터)
+  (() => {
+    const panel = document.getElementById('calendar');
+    if (!panel) return;
+
+    const $ = (name) => document.querySelector(`[data-calendar-${name}]`);
+    const els = {
+      notice: $('notice'), body: $('body'), nowTag: $('now-tag'), nowTitle: $('now-title'), nowPoints: $('now-points'),
+      photo: $('photo'), pests: $('pests'), title: $('title'), table: $('table'), uses: $('uses'),
+      dilution: $('dilution'), notes: $('notes'), downloadTitle: $('download-title'), download: $('download'),
+    };
+    const allButton = document.querySelector('[data-crop-all]');
+    const allList = document.querySelector('[data-crop-all-list]');
+    let data = { crops: [] };
+
+    // 상·중·하순 → 1~36칸 (1월 상순 = 1, 12월 하순 = 36)
+    const DEKADS = ['상', '중', '하'];
+    const SPAN = /^(\d{1,2})(상|중|하)(?:-(\d{1,2})(상|중|하))?$/;
+    const toSlot = (month, dekad) => (month - 1) * 3 + DEKADS.indexOf(dekad) + 1;
+    const parseSpan = (text) => {
+      const [, m1, d1, m2 = m1, d2 = d1] = text.match(SPAN);
+      return [toSlot(+m1, d1), toSlot(+m2, d2)];
+    };
+    // 해를 넘기는 기간(11중-2상)은 두 토막으로 나눔
+    const pieces = ([from, to]) => (from <= to ? [[from, to]] : [[from, 36], [1, to]]);
+    const covers = (span, slot) => pieces(parseSpan(span)).some(([from, to]) => from <= slot && slot <= to);
+
+    const ROWS = {
+      stage: { title: '생육 단계', tone: 'green' }, task: { title: '주요 작업', tone: 'sand' },
+      fert: { title: '웃거름', tone: 'cream' }, uses: { title: '모두싹 사용' },
+      weather: { title: '기상', tone: 'blue' }, pest: { title: '주의할 병해충', tone: 'pink' },
+    };
+    const toneOf = (kind, label) => {
+      if ((kind === 'stage' || kind === 'task') && /수확|수매|저장|출하/.test(label)) return 'harvest';
+      if (kind === 'weather' && /가뭄|고온/.test(label)) return 'dry';
+      return ROWS[kind].tone;
+    };
+
+    // 오늘 날짜 → 지금 칸, 이번 주(월~일)
+    const today = new Date();
+    const nowMonth = today.getMonth() + 1;
+    const nowDekad = DEKADS[Math.min(2, Math.floor((today.getDate() - 1) / 10))];
+    const nowSlot = toSlot(nowMonth, nowDekad);
+    const weekRange = () => {
+      const monday = new Date(today);
+      monday.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+      const sunday = new Date(monday);
+      sunday.setDate(monday.getDate() + 6);
+      const fmt = (d) => `${d.getMonth() + 1}.${String(d.getDate()).padStart(2, '0')}`;
+      return `${fmt(monday)} – ${fmt(sunday)}`;
+    };
+
+    const findCrop = (name) => {
+      const q = name.replace(/\s+/g, '');
+      return data.crops.find((c) => c.name === q)
+        || data.crops.find((c) => (c.aliases || []).includes(q))
+        || data.crops.find((c) => c.name.includes(q));
+    };
+    const usesOf = (cropData) => cropData.uses.map((use, i) => ({ ...use, no: i + 1, slot: parseSpan(use.at)[0] }));
+    const activeLabels = (cropData, kinds) => cropData.rows
+      .filter((row) => kinds.includes(row.kind))
+      .flatMap((row) => (row.bars || []).filter(([, span]) => covers(span, nowSlot)).map(([label]) => label));
+    const unique = (list) => [...new Set(list)];
+    const slotLabel = (at) => at.replace(/(\d+)(.)/, '$1월 $2순');
+
+    // 지금 시기 카드
+    const renderNow = (cropData) => {
+      els.nowTag.textContent = `지금 시기 · ${nowMonth}월 ${Math.ceil(today.getDate() / 7)}주 (${weekRange()})`;
+      const doing = unique(activeLabels(cropData, ['stage', 'task'])).map((label) => label.replace(/ · /g, '·'));
+      els.nowTitle.title = els.nowTitle.textContent = doing.length
+        ? `${cropData.name} ${doing.slice(0, 2).join(', ')} 시기`
+        : `${cropData.name} 다음 작기 준비 시기`;
+
+      const points = [];
+      const tasks = unique(activeLabels(cropData, ['task', 'fert']));
+      if (tasks.length) points.push(`지금 할 일: ${tasks.join(', ')}`);
+      const weather = unique(activeLabels(cropData, ['weather']));
+      if (weather.length) points.push(`${weather.join(', ')} — 날씨 대비가 필요합니다`);
+      const pests = unique(activeLabels(cropData, ['pest']));
+      if (pests.length) points.push(`주의: ${pests.join(', ')}`);
+      // 다음 모두싹 사용 시기 (올해 남은 게 없으면 내년 첫 번째)
+      const uses = [...usesOf(cropData)].sort((a, b) => a.slot - b.slot);
+      const next = uses.find((use) => use.slot >= nowSlot) || uses[0];
+      if (next) points.push(`다음 모두싹 사용: ${next.no}번 ${next.title} (${slotLabel(next.at)})`);
+      els.nowPoints.innerHTML = points.slice(0, 3).map((point) => `<li title="${esc(point)}">${esc(point)}</li>`).join('');
+
+      els.photo.hidden = !cropData.photo;
+      els.photo.closest('.cal-now').classList.toggle('has-photo', Boolean(cropData.photo));
+      if (cropData.photo) els.photo.src = cropData.photo;
+    };
+
+    // 연간 재배력 표: 첫 칸은 줄 제목, 나머지 36칸은 상·중·하순
+    const renderTable = (cropData) => {
+      const cells = ['<div class="cal-table__corner" role="columnheader"></div>'];
+      for (let m = 1; m <= 12; m += 1) {
+        cells.push(`<div class="cal-table__month${m === nowMonth ? ' is-now' : ''}" role="columnheader" style="grid-column:${(m - 1) * 3 + 2} / span 3">${m}월</div>`);
+      }
+      let line = 2;  // 1줄은 월 머리글
+      cropData.rows.filter((row) => row.kind === 'uses' || row.bars?.length).forEach((row) => {
+        // 겹치는 막대는 아래 줄로 내림
+        const lanes = [];
+        if (row.kind === 'uses') {
+          lanes.push(usesOf(cropData).map((use) => ({ dot: use.no, from: use.slot, to: use.slot, label: use.title })));
+        } else {
+          row.bars
+            .flatMap(([label, span]) => pieces(parseSpan(span)).map(([from, to]) => ({ label, from, to, tone: toneOf(row.kind, label) })))
+            .sort((a, b) => a.from - b.from)
+            .forEach((item) => {
+              const lane = lanes.find((list) => list.at(-1).to < item.from);
+              if (lane) lane.push(item); else lanes.push([item]);
+            });
+        }
+        const rows = `grid-row:${line} / span ${lanes.length}`;
+        cells.push(`<div class="cal-table__label" role="rowheader" style="${rows}">${esc(row.title || ROWS[row.kind].title)}</div>`);
+        cells.push(`<div class="cal-table__line" aria-hidden="true" style="${rows}"></div>`);
+        lanes.forEach((lane, i) => lane.forEach((item) => {
+          const place = `grid-row:${line + i};grid-column:${item.from + 1} / ${item.to + 2}`;
+          cells.push(item.dot
+            ? `<span class="cal-dot cal-dot--${item.dot}" role="cell" style="${place}" title="${esc(item.label)}">${item.dot}</span>`
+            : `<span class="cal-bar cal-bar--${item.tone}" role="cell" style="${place}" title="${esc(item.label)}">${esc(item.label)}</span>`);
+        }));
+        line += lanes.length;
+      });
+      // 지금 달 노란 열 + '지금 · 중순' 표시
+      cells.push(`<div class="cal-table__now" aria-hidden="true" style="grid-column:${(nowMonth - 1) * 3 + 2} / span 3;grid-row:1 / ${line}"><span>지금 · ${nowDekad}순</span></div>`);
+      els.table.innerHTML = cells.join('');
+      // 좁은 화면에서는 표를 지금 달 근처로 밀어 둠
+      const scroller = els.table.parentElement;
+      const nowColumn = els.table.querySelector('.cal-table__now');
+      scroller.scrollLeft = Math.max(0, nowColumn.offsetLeft - scroller.clientWidth / 2);
+    };
+
+    const renderUses = (cropData) => {
+      els.uses.innerHTML = usesOf(cropData).map((use) => `
+        <li class="cal-use">
+          <h3><span class="cal-dot cal-dot--${use.no}" aria-hidden="true">${use.no}</span>${esc(use.title)}</h3>
+          <p>${esc(use.desc)}</p>
+          <div class="cal-use__recipe">${use.recipe.map((text) => `<span>${highlight(text)}</span>`).join('')}</div>
+        </li>`).join('');
+      els.notes.innerHTML = [
+        ...(cropData.notes || []),
+        '지역과 작형에 따라 시기가 다를 수 있으니, 궁금한 점은 상담으로 확인하세요.',
+        '경엽 살포 시 모두싹딱풀을 섞으면 약흔이 줄고 약효가 높아집니다.',
+      ].map((note) => `<li>${esc(note)}</li>`).join('');
+    };
+
+    const render = () => {
+      const cropData = crop ? findCrop(crop) : data.crops[0];
+      allList.querySelectorAll('[data-crop]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.crop === cropData?.name)));
+      els.notice.hidden = Boolean(cropData);
+      els.body.hidden = !cropData;
+      if (!cropData) {
+        els.notice.innerHTML = noInfo(`${esc(crop)} 재배력`);
+        return;
+      }
+      const name = cropData.subtitle ? `${cropData.name}(${cropData.subtitle})` : cropData.name;
+      renderNow(cropData);
+      els.title.textContent = `${name} 연간 재배력`;
+      renderTable(cropData);
+      renderUses(cropData);
+      els.downloadTitle.textContent = `${name} 재배력 원본`;
+      els.download.href = cropData.image;
+      els.download.download = `${cropData.name} 재배력.png`;
+    };
+
+    // 위쪽 '전체 작물 보기': 재배력이 있는 작물을 분야별로
+    const renderAll = () => {
+      const groups = [...new Set(data.crops.map((c) => c.group))];
+      allButton.textContent = `전체 작물 ${data.crops.length}종 보기 ▾`;
+      allList.innerHTML = groups.map((group) => `
+        <div class="crop-all-list__group">
+          <strong>${esc(group)}</strong>
+          ${data.crops.filter((c) => c.group === group).map((c) => `<button type="button" class="crop-chip" aria-pressed="false" data-crop="${esc(c.name)}">${esc(c.name)}</button>`).join('')}
+        </div>`).join('');
+    };
+    const toggleAll = (open) => {
+      allList.hidden = !open;
+      allButton.setAttribute('aria-expanded', String(open));
+    };
+    allButton.addEventListener('click', () => toggleAll(allList.hidden));
+    allList.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-crop]');
+      if (!button) return;
+      selectCrop(button.dataset.crop);
+      toggleAll(false);
+    });
+
+    // '이 시기 병해충 보기': 병해충 검색에 작물 이름을 넣어 병해충 탭으로
+    els.pests.addEventListener('click', () => {
+      const form = document.querySelector('[data-pest-search]');
+      const cropData = findCrop(crop || '') || data.crops[0];
+      if (!form || !cropData) { location.hash = '#pests'; return; }
+      form.elements.q.value = cropData.name;
+      form.requestSubmit();
+    });
+
+    cropWatchers.push(() => { if (data.crops.length) render(); });
+
+    loadJson('data/calendar.json')
+      .then((json) => {
+        data = json;
+        els.dilution.innerHTML = `<dt>물 1말(20L) 기준</dt>${(data.dilution || []).map((d) => `<dd><b>${esc(d.rate)}</b> ${esc(d.amount)}</dd>`).join('')}`;
+        renderAll();
+        render();
       })
       .catch(() => {});
   })();
@@ -126,7 +377,8 @@
     };
     let issues = [];
     let index = 0;
-    let category = '전체';
+    // farm.html?pest=채소#pests 처럼 분야를 정해서 열 수 있음 (메인 '작물별 병해충 정보'에서 사용)
+    let category = new URLSearchParams(location.search).get('pest') || '전체';
     let query = '';  // 히어로 아래 병해충 검색어
     let expanded = false;  // 처음엔 카드 3개만, 더보기로 나머지 펼침
     const PREVIEW = 3;

@@ -1,0 +1,109 @@
+/* 회사소개 (company.html) */
+.page-company [hidden] { display: none !important; }
+
+/* 서브 히어로 배경 (공통 스타일은 common.css): 공장 사진을 줄여 '세상을 이롭게…' 문구와 '싹' 로고가 다 보이게.
+   원본에서 건물 위끝(세로 23%)부터 싹 로고 아래(66%)까지만 히어로 높이에 들어오도록 234%로 키우고 아래 현수막은 잘라냄. 건물이 글자와 덜 겹치게 오른쪽으로 150px 밀어 둠. 왼쪽 빈자리는 같은 사진에서 하늘만 잘라 낸 이미지(_Hero_Sky)로 채움 */
+.page-company .sub-hero::before { position: absolute; inset: 0; background: url("../images/company/_02_Company_Hero_Sky.jpg") center 70% / cover; content: ""; }
+.page-company .sub-hero__bg { right: -150px; bottom: -80%; width: auto; height: 234%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%); mask-image: linear-gradient(90deg, transparent, #000 12%); }
+.page-company .sub-hero::after { background: linear-gradient(90deg, rgb(22 38 30 / 62%) 0%, rgb(22 38 30 / 35%) 30%, rgb(22 38 30 / 0%) 45%); }
+@media (max-width: 640px) {
+  /* 좁은 화면: 건물을 가운데로 */
+  .page-company .sub-hero__bg { right: auto; left: 50%; transform: translateX(-50.6%); -webkit-mask-image: none; mask-image: none; }
+  .page-company .sub-hero::after { background: rgb(22 38 30 / 45%); }
+}
+
+/* 탭 */
+.company-tabs { border-bottom: 1px solid var(--c-line); background: #fff; }
+.company-tabs__inner { display: flex; justify-content: center; }
+.company-tabs__item { padding: 20px 32px 17px; border-bottom: 3px solid transparent; color: var(--c-text-muted); font: 700 18px/1.4 var(--f-title); }
+.company-tabs__item:hover { color: var(--c-forest); }
+.company-tabs__item[aria-selected="true"] { border-bottom-color: var(--c-gold); color: var(--c-forest); }
+
+.company-body { padding-top: 64px; padding-bottom: 112px; }
+.company-title { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--c-line); color: var(--c-forest); font: 700 32px/1.35 var(--f-title); }
+
+/* ① 인사말 */
+.greeting__headline { margin: 40px 0 48px; color: var(--c-text); font: 700 28px/1.5 var(--f-title); text-align: center; letter-spacing: -.01em; }
+.greeting__body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: start; gap: 56px; }
+.greeting__photo { overflow: hidden; margin: 0; border-radius: var(--radius); }
+.greeting__photo img { display: block; width: 100%; height: auto; }
+.greeting__text { display: grid; gap: 18px; color: var(--c-text-sub); font: 400 17px/1.85 var(--f-title); word-break: keep-all; }
+.greeting__accent { padding: 16px 20px; border-left: 4px solid var(--c-gold); border-radius: 0 8px 8px 0; background: #fbf3df; color: var(--c-text); font-weight: 500; }
+.greeting__thanks { margin-top: 8px; color: var(--c-text); }
+.greeting__sign { margin-top: 8px; color: var(--c-charcoal); font: 400 30px/1.4 'Nanum Brush Script', var(--f-title); text-align: right; }
+.greeting__sign strong { margin-left: 6px; font-size: 40px; font-weight: 400; }
+
+/* 비전: 인사말 위 두 문구 */
+.vision { margin-bottom: 64px; padding: 40px 24px; border-radius: var(--radius); background: var(--c-forest); color: #fff; text-align: center; }
+.vision__label { margin-bottom: 16px; color: var(--c-gold); font: 700 15px/1.4 var(--f-title); letter-spacing: .12em; }
+.vision__titles { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 48px; font: 800 34px/1.35 var(--f-title); letter-spacing: -.01em; }
+.vision__titles li + li { position: relative; }
+.vision__titles li + li::before { position: absolute; top: 50%; left: -28px; width: 8px; height: 8px; border-radius: 50%; background: var(--c-gold); content: ""; transform: translateY(-50%); }
+
+/* ② 회사 연혁 */
+.history__intro { margin: 32px 0 48px; text-align: center; }
+.history__lead { margin-bottom: 8px; color: var(--c-forest); font: 800 28px/1.45 var(--f-title); }
+.history__intro p:last-child { color: var(--c-text-sub); font: 400 18px/1.6 var(--f-title); }
+.history__body { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; gap: 56px; }
+.timeline { display: grid; gap: 8px; }
+.timeline__year { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 24px; padding: 28px 0; border-top: 1px solid var(--c-line); }
+.timeline__year:first-child { border-top: 0; padding-top: 0; }
+.timeline__year h3 { color: var(--c-forest); font: 800 28px/1.2 var(--f-title); }
+.timeline__year ul { display: grid; gap: 10px; }
+.timeline__year li { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 12px; color: var(--c-text-sub); font: 400 17px/1.6 var(--f-title); }
+.timeline__year b { color: var(--c-olive); font-weight: 700; }
+.history__photo { position: sticky; top: calc(var(--header-h) + 24px); overflow: hidden; margin: 0; border-radius: var(--radius); }
+.history__photo img { display: block; width: 100%; height: auto; }
+
+/* ③ 인증 · 특허 */
+.cert__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 32px; }
+.cert__group { padding: 28px; border: 1px solid var(--c-line); border-radius: var(--radius); background: #fff; }
+.cert__group h3 { margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--c-gold); color: var(--c-forest); font: 700 20px/1.4 var(--f-title); }
+.cert__group ul { display: grid; gap: 12px; }
+.cert__group li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 8px; color: var(--c-text-sub); font: 400 16px/1.6 var(--f-title); }
+.cert__group b { color: var(--c-olive); font-weight: 700; }
+.cert__photo { max-width: 420px; margin: 40px auto 0; text-align: center; }
+.cert__photo img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
+.cert__photo figcaption { margin-top: 10px; color: var(--c-text-muted); font: 400 15px/1.5 var(--f-title); }
+
+/* ④ 오시는 길 */
+.location__body { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); grid-template-rows: auto 1fr; gap: 20px 40px; margin-top: 32px; }
+.location__map { grid-row: 1 / 3; overflow: hidden; min-height: 420px; border: 1px solid var(--c-line); border-radius: var(--radius); background: var(--c-bg-soft); }
+.location__map iframe { display: block; width: 100%; height: 100%; min-height: 420px; border: 0; }
+.location__info { display: grid; gap: 4px; padding: 28px; border-radius: var(--radius); background: #fff; }
+.location__info div { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--c-line); font: 400 17px/1.5 var(--f-title); }
+.location__info div:last-child { border-bottom: 0; }
+.location__info dt { color: var(--c-forest); font-weight: 700; }
+.location__info dd { color: var(--c-text); }
+.location__info a:hover { color: var(--c-forest); text-decoration: underline; }
+.location__links { display: grid; align-content: start; gap: 10px; }
+.location__links a { padding: 14px 20px; border: 1px solid var(--c-forest); border-radius: 999px; color: var(--c-forest); font: 700 16px/1.2 var(--f-title); text-align: center; }
+.location__links a:hover, .location__links a:focus-visible { background: var(--c-forest); color: #fff; }
+
+@media (max-width: 900px) {
+  .cert__grid { grid-template-columns: 1fr; }
+  .location__body { grid-template-columns: 1fr; }
+  .location__map { grid-row: auto; min-height: 320px; }
+  .location__map iframe { min-height: 320px; }
+  .greeting__body, .history__body { grid-template-columns: 1fr; gap: 32px; }
+  .history__photo { position: static; max-width: 480px; }
+}
+
+@media (max-width: 640px) {
+  .company-tabs__inner { padding: 0; }
+  .company-tabs__item { flex: 1; padding: 14px 2px 11px; font-size: 14px; text-align: center; white-space: nowrap; }
+  .company-body { padding-top: 36px; padding-bottom: 72px; }
+  .company-title { font-size: 24px; }
+  .greeting__headline { margin: 24px 0 28px; font-size: 21px; }
+  .greeting__text { font-size: 16px; }
+  .greeting__sign { font-size: 26px; }
+  .greeting__sign strong { font-size: 34px; }
+  .vision { margin-bottom: 40px; padding: 28px 16px; }
+  .vision__titles { flex-direction: column; font-size: 23px; }
+  .vision__titles li + li::before { display: none; }
+  .history__lead { font-size: 21px; }
+  .history__intro p:last-child { font-size: 16px; }
+  .timeline__year { grid-template-columns: 1fr; gap: 12px; padding: 22px 0; }
+  .timeline__year h3 { font-size: 24px; }
+  .timeline__year li { grid-template-columns: 44px minmax(0, 1fr); font-size: 16px; }
+}

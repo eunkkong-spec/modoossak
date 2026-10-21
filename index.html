@@ -15,7 +15,8 @@
 <body class="page-main" id="top">
   <header class="site-header">
     <div class="site-header__inner">
-      <a class="brand" href="index.html" aria-label="나라바이오 홈"><img src="images/common/imgi_5_logo.png" alt="나라바이오"></a>
+      <a class="brand" href="index.html" aria-label="나라바이오 홈"><img class="brand__light" src="images/common/imgi_5_logo.png" alt="나라바이오"><img class="brand__dark" src="images/common/logo_color_transparent.png" alt=""></a>
+      <img class="header-mark" src="images/main/_07_Modussak_1.png" alt="모두싹">
       <nav class="primary-nav" id="primary-nav" aria-label="주 메뉴">
         <button type="button" class="primary-nav__item" aria-expanded="false" data-menu-index="0">회사소개</button>
         <button type="button" class="primary-nav__item" aria-expanded="false" data-menu-index="1">기술</button>
@@ -27,11 +28,11 @@
     </div>
     <nav class="mega-menu" id="sitemap-panel" aria-label="전체 사이트 메뉴" hidden>
       <div class="mega-menu__inner">
-        <section class="mega-menu__group" data-menu-group="0"><h2>회사소개</h2><a href="#technology">인사말 · 비전</a><a href="#technology">회사소개 · 연혁</a><a href="#technology-stats">인증 · 특허</a><a href="#news">오시는 길</a></section>
+        <section class="mega-menu__group" data-menu-group="0"><h2>회사소개</h2><a href="company.html#greeting">인사말 · 비전</a><a href="company.html#history">회사 연혁</a><a href="company.html#cert">인증 · 특허</a><a href="company.html#location">오시는 길</a></section>
         <section class="mega-menu__group" data-menu-group="1"><h2>기술</h2><a href="#technology">제독 유황이란</a><a href="#technology">현장 검증</a><a href="#technology-stats">저탄소 농업</a></section>
-        <section class="mega-menu__group" data-menu-group="2"><h2>제품</h2><a href="#products">전체 제품</a><a href="#products">전문 농가용</a><a href="#for-you">텃밭 입문용</a></section>
-        <section class="mega-menu__group" data-menu-group="3"><h2>영농정보</h2><a href="farm.html#weekly">주간농사정보</a><a href="farm.html#calendar">작물재배력</a><a href="farm.html">병해충 정보</a><a href="#stories">현장 재배 이야기</a></section>
-        <section class="mega-menu__group" data-menu-group="4"><h2>소식 · 고객지원</h2><a href="#news">공지 · 뉴스</a><a href="#stories">모두싹TV</a><a href="#news">대리점 찾기</a><a href="tel:15227008">상담 · FAQ</a></section>
+        <section class="mega-menu__group" data-menu-group="2"><h2>제품</h2><a href="product.html#all">전체 제품</a><a href="product.html#pro">전문 농가용</a><a href="product.html#garden">텃밭 입문용</a></section>
+        <section class="mega-menu__group" data-menu-group="3"><h2>영농정보</h2><a href="farm.html#weekly">주간농사정보</a><a href="farm.html#calendar">작물재배력</a><a href="farm.html">병해충 정보</a></section>
+        <section class="mega-menu__group" data-menu-group="4"><h2>소식 · 고객지원</h2><a href="#news">공지 · 뉴스</a><a href="tv.html">모두싹TV</a><a href="#news">대리점 찾기</a><a href="tel:15227008">상담 · FAQ</a></section>
       </div>
     </nav>
   </header>
@@ -67,9 +68,6 @@
       <a class="hero__scroll" href="#for-you">SCROLL <span>↓</span></a>
     </section>
 
-    <nav class="quick-nav" aria-label="빠른 메뉴"><a href="#products">제품<br>정보</a><a href="farm.html">병해충<br>정보</a><a href="farm.html#weekly">주간농사<br>정보</a><a href="#stories">모두싹<br>TV</a><a href="#news">대리점<br>찾기</a><a class="quick-nav__top" href="#top">TOP</a></nav>
-    <img class="hero__brand-mark" src="images/main/_07_Modussak_1.png" alt="모두싹">
-
     <section class="section for-you" id="for-you">
       <div class="inner">
         <div class="section-heading"><p class="section-eyebrow">FOR YOU</p><h2>전문 영농인가요, 가정 텃밭인가요?</h2><p>농사 규모와 목적에 맞는 제품과 정보를 바로 안내합니다.</p></div>
@@ -83,11 +81,11 @@
     <section class="section pest-shortcuts" id="pests">
       <div class="inner"><div class="section-heading section-heading--center"><p class="section-eyebrow">PEST INFO</p><h2>작물별 병해충 정보</h2></div>
         <div class="crop-grid">
-          <a href="farm.html?crop=김장채소"><span class="crop-grid__thumb crop-grid__thumb--ringed"><img src="images/main/_01_Ring.png" alt=""></span><span>김장채소</span></a>
-          <a href="farm.html?crop=열매채소"><span class="crop-grid__thumb crop-grid__thumb--ringed"><img src="images/main/_01_Ring-1.png" alt=""></span><span>열매채소</span></a>
-          <a href="farm.html?crop=과수"><span class="crop-grid__thumb crop-grid__thumb--ringed"><img src="images/main/_01_Ring-2.png" alt=""></span><span>과수</span></a>
-          <a href="farm.html?crop=뿌리·구근채소"><span class="crop-grid__thumb"><img src="images/main/_01_Ellipse.png" alt=""></span><span>뿌리 · 구근채소</span></a>
-          <a href="farm.html?crop=식량작물"><span class="crop-grid__thumb"><img src="images/main/_01_Ellipse-1.png" alt=""></span><span>식량작물</span></a>
+          <a href="farm.html?pest=채소#pests"><span class="crop-grid__thumb crop-grid__thumb--ringed"><img src="images/main/_01_Ring.png" alt=""></span><span>김장채소</span></a>
+          <a href="farm.html?pest=채소#pests"><span class="crop-grid__thumb crop-grid__thumb--ringed"><img src="images/main/_01_Ring-1.png" alt=""></span><span>열매채소</span></a>
+          <a href="farm.html?pest=과수#pests"><span class="crop-grid__thumb crop-grid__thumb--ringed"><img src="images/main/_01_Ring-2.png" alt=""></span><span>과수</span></a>
+          <a href="farm.html?pest=채소#pests"><span class="crop-grid__thumb"><img src="images/main/_01_Ellipse.png" alt=""></span><span>뿌리 · 구근채소</span></a>
+          <a href="farm.html?pest=식량작물#pests"><span class="crop-grid__thumb"><img src="images/main/_01_Ellipse-1.png" alt=""></span><span>식량작물</span></a>
         </div>
       </div>
     </section>
@@ -101,8 +99,8 @@
     <section class="section products-section" id="products">
       <div class="inner"><div class="section-heading"><p class="section-eyebrow">PRODUCTS</p><h2>목적에 맞는 제품을 고르세요</h2></div>
         <div class="product-grid">
-          <a class="product-card" href="farm.html"><img src="images/main/_01_Image_Pests_Diseases_Product.png" alt="배추밭의 병해충 피해 잎과 모두싹 균 제품"><div><p class="product-card__category">병해충 관리용 라인</p><h3>모두싹</h3><p>작물별 사용법과 시험결과를 함께 확인하세요.</p></div></a>
-          <a class="product-card" href="farm.html"><img src="images/main/_01_Image_Pepper_Field_Modussak.png" alt="고추밭과 모두싹 라인 제품"><div><p class="product-card__category product-card__category--brown">토양과 작물에도 보약을</p><h3>모두싹 라인</h3><p>토양과 작물에 영양을 주어 작물을 튼튼하게 해줍니다.</p></div></a>
+          <a class="product-card" href="product.html"><img src="images/main/_01_Image_Pests_Diseases_Product.png" alt="배추밭의 병해충 피해 잎과 모두싹 균 제품"><div><p class="product-card__category">병해충 관리용 라인</p><h3>모두싹</h3><p>작물별 사용법과 시험결과를 함께 확인하세요.</p></div></a>
+          <a class="product-card" href="product.html"><img src="images/main/_01_Image_Pepper_Field_Modussak.png" alt="고추밭과 모두싹 라인 제품"><div><p class="product-card__category product-card__category--brown">토양과 작물에도 보약을</p><h3>모두싹 라인</h3><p>토양과 작물에 영양을 주어 작물을 튼튼하게 해줍니다.</p></div></a>
         </div>
       </div>
     </section>
@@ -118,7 +116,7 @@
     <section class="contact-banner"><div class="inner"><div><h2>가까운 대리점에서 바로 상담하세요</h2><p>제품 선택부터 사용방법까지 전문 상담원이 안내합니다.</p></div><div><a href="#news">대리점 찾기</a><a href="tel:15227008">☎ 공식 상담 1522-7008</a></div></div></section>
   </main>
 
-  <footer class="site-footer"><div class="inner footer-main"><a class="brand" href="index.html" aria-label="나라바이오 홈"><img src="images/common/imgi_5_logo.png" alt="나라바이오"></a><div class="footer-info"><p><span><b>상호명</b>나라바이오 주식회사</span><span><b>대표자</b>김경수</span><span><b>사업자등록번호</b>317-81-08010</span></p><p><span><b>주소</b>전라북도 군산시 서수면 231</span><span><b>이메일</b><a href="mailto:narabio@narabio.com">narabio@narabio.com</a></span></p></div><div class="footer-cs"><span>고객센터</span><a class="footer-phone" href="tel:15227008">1522-7008</a><p>평일 09:00–18:00</p></div></div><div class="footer-bottom">이용약관 · 개인정보처리방침 · 찾아오시는 길 <span>© NARABIO. All rights reserved.</span></div></footer>
+  <footer class="site-footer"><div class="inner footer-main"><a class="brand" href="index.html" aria-label="나라바이오 홈"><img src="images/common/imgi_5_logo.png" alt="나라바이오"></a><div class="footer-info"><p><span><b>상호명</b>나라바이오 주식회사</span><span><b>대표자</b>김일호</span><span><b>사업자등록번호</b>197-88-00980</span><span><b>통신판매신고번호</b>제 2019-전주덕진-0259호</span></p><p><span><b>주소</b>전라북도 군산시 서해로 237</span><span><b>이메일</b><a href="mailto:narabio@narabio.com">narabio@narabio.com</a></span></p></div><div class="footer-cs"><span>고객센터</span><a class="footer-phone" href="tel:15227008">1522-7008</a><p>평일 09:00–18:00</p></div></div><div class="footer-bottom">이용약관 · 개인정보처리방침 · 찾아오시는 길 <span>© NARABIO. All rights reserved.</span></div></footer>
 
   <nav class="mobile-bottom-nav" aria-label="모바일 바로가기"><a href="farm.html">영농정보</a><a href="#products">제품</a><a href="#news">소식</a><a href="tel:15227008">상담</a></nav>
 

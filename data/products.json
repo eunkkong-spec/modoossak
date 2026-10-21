@@ -1,0 +1,70 @@
+{
+  "_comment": "제품 목록. summary는 재배력 그림(images/calendar)과 메인 카드에 적힌 내용에서만 가져옴 — 성분·용량·가격은 받는 대로 추가. match는 data/calendar.json 사용법에서 이 제품을 찾는 정규식. audience: pro 전문 농가용, garden 텃밭 입문용",
+  "groups": ["기본 제품", "병해충 관리", "영양 · 생육", "토양 · 보조", "텃밭 입문"],
+  "products": [
+    {
+      "id": "modussak", "name": "모두싹", "group": "기본 제품", "audience": "pro",
+      "image": "images/product/_04_Product_Modussak.png", "fit": "contain",
+      "summary": "종자 소독부터 생육기 살포까지, 작물재배력 대부분에 들어가는 기본 제품입니다.",
+      "match": "(?<!4종복합\\s?)모두싹(?!균|충|칼마|아미플|딱풀)"
+    },
+    {
+      "id": "complex4", "name": "4종복합 모두싹", "group": "기본 제품", "audience": "pro",
+      "image": "images/product/_04_Product_Complex4.jpg", "alt": "이삭이 팬 벼",
+      "summary": "생육기 · 비대기 엽면 시비에 모두싹칼마, 모두싹아미플과 섞어 씁니다.",
+      "match": "4종복합"
+    },
+    {
+      "id": "organic", "name": "유기농 모두싹", "group": "기본 제품", "audience": "pro",
+      "image": "images/product/_04_Product_Organic.png", "fit": "contain",
+      "summary": "토양과 작물에 영양을 주어 작물을 튼튼하게 해줍니다."
+    },
+    {
+      "id": "gyun", "name": "모두싹균", "group": "병해충 관리", "audience": "pro",
+      "image": "images/product/_04_Product_Gyun.png", "alt": "병해충 피해를 입은 배추밭과 모두싹균",
+      "summary": "잿빛곰팡이 · 균핵 · 탄저 · 뿌리썩음 · 흰가루 등 병을 막는 데 씁니다. 미생물 대사물질이라 약해 걱정이 없습니다.",
+      "match": "모두싹균(?!산)"
+    },
+    {
+      "id": "gyunsan", "name": "모두싹균산", "group": "병해충 관리", "audience": "pro",
+      "image": "images/product/_04_Product_GyunSan.jpg", "alt": "푸른 벼 잎",
+      "summary": "벼 육묘상 관리와 이삭거름 시기 방제에 모두싹과 함께 씁니다.",
+      "match": "모두싹균산"
+    },
+    {
+      "id": "chung", "name": "모두싹충", "group": "병해충 관리", "audience": "pro",
+      "image": "images/product/_04_Product_Chung.jpg", "alt": "딸기 포기",
+      "summary": "선충 · 진딧물 · 응애 등 해충을 잡을 때 섞어 씁니다.",
+      "match": "모두싹충"
+    },
+    {
+      "id": "calma", "name": "모두싹칼마", "group": "영양 · 생육", "audience": "pro",
+      "image": "images/product/_04_Product_Calma.jpg", "alt": "방울토마토 송이",
+      "summary": "칼슘 · 마그네슘 결핍을 관리하고, 고온기에 작물 조직을 단단하게 합니다.",
+      "match": "모두싹칼마"
+    },
+    {
+      "id": "amiple", "name": "모두싹아미플", "group": "영양 · 생육", "audience": "pro",
+      "image": "images/product/_04_Product_Amiple.jpg", "alt": "이끼 위의 인삼 뿌리",
+      "summary": "뿌리 활착을 돕고, 냉해를 막거나 회복할 때 씁니다.",
+      "match": "모두싹아미플"
+    },
+    {
+      "id": "ttangbuja", "name": "땅부자", "group": "토양 · 보조", "audience": "pro",
+      "image": "images/product/_04_Product_Ttangbuja.jpg", "alt": "밭에서 캔 감자",
+      "summary": "밭을 만들 때 뿌리는 토양 개량 제품입니다. 보통 50~100평에 10kg 1포를 씁니다.",
+      "match": "땅부자"
+    },
+    {
+      "id": "ttakpul", "name": "모두싹딱풀", "group": "토양 · 보조", "audience": "pro",
+      "image": "images/product/_04_Product_Ttakpul.jpg", "alt": "상추밭 이랑",
+      "summary": "경엽 살포 때 섞으면 약흔이 줄고 약효가 높아집니다.",
+      "match": "모두싹딱풀"
+    },
+    {
+      "id": "wangjalkeo", "name": "왕잘커", "group": "텃밭 입문", "audience": "garden",
+      "image": "images/product/_04_Product_Wangjalkeo.png", "fit": "contain",
+      "summary": "처음 텃밭을 가꾸는 분도 쉽게 고를 수 있어요."
+    }
+  ]
+}

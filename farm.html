@@ -28,11 +28,11 @@
     </div>
     <nav class="mega-menu" id="sitemap-panel" aria-label="전체 사이트 메뉴" hidden>
       <div class="mega-menu__inner">
-        <section class="mega-menu__group" data-menu-group="0"><h2>회사소개</h2><a href="index.html#technology">인사말 · 비전</a><a href="index.html#technology">회사소개 · 연혁</a><a href="index.html#technology-stats">인증 · 특허</a><a href="index.html#news">오시는 길</a></section>
+        <section class="mega-menu__group" data-menu-group="0"><h2>회사소개</h2><a href="company.html#greeting">인사말 · 비전</a><a href="company.html#history">회사 연혁</a><a href="company.html#cert">인증 · 특허</a><a href="company.html#location">오시는 길</a></section>
         <section class="mega-menu__group" data-menu-group="1"><h2>기술</h2><a href="index.html#technology">제독 유황이란</a><a href="index.html#technology">현장 검증</a><a href="index.html#technology-stats">저탄소 농업</a></section>
-        <section class="mega-menu__group" data-menu-group="2"><h2>제품</h2><a href="index.html#products">전체 제품</a><a href="index.html#products">전문 농가용</a><a href="index.html#for-you">텃밭 입문용</a></section>
-        <section class="mega-menu__group" data-menu-group="3"><h2>영농정보</h2><a href="farm.html#weekly">주간농사정보</a><a href="farm.html#calendar">작물재배력</a><a href="farm.html#pests">병해충 정보</a><a href="index.html#stories">현장 재배 이야기</a></section>
-        <section class="mega-menu__group" data-menu-group="4"><h2>소식 · 고객지원</h2><a href="index.html#news">공지 · 뉴스</a><a href="index.html#stories">모두싹TV</a><a href="index.html#news">대리점 찾기</a><a href="tel:15227008">상담 · FAQ</a></section>
+        <section class="mega-menu__group" data-menu-group="2"><h2>제품</h2><a href="product.html#all">전체 제품</a><a href="product.html#pro">전문 농가용</a><a href="product.html#garden">텃밭 입문용</a></section>
+        <section class="mega-menu__group" data-menu-group="3"><h2>영농정보</h2><a href="farm.html#weekly">주간농사정보</a><a href="farm.html#calendar">작물재배력</a><a href="farm.html#pests">병해충 정보</a></section>
+        <section class="mega-menu__group" data-menu-group="4"><h2>소식 · 고객지원</h2><a href="index.html#news">공지 · 뉴스</a><a href="tv.html">모두싹TV</a><a href="index.html#news">대리점 찾기</a><a href="tel:15227008">상담 · FAQ</a></section>
       </div>
     </nav>
   </header>
@@ -60,8 +60,28 @@
     </nav>
 
     <div class="inner farm-body">
-      <!-- 병해충 검색 + 사진 상담: 검색하면 병해충 정보 탭으로 이동 -->
-      <section class="crop-select" aria-label="병해충 검색">
+      <!-- 작물 선택: 주간농사정보 · 작물재배력 탭에서 사용 -->
+      <section class="crop-select crop-select--bar" aria-label="작물 선택" data-tab-for="weekly calendar">
+        <form class="crop-search" role="search" action="farm.html" data-crop-search>
+          <label class="blind" for="crop-search-input">작물 이름으로 검색</label>
+          <input id="crop-search-input" type="search" name="crop" placeholder="작물 이름으로 검색 (예: 감자, 딸기)">
+          <button type="submit" class="crop-search__btn">검색</button>
+        </form>
+        <div class="crop-chips">
+          <strong class="crop-chips__label">주력 작물</strong>
+          <button type="button" class="crop-chip" aria-pressed="true" data-crop="고추">고추</button>
+          <button type="button" class="crop-chip" aria-pressed="false" data-crop="마늘">마늘</button>
+          <button type="button" class="crop-chip" aria-pressed="false" data-crop="배추">배추</button>
+          <button type="button" class="crop-chip" aria-pressed="false" data-crop="과수">과수</button>
+          <button type="button" class="crop-chip" aria-pressed="false" data-crop="벼">벼</button>
+        </div>
+        <button type="button" class="crop-all" aria-expanded="false" aria-controls="crop-all-list" data-crop-all>전체 작물 보기 ▾</button>
+        <!-- 재배력이 있는 작물 전체: data/calendar.json에서 그림 -->
+        <div class="crop-all-list" id="crop-all-list" data-crop-all-list hidden></div>
+      </section>
+
+      <!-- 병해충 검색 + 사진 상담: 병해충 정보 탭에서 사용 -->
+      <section class="crop-select" aria-label="병해충 검색" data-tab-for="pests" hidden>
         <form class="crop-search" role="search" action="farm.html#pests" data-pest-search>
           <label class="blind" for="pest-search-input">병해충 이름으로 검색</label>
           <input id="pest-search-input" type="search" name="q" placeholder="병해충 이름으로 검색 (예: 노균병, 총채벌레)">
@@ -107,7 +127,7 @@
           </div>
 
           <div class="field-board">
-            <p class="field-board__notice" data-weekly-notice>이번 주 주간농사정보에 없는 작물은 작물재배력을 확인하세요. <a href="#calendar">작물재배력 보기 →</a></p>
+            <p class="field-board__notice" data-weekly-notice>이번 주 고추 농작업 정보가 없습니다. 궁금하신 작물이 있으시면 상담전화나 문자 주시면 상세히 상담해드리겠습니다. <a href="tel:15227008">☎ 1522-7008</a></p>
             <div data-weekly-fields>
               <section class="field-row">
                 <h4 class="field-row__tag field-row__tag--veg">채소</h4>
@@ -157,9 +177,52 @@
         </section>
       </section>
 
-      <!-- ② 작물재배력 : data/calendar.json (다음 단계에서 작업) -->
+      <!-- ② 작물재배력 : data/calendar.json (images/calendar 작물별 재배력 그림) -->
       <section class="farm-panel calendar" id="calendar" role="tabpanel" aria-labelledby="tab-calendar" hidden>
-        <h2 class="farm-title">작물재배력</h2>
+        <p class="field-board__notice" data-calendar-notice hidden></p>
+
+        <div class="calendar-body" data-calendar-body>
+          <!-- 지금 시기: 오늘 날짜가 걸린 생육 단계 · 작업 · 기상 · 병해충을 모아 보여줌 -->
+          <section class="cal-now" aria-labelledby="cal-now-title">
+            <div class="cal-now__text">
+              <p class="cal-now__tag" data-calendar-now-tag>지금 시기</p>
+              <h2 id="cal-now-title" class="cal-now__title" data-calendar-now-title>고추 재배력</h2>
+              <ul class="cal-now__points" data-calendar-now-points></ul>
+            </div>
+            <div class="cal-now__actions">
+              <button type="button" class="cal-now__btn cal-now__btn--fill" data-calendar-pests>이 시기 병해충 보기 →</button>
+              <a class="cal-now__btn" href="#weekly">이번 주 농사 보기 →</a>
+            </div>
+            <img class="cal-now__photo" src="" alt="" data-calendar-photo hidden>
+          </section>
+
+          <!-- 연간 재배력 표: 월을 상·중·하순 36칸으로 나눔 -->
+          <section class="cal-year" aria-labelledby="cal-year-title">
+            <h2 id="cal-year-title" class="cal-heading" data-calendar-title>고추 연간 재배력</h2>
+            <p class="farm-title-desc">월을 상 · 중 · 하순으로 나눈 주요 농작업과 모두싹 사용 시기입니다. 노란 열이 지금 시기입니다.</p>
+            <div class="cal-table-scroll">
+              <div class="cal-table" role="table" aria-labelledby="cal-year-title" data-calendar-table></div>
+            </div>
+          </section>
+
+          <!-- 시기별 모두싹 사용법: 표의 ①~⑥ 번호와 같음 -->
+          <section class="cal-uses" aria-labelledby="cal-uses-title">
+            <h2 id="cal-uses-title" class="cal-heading cal-heading--plain">시기별 모두싹 사용법</h2>
+            <p class="farm-title-desc">표의 숫자 ①~⑥ 시기에 맞춰 사용하세요. 희석 배수는 물 1말(20L) 기준입니다.</p>
+            <ol class="cal-uses__grid" data-calendar-uses></ol>
+            <dl class="cal-dilution" data-calendar-dilution></dl>
+            <ul class="farm-note" data-calendar-notes></ul>
+          </section>
+
+          <!-- 원본 재배력 그림 내려받기 -->
+          <div class="cal-download">
+            <div>
+              <strong data-calendar-download-title>고추 재배력 원본</strong>
+              <p>인쇄하거나 휴대폰에 저장해 두고 보세요.</p>
+            </div>
+            <a class="farm-outline-btn" href="images/calendar/고추.png" download="고추 재배력.png" data-calendar-download>원본 파일 내려받기 ↓</a>
+          </div>
+        </div>
       </section>
 
       <!-- ③ 병해충 정보 : data/pest.json (농촌진흥청 병해충 발생정보 API → 매달 자동 갱신) -->
@@ -214,7 +277,7 @@
     </div>
   </main>
 
-  <footer class="site-footer"><div class="inner footer-main"><a class="brand" href="index.html" aria-label="나라바이오 홈"><img src="images/common/imgi_5_logo.png" alt="나라바이오"></a><div class="footer-info"><p><span><b>상호명</b>나라바이오 주식회사</span><span><b>대표자</b>김경수</span><span><b>사업자등록번호</b>317-81-08010</span></p><p><span><b>주소</b>전라북도 군산시 서수면 231</span><span><b>이메일</b><a href="mailto:narabio@narabio.com">narabio@narabio.com</a></span></p></div><div class="footer-cs"><span>고객센터</span><a class="footer-phone" href="tel:15227008">1522-7008</a><p>평일 09:00–18:00</p></div></div><div class="footer-bottom">이용약관 · 개인정보처리방침 · 찾아오시는 길 <span>© NARABIO. All rights reserved.</span></div></footer>
+  <footer class="site-footer"><div class="inner footer-main"><a class="brand" href="index.html" aria-label="나라바이오 홈"><img src="images/common/imgi_5_logo.png" alt="나라바이오"></a><div class="footer-info"><p><span><b>상호명</b>나라바이오 주식회사</span><span><b>대표자</b>김일호</span><span><b>사업자등록번호</b>197-88-00980</span><span><b>통신판매신고번호</b>제 2019-전주덕진-0259호</span></p><p><span><b>주소</b>전라북도 군산시 서해로 237</span><span><b>이메일</b><a href="mailto:narabio@narabio.com">narabio@narabio.com</a></span></p></div><div class="footer-cs"><span>고객센터</span><a class="footer-phone" href="tel:15227008">1522-7008</a><p>평일 09:00–18:00</p></div></div><div class="footer-bottom">이용약관 · 개인정보처리방침 · 찾아오시는 길 <span>© NARABIO. All rights reserved.</span></div></footer>
 
   <script src="js/common.js"></script>
   <script src="js/farm.js"></script>
