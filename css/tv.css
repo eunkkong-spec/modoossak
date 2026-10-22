@@ -15,11 +15,11 @@
 .tv-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 64px; padding-top: 48px; padding-bottom: 96px; }
 
 /* 플레이어 */
-/* 플레이어: 차분한 올리브 바탕 (사이트 보조색 --c-olive) */
-.tv-player { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); align-items: center; gap: 40px; padding: 8px; border-radius: var(--radius); background: linear-gradient(135deg, #7f9a66 0%, var(--c-olive) 100%); color: #fff; }
-/* 올리브 바탕은 영상 둘레에 얇은 테두리처럼만 보이게 (padding 8px) */
-.tv-player__info { padding: 16px 32px 16px 0; }
-.tv-player__frame { overflow: hidden; aspect-ratio: 16 / 9; border-radius: 6px; background: #000; }
+/* 플레이어: 다른 서브페이지 강조 박스(영농정보 호 이동, 회사소개 비전, 제품 상담 배너)와 같은 진한 녹색 바탕 (--c-forest) */
+.tv-player { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); align-items: center; gap: 40px; overflow: hidden; padding: 0; border-radius: var(--radius); background: var(--c-forest); color: #fff; }
+/* 영상 둘레는 얇은 검정 테두리(3px)만, 녹색 바탕은 오른쪽 글 영역에만 */
+.tv-player__info { padding: 24px 32px 24px 0; }
+.tv-player__frame { overflow: hidden; aspect-ratio: 16 / 9; border: 3px solid #000; border-radius: var(--radius) 0 0 var(--radius); background: #000; }
 .tv-player__frame iframe { display: block; width: 100%; height: 100%; border: 0; }
 .tv-player__label { color: #f6e3a8; font: 700 15px/1.4 var(--f-title); }
 .tv-player__info h2 { margin: 10px 0 24px; color: #fff; font: 700 24px/1.45 var(--f-title); word-break: keep-all; }
@@ -66,8 +66,8 @@
   .tv-player__logo { height: 40px; }
   .tv-list__title img { height: 32px; }
   .tv-body { gap: 40px; padding-top: 24px; padding-bottom: 64px; }
-  .tv-player { padding: 6px; }
-  .tv-player__info { padding: 4px 14px 16px; }
+  .tv-player__frame { border-radius: var(--radius) var(--radius) 0 0; }
+  .tv-player__info { padding: 4px 16px 20px; }
   .tv-player__info h2 { margin-bottom: 16px; font-size: 19px; }
   .tv-list__title { font-size: 22px; }
   .tv-grid { grid-template-columns: 1fr; }
