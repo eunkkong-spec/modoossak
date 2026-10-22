@@ -78,3 +78,18 @@
 .news-row.is-pinned { background: #fbf6e7; }
 .news-row.is-pinned:hover { background: #f6eed5; }
 .news-row__pin { margin-right: 8px; padding: 1px 7px; border-radius: 4px; background: var(--c-forest); color: #fff; font: 700 12px/1.5 var(--f-title); vertical-align: 2px; }
+/* 본문이 있는 글: 펼쳐 보기 */
+.news-post > summary { cursor: pointer; list-style: none; }
+.news-post > summary::-webkit-details-marker { display: none; }
+.news-post__toggle { display: inline-block; margin-left: 6px; font-style: normal; transition: transform .2s ease; }
+.news-post[open] .news-post__toggle { transform: rotate(180deg); }
+.news-post[open] > summary { background: #f6f4ed; }
+.news-post__body { display: grid; gap: 12px; padding: 8px 20px 28px calc(112px + 36px); color: var(--c-text-sub); font: 400 17px/1.8 var(--f-title); }
+.news-post__video { display: inline-flex; width: fit-content; align-items: center; gap: 14px; margin-top: 4px; padding: 8px 18px 8px 8px; border: 1px solid var(--c-line); border-radius: 10px; background: #fff; color: #cf1015; font: 700 15px/1.4 var(--f-title); }
+.news-post__video img { width: 120px; height: 68px; border-radius: 6px; object-fit: cover; }
+.news-post__video:hover { border-color: #cf1015; }
+.news-post__footer { color: var(--c-forest); font-weight: 700; }
+@media (max-width: 640px) {
+  .news-post__body { padding: 4px 12px 22px; font-size: 16px; }
+  .news-post__video img { width: 96px; height: 54px; }
+}

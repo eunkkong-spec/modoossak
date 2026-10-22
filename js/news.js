@@ -59,6 +59,26 @@
     els.count.textContent = query ? `'${query}' 검색 결과 ${found.length}건` : `전체 ${found.length}건`;
     els.list.innerHTML = found.length ? found.slice(0, shown).map((post) => {
       const external = /^https?:/.test(post.link);
+      // 본문(body)이 있는 글: 누르면 아래로 펼쳐져 내용 + 영상(youtube) 보기
+      if (post.body) {
+        const yt = post.youtube || '';
+        return `
+      <li>
+        <details class="news-post"${post.open ? ' open' : ''}>
+          <summary class="news-row${post.pinned ? ' is-pinned' : ''}">
+            <span class="news-row__cat news-row__cat--${CATEGORIES.indexOf(post.category)}">${esc(post.category)}</span>
+            <span class="news-row__title">${post.pinned ? '<b class="news-row__pin">📌 고정</b>' : ''}${esc(post.title)}${isNew(post.date) ? '<b class="news-row__new">NEW</b>' : ''}</span>
+            <span class="news-row__meta"><time datetime="${esc(post.date)}">${dateLabel(post.date)}</time> <i class="news-post__toggle" aria-hidden="true">▾</i></span>
+          </summary>
+          <div class="news-post__body">
+            ${post.body.map((p) => `<p>${esc(p)}</p>`).join('')}
+            ${yt ? `<a class="news-post__video" href="https://www.youtube.com/shorts/${esc(yt)}" target="_blank" rel="noopener">
+              <img src="https://i.ytimg.com/vi/${esc(yt)}/hqdefault.jpg" alt="" loading="lazy"><span>▶ 현장 영상 보기 (유튜브 쇼츠) ↗</span></a>` : ''}
+            ${post.footer ? `<p class="news-post__footer">${esc(post.footer)}</p>` : ''}
+          </div>
+        </details>
+      </li>`;
+      }
       return `
       <li>
         <a class="news-row${post.pinned ? ' is-pinned' : ''}" href="${esc(post.link)}"${external ? ' target="_blank" rel="noopener"' : ''}>

@@ -1,9 +1,21 @@
 {
-  "_comment": "공지 · 뉴스 게시판에 직접 쓰는 글. 주간농사정보·병해충 발생정보·모두싹TV 영상은 data/weekly.json, pest.json, tv.json에서 자동으로 합쳐서 보여줌(js/news.js). date는 'YYYY-MM-DD' 또는 날짜를 모르면 'YYYY-MM'. category: 공지 / 회사 소식 / 방송 · 홈쇼핑 / 영농정보 / 모두싹TV. 회사 소식은 회사 연혁(data/txt/회사연혁_텍스트.txt) 원문 그대로. pinned: 여기 적은 링크의 글은 분류·날짜와 상관없이 게시판 맨 위에 고정(📌)",
+  "_comment": "공지 · 뉴스 게시판에 직접 쓰는 글. 주간농사정보·병해충 발생정보·모두싹TV 영상은 data/weekly.json, pest.json, tv.json에서 자동으로 합쳐서 보여줌(js/news.js). date는 'YYYY-MM-DD' 또는 날짜를 모르면 'YYYY-MM'. category: 공지 / 회사 소식 / 방송 · 홈쇼핑 / 영농정보 / 모두싹TV. 회사 소식은 회사 연혁(data/txt/회사연혁_텍스트.txt) 원문 그대로. pinned: 여기 적은 링크의 글은 분류·날짜와 상관없이 게시판 맨 위에 고정(📌). body(문단 배열)가 있는 글은 누르면 펼쳐져 본문을 보여줌, youtube(영상 ID)·footer(끝 문구)는 선택",
   "pinned": [
     "https://www.youtube.com/watch?v=QjLZZW0yGRQ"
   ],
   "posts": [
+    {
+      "date": "2026-10-22",
+      "category": "회사 소식",
+      "title": "송미령 농림부 장관의 모두싹 사과 시범농가(함양) 방문 현장",
+      "body": [
+        "송미령 농림부 장관이 모두싹 사과 시범농가(함양)를 방문하셔서 농가에 아낌없는 격려를 하셨습니다.",
+        "나라바이오 대표와의 면담에서 가뭄 · 고온 스트레스 효과에 대한 네이처 논문을 근거로 설명드렸습니다."
+      ],
+      "youtube": "SQJASFc2kRU",
+      "footer": "곧 편집 영상을 올려드리겠습니다. 많은 시청 바랍니다.",
+      "link": "news.html#notice"
+    },
     {
       "date": "2022-05",
       "category": "회사 소식",
