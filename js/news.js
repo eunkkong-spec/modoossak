@@ -37,8 +37,10 @@
       category: v.category === '방송 · 홈쇼핑' ? '방송 · 홈쇼핑' : v.category === '제품 · 회사 소식' ? '회사 소식' : '모두싹TV',
       title: v.title, link: `https://www.youtube.com/watch?v=${v.id}`, video: true,
     }));
-    // 공지는 맨 위에 고정, 나머지는 최신순
-    return list.sort((a, b) => (b.category === '공지') - (a.category === '공지') || b.date.localeCompare(a.date));
+    // news.json의 pinned(링크)는 맨 위 고정 → 공지 → 나머지 최신순
+    const pinned = news?.pinned || [];
+    list.forEach((post) => { post.pinned = pinned.includes(post.link); });
+    return list.sort((a, b) => (b.pinned - a.pinned) || (b.category === '공지') - (a.category === '공지') || b.date.localeCompare(a.date));
   };
 
   const matches = (post) => (category === '전체' || post.category === category)
@@ -59,9 +61,9 @@
       const external = /^https?:/.test(post.link);
       return `
       <li>
-        <a class="news-row" href="${esc(post.link)}"${external ? ' target="_blank" rel="noopener"' : ''}>
+        <a class="news-row${post.pinned ? ' is-pinned' : ''}" href="${esc(post.link)}"${external ? ' target="_blank" rel="noopener"' : ''}>
           <span class="news-row__cat news-row__cat--${CATEGORIES.indexOf(post.category)}">${esc(post.category)}</span>
-          <span class="news-row__title">${esc(post.title)}${isNew(post.date) ? '<b class="news-row__new">NEW</b>' : ''}</span>
+          <span class="news-row__title">${post.pinned ? '<b class="news-row__pin">📌 고정</b>' : ''}${esc(post.title)}${isNew(post.date) ? '<b class="news-row__new">NEW</b>' : ''}</span>
           <span class="news-row__meta">${post.video ? '▶ 영상 · ' : ''}<time datetime="${esc(post.date)}">${dateLabel(post.date)}</time>${external ? ' ↗' : ''}</span>
         </a>
       </li>`;

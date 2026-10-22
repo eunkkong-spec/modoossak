@@ -74,3 +74,7 @@
   .news-row__meta { grid-row: 1; grid-column: 2; font-size: 13px; }
   .news-row__title { grid-column: 1 / -1; font-size: 16px; white-space: normal; }
 }
+/* 맨 위 고정 글 (news.json pinned) */
+.news-row.is-pinned { background: #fbf6e7; }
+.news-row.is-pinned:hover { background: #f6eed5; }
+.news-row__pin { margin-right: 8px; padding: 1px 7px; border-radius: 4px; background: var(--c-forest); color: #fff; font: 700 12px/1.5 var(--f-title); vertical-align: 2px; }
