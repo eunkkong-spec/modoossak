@@ -32,13 +32,14 @@
     const name = new RegExp(product.match || '$^', 'g');
     return `
       <article class="product-item" id="${esc(product.id)}">
-        <figure class="product-item__photo${product.fit === 'contain' ? ' is-contain' : ''}">
+        <figure class="product-item__photo"${product.bg ? ` style="background-image: url('${esc(product.bg)}')"` : ''}>
           <img src="${esc(product.image)}" alt="${esc(product.alt || product.name)}" loading="lazy">
         </figure>
         <div class="product-item__body">
           <p class="product-item__group">${esc(product.group)}</p>
           <h3>${esc(product.name)}</h3>
-          <p class="product-item__summary">${esc(product.summary)}</p>
+          ${product.tagline ? `<p class="product-item__tagline">${esc(product.tagline)}</p>` : ''}
+          ${product.summary ? `<p class="product-item__summary">${esc(product.summary)}</p>` : ''}
           ${crops.length ? `
           <div class="product-item__crops">
             <strong>재배력에서 쓰는 작물</strong>
