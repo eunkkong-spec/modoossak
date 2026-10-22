@@ -52,10 +52,18 @@
   };
   chips.forEach((chip) => chip.addEventListener('click', () => selectCrop(chip.dataset.crop)));
   const cropForm = document.querySelector('[data-crop-search]');
+  // 검색 결과로 화면 이동: 지금 열린 탭에서 강조된 항목 → 없으면 '정보 없음' 안내 → 재배력 카드 순
+  const scrollToResult = () => requestAnimationFrame(() => {
+    const panel = document.querySelector('.farm-panel:not([hidden])');
+    const target = panel?.querySelector('.is-match, [data-weekly-notice]:not([hidden]), [data-calendar-notice]:not([hidden]), .cal-now');
+    (target || panel)?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  });
   cropForm?.addEventListener('submit', (event) => {
     event.preventDefault();
     const name = cropForm.elements.crop.value.trim();
-    if (name) selectCrop(name);
+    if (!name) return;
+    selectCrop(name);
+    scrollToResult();
   });
   // farm.html?crop=마늘 처럼 주소로 작물을 정해서 열 수 있음
   const cropParam = new URLSearchParams(location.search).get('crop');
@@ -105,6 +113,10 @@
     const renderNotice = () => {
       const issue = issues[index];
       if (!issue || !els.notice) return;
+      // 고른 작물이 나오는 항목은 강조 (검색하면 첫 항목으로 화면 이동)
+      els.fields.querySelectorAll('dl > div').forEach((row) => {
+        row.classList.toggle('is-match', Boolean(crop) && row.textContent.includes(crop));
+      });
       const mentioned = !crop || shownFields(issue).some((f) => f.name.includes(crop)
         || f.items.some((item) => `${item.topic} ${item.text}`.includes(crop)));
       els.notice.hidden = mentioned;
@@ -476,8 +488,9 @@
     searchForm?.addEventListener('submit', (event) => {
       event.preventDefault();
       search(searchForm.elements.q.value);
-      if (location.hash !== '#pests') location.hash = '#pests';
-      else document.querySelector('.farm-tabs')?.scrollIntoView({ block: 'start' });
+      if (location.hash !== '#pests') { history.replaceState(null, '', '#pests'); showTab('pests'); }
+      // '○○ 검색 결과 N건'과 결과 목록이 보이게 이동
+      requestAnimationFrame(() => panel.querySelector('.pest-detail')?.scrollIntoView({ block: 'start', behavior: 'smooth' }));
     });
     // 검색창을 비우면(× 버튼 포함) 검색 해제
     searchForm?.elements.q.addEventListener('input', (event) => { if (!event.target.value && query) search(''); });

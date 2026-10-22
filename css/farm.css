@@ -276,3 +276,7 @@
   .farm-consult__actions { width: 100%; flex-direction: column; }
   .farm-consult__actions a { text-align: center; }
 }
+
+/* 검색 결과로 화면 이동할 때 고정 헤더 아래 여유, 주간농사정보에서 찾은 작물 항목 강조 */
+.field-row dl > div.is-match, [data-weekly-notice], [data-calendar-notice], .cal-now, .pest-detail { scroll-margin-top: 24px; }
+.field-row dl > div.is-match { margin: 0 -12px; padding-right: 12px; padding-left: 12px; border-radius: 8px; background: #fbf3df; box-shadow: inset 4px 0 0 var(--c-gold); }
