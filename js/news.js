@@ -7,8 +7,6 @@
   const $ = (name) => board.querySelector(`[data-news-${name}]`);
   const els = { filter: $('filter'), search: $('search'), count: $('count'), list: $('list'), more: $('more') };
   const PAGE = 10;
-  // 메인 '공지 · NEWS'에서 본문이 있는 글을 누르면 news.html?open=글ID 로 와서 그 글이 펼쳐짐
-  const openId = new URLSearchParams(location.search).get('open');
   let posts = [];
   let category = '전체';
   let query = '';
@@ -30,26 +28,6 @@
     els.count.textContent = query ? `'${query}' 검색 결과 ${found.length}건` : `전체 ${found.length}건`;
     els.list.innerHTML = found.length ? found.slice(0, shown).map((post) => {
       const external = post.external;
-      // 본문(body)이 있는 글: 누르면 아래로 펼쳐져 내용 + 영상(youtube) 보기
-      if (post.body) {
-        const yt = post.youtube || '';
-        return `
-      <li>
-        <details class="news-post" id="news-${esc(post.id)}"${post.id === openId ? ' open' : ''}>
-          <summary class="news-row${post.pinned ? ' is-pinned' : ''}">
-            <span class="news-row__cat news-row__cat--${CATEGORIES.indexOf(post.category)}">${esc(post.category)}</span>
-            <span class="news-row__title">${post.pinned ? '<b class="news-row__pin">📌 고정</b>' : ''}${esc(post.title)}${isNew(post.date) ? '<b class="news-row__new">NEW</b>' : ''}</span>
-            <span class="news-row__meta"><time datetime="${esc(post.date)}">${dateLabel(post.date)}</time> <i class="news-post__toggle" aria-hidden="true">▾</i></span>
-          </summary>
-          <div class="news-post__body">
-            ${post.body.map((p) => `<p>${esc(p)}</p>`).join('')}
-            ${yt ? `<a class="news-post__video" href="https://www.youtube.com/shorts/${esc(yt)}" target="_blank" rel="noopener">
-              <img src="https://i.ytimg.com/vi/${esc(yt)}/hqdefault.jpg" alt="" loading="lazy"><span>▶ 현장 영상 보기 (유튜브 쇼츠) ↗</span></a>` : ''}
-            ${post.footer ? `<p class="news-post__footer">${esc(post.footer)}</p>` : ''}
-          </div>
-        </details>
-      </li>`;
-      }
       return `
       <li>
         <a class="news-row${post.pinned ? ' is-pinned' : ''}" href="${esc(post.href)}"${external ? ' target="_blank" rel="noopener"' : ''}>
@@ -86,8 +64,5 @@
     posts = list;
     renderFilter();
     renderList();
-    // 열 글이 있으면 그 글로 화면 이동
-    const target = openId && document.getElementById(`news-${openId}`);
-    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: 'start', behavior: 'smooth' }));
   });
 })();

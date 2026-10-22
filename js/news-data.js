@@ -16,10 +16,10 @@ window.NewsData = (() => {
   };
 
   const collect = ([news, weekly, pest, tv]) => {
-    // 본문(body)이 있는 글은 게시판에서 그 글을 펼쳐 보이는 주소로 연결 (news.html?open=글ID#notice)
+    // 본문(body)이 있는 글은 글 보기 페이지로 연결 (post.html?id=글ID)
     const list = (news?.posts || []).map((post, i) => {
       const id = post.id || `post-${i}`;
-      return { ...post, id, href: post.body ? `news.html?open=${encodeURIComponent(id)}#notice` : post.link };
+      return { ...post, id, href: post.body ? `post.html?id=${encodeURIComponent(id)}` : post.link };
     });
     (weekly?.issues || []).forEach((issue) => list.push({
       date: issue.start, category: '영농정보', title: `${weekLabel(issue.start)} 주간농사정보 (제${issue.no}호)`, link: 'farm.html#weekly',
