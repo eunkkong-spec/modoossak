@@ -389,8 +389,19 @@
     };
     let issues = [];
     let index = 0;
-    // farm.html?pest=채소#pests 처럼 분야를 정해서 열 수 있음 (메인 '작물별 병해충 정보'에서 사용)
-    let category = new URLSearchParams(location.search).get('pest') || '전체';
+    // 메인 '작물별 병해충 정보'에서 farm.html?pest=○○#pests 로 들어옴
+    //  · 과수 / 식량작물 / 채소: 그 분야 전체
+    //  · 김장채소 / 열매채소 / 뿌리구근채소: 제목·발생 상황에 그 작물이 나오는 병해충만 (분야와 상관없이)
+    const WORD_MU = '(^|[\\s(·,])무($|[\\s)·,])';  // '무늬', '무름병'의 '무'는 빼고 작물 '무'만
+    const CROP_GROUPS = {
+      김장채소: { label: '김장채소(배추 · 무)', re: new RegExp(`배추|${WORD_MU}`) },
+      열매채소: { label: '열매채소(고추 · 토마토 등)', re: /고추|토마토|딸기|오이|참외|수박|멜론|파프리카/ },
+      뿌리구근채소: { label: '뿌리 · 구근채소(무 · 감자 · 마늘 · 양파 등)', re: new RegExp(`감자|고구마|마늘|양파|당근|생강|${WORD_MU}`) },
+    };
+    const pestParam = new URLSearchParams(location.search).get('pest') || '';
+    let group = CROP_GROUPS[pestParam] || null;
+    let category = group ? '전체' : pestParam || '전체';
+    const inGroup = (item) => group && [item.title, ...item.situation].some((text) => group.re.test(text));
     let query = '';  // 히어로 아래 병해충 검색어
     let expanded = false;  // 처음엔 카드 3개만, 더보기로 나머지 펼침
     const PREVIEW = 3;
@@ -426,22 +437,26 @@
 
     const renderList = () => {
       const issue = issues[index];
-      const matched = query ? issue.items.filter((item) => matchesQuery(item, query)) : [];
+      const matched = query ? issue.items.filter((item) => matchesQuery(item, query))
+        : group ? issue.items.filter(inGroup) : [];
+      const filtered = Boolean(query || group);
       const base = matched.length ? matched : issue.items;
       const categories = ['전체', ...new Set(base.map((item) => item.category))];
       if (!categories.includes(category)) category = '전체';
       const shown = base.filter((item) => category === '전체' || item.category === category).sort(byLevel);
 
-      if (!query) els.desc.textContent = '이번 호 병해충 정보입니다.';
+      if (group) els.desc.textContent = matched.length ? `${group.label} 병해충 ${matched.length}건입니다.` : `이번 호에는 ${group.label} 병해충 정보가 없어 전체를 보여드립니다.`;
+      else if (!query) els.desc.textContent = '이번 호 병해충 정보입니다.';
       else if (matched.length) els.desc.textContent = `'${query}' 검색 결과 ${matched.length}건입니다.`;
       else els.desc.textContent = `'${query}' 검색 결과가 없어 이번 호 전체 병해충 정보를 보여드립니다.`;
 
       els.filter.innerHTML = categories.map((name) => `
-        <button type="button" class="pest-filter__btn" aria-pressed="${name === category}" data-category="${esc(name)}">${esc(name)}</button>`).join('');
+        <button type="button" class="pest-filter__btn" aria-pressed="${name === category}" data-category="${esc(name)}">${esc(name)}</button>`).join('')
+        + (group ? '<button type="button" class="pest-filter__btn pest-filter__btn--clear" data-pest-clear>× 전체 병해충 보기</button>' : '');
 
-      const visible = expanded || query ? shown : shown.slice(0, PREVIEW);
+      const visible = expanded || filtered ? shown : shown.slice(0, PREVIEW);
       const rest = shown.length - PREVIEW;
-      const moreButton = rest > 0 && !query
+      const moreButton = rest > 0 && !filtered
         ? `<button type="button" class="pest-more" data-pest-more aria-expanded="${expanded}">${expanded ? '접기 ▴' : `더보기 (${rest}건) ▾`}</button>`
         : '';
 
@@ -477,6 +492,7 @@
     // 검색: 이번 호에 없으면 지난호 중 가장 최근에 나온 호로 옮겨 보여줌
     const search = (value) => {
       query = value.trim();
+      group = null;  // 직접 검색하면 메인에서 넘어온 작물 묶음은 해제
       category = '전체';
       if (query && !issues[index]?.items.some((item) => matchesQuery(item, query))) {
         const found = issues.findIndex((issue) => issue.items.some((item) => matchesQuery(item, query)));
@@ -498,6 +514,7 @@
     els.prev.addEventListener('click', () => { if (index < issues.length - 1) { index += 1; render(); } });
     els.next.addEventListener('click', () => { if (index > 0) { index -= 1; render(); } });
     els.filter.addEventListener('click', (event) => {
+      if (event.target.closest('[data-pest-clear]')) { group = null; category = '전체'; expanded = false; renderList(); return; }
       const button = event.target.closest('[data-category]');
       if (!button) return;
       category = button.dataset.category;
@@ -515,7 +532,19 @@
     loadJson('data/pest.json')
       .then((data) => {
         issues = (data.issues || []).filter((issue) => issue.items?.length);
+        // 메인에서 작물 묶음으로 들어왔는데 이번 호에 없으면, 그 작물이 나오는 가장 최근 호로
+        if (group && !issues[0]?.items.some(inGroup)) {
+          const found = issues.findIndex((issue) => issue.items.some(inGroup));
+          if (found >= 0) index = found;
+        }
         render();
+        // 메인 '작물별 병해충 정보'에서 들어오면 결과 목록이 바로 보이게
+        // (브라우저가 #pests로 먼저 이동한 뒤에도 덮어쓰도록 페이지 로드가 끝난 다음 한 번 더)
+        if (pestParam && location.hash === '#pests') {
+          const toList = () => panel.querySelector('.pest-detail')?.scrollIntoView({ block: 'start' });
+          requestAnimationFrame(toList);
+          if (document.readyState === 'complete') setTimeout(toList, 300); else window.addEventListener('load', () => setTimeout(toList, 50), { once: true });
+        }
       })
       .catch(() => {});
   })();
