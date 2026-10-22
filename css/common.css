@@ -200,7 +200,7 @@ html:has(.site-header--sub) { scroll-padding-top: var(--header-h); }
 
 /* 푸터 (전 페이지 공통) */
 .site-footer { background: #1e2b24; color: #fff; }
-.footer-main { display: flex; align-items: center; gap: 56px; padding: 36px 0; }
+.footer-main { display: flex; align-items: center; gap: 40px; padding-top: 36px; padding-bottom: 36px; }
 .footer-main .brand { flex: none; }
 .footer-info { display: grid; flex: 1; gap: 6px; color: #bdc7bf; font: 400 15px/1.6 var(--f-title); }
 .footer-info p { display: flex; flex-wrap: wrap; row-gap: 4px; }
@@ -208,21 +208,29 @@ html:has(.site-header--sub) { scroll-padding-top: var(--header-h); }
 .footer-info b { margin-right: 8px; color: #fff; font-weight: 700; }
 .footer-info a:hover, .footer-info a:focus-visible { color: #fff; text-decoration: underline; }
 .footer-cs { flex: none; text-align: right; }
+/* 오른쪽 아래 떠 있는 뒤로·TOP 버튼(폭 약 80px)이 고객센터 전화번호를 가리지 않게, 화면이 좁을수록 그만큼 왼쪽으로 */
+.footer-cs { margin-right: max(0px, calc(70px - (100vw - 1320px) / 2)); }
 .footer-cs > span { display: block; color: #bdc7bf; font: 700 14px/1.4 var(--f-title); }
 .footer-phone { display: block; margin: 2px 0 4px; font: 900 30px/1.2 var(--f-title); }
 .footer-cs p { color: #bdc7bf; font: 400 14px/1.4 var(--f-title); }
 .footer-bottom { display: flex; justify-content: space-between; padding: 14px max(24px, calc((100% - 1280px)/2)); background: #17211c; color: #aab4ac; font: 400 13px/1.4 var(--f-title); }
+
+/* 태블릿: 회사 정보가 두 줄 이상으로 넘어가면 줄 앞에 구분선이 남으므로 한 항목씩 줄바꿈 */
+@media (max-width: 1180px) {
+  .footer-info p { flex-direction: column; }
+  .footer-info span + span::before { display: none; }
+}
 
 @media (max-width: 640px) {
   .brand img { width: 142px; }
   :root { --header-h: 48px; }
   .site-header--sub .primary-nav { display: none; }
   .site-header--sub .menu-toggle { margin-left: auto; }
-  .footer-main { align-items: flex-start; flex-direction: column; gap: 20px; padding: 28px 0; }
+  .footer-main { align-items: flex-start; flex-direction: column; gap: 20px; padding-top: 28px; padding-bottom: 28px; }
   .footer-info { font-size: 13px; }
   .footer-info p { flex-direction: column; }
   .footer-info span + span::before { display: none; }
-  .footer-cs { text-align: left; }
+  .footer-cs { margin-right: 0; text-align: left; }
   .footer-phone { font-size: 26px; }
   .footer-bottom { gap: 8px; flex-direction: column; padding: 14px 20px; font-size: 12px; }
 }
