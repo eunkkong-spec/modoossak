@@ -65,10 +65,19 @@
       <section class="section-panel" id="notice" role="tabpanel" aria-labelledby="tab-notice">
         <h2 class="section-title">공지 · 뉴스</h2>
         <p class="section-desc">나라바이오와 모두싹의 새 소식, 방송 · 행사 안내를 전해 드립니다.</p>
-        <div class="section-slot">
-          <strong>공지 · 뉴스 목록이 들어갈 자리입니다</strong>
-          <ul><li>공지사항</li><li>보도자료 · 방송</li><li>행사 · 이벤트</li></ul>
-          <p>게시글 자료를 주시면 목록과 상세 보기로 만들어 넣습니다.</p>
+        <!-- 게시판: js/news.js가 data/news.json + 주간농사정보 · 병해충 발생정보 · 모두싹TV 영상을 날짜순으로 합쳐 그림 -->
+        <div class="news-board" data-news-board>
+          <div class="news-board__tools">
+            <div class="news-filter" role="group" aria-label="분류" data-news-filter></div>
+            <form class="news-search" role="search" data-news-search>
+              <label class="blind" for="news-search-input">게시글 제목 검색</label>
+              <input id="news-search-input" type="search" name="q" placeholder="제목으로 검색">
+              <button type="submit">검색</button>
+            </form>
+          </div>
+          <p class="news-board__count" data-news-count>불러오는 중…</p>
+          <ul class="news-list-board" data-news-list></ul>
+          <button type="button" class="news-more" data-news-more hidden>더보기</button>
         </div>
       </section>
 
@@ -100,5 +109,6 @@
 
   <script src="js/common.js"></script>
   <script src="js/sub-tabs.js"></script>
+  <script src="js/news.js"></script>
 </body>
 </html>

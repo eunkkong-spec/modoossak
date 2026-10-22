@@ -1,5 +1,5 @@
 {
-  "_comment": "제품 목록 (누끼 사진이 있는 제품만, 2026-10-22). name은 병 라벨, tagline은 예전 사이트 제품 목록 화면 문구, summary는 재배력 그림 내용. image는 누끼(images/product/_04_Product_Cut_*), bg는 뒤 배경 사진(images/product/bg). match는 data/calendar.json 사용법에서 이 제품을 찾는 정규식. audience: pro 전문 농가용, garden 텃밭 입문용",
+  "_comment": "제품 목록 (누끼 사진이 있는 제품만, 2026-10-22). name은 병 라벨, tagline은 예전 사이트 제품 목록 화면 문구, summary는 재배력 그림 내용. image는 누끼(images/product/_04_Product_Cut_*), bg는 뒤 배경 사진(images/product/bg). match는 data/calendar.json 사용법에서 이 제품을 찾는 정규식. wide: 세트처럼 가로로 넓은 사진은 카드 사진 칸을 가로로 채움. video: 유튜브 영상 ID가 있으면 썸네일 영상 카드(누르면 유튜브로). audience: pro 전문 농가용, garden 텃밭 입문용",
   "groups": [
     "대표 제품",
     "병해충 관리",
@@ -134,6 +134,49 @@
       "bg": "images/product/bg/_04_Product_Bg_lettuce.jpg",
       "tagline": "식물생장 영양주사의 병해충 싹~ 왕잘커",
       "summary": "4종복합비료 · 유기농업자재 두 가지. 처음 텃밭을 가꾸는 분도 쉽게 고를 수 있어요."
+    },
+    {
+      "id": "wangjalkeo-set",
+      "name": "왕잘커 홈쇼핑 세트",
+      "group": "텃밭 입문",
+      "audience": "garden",
+      "image": "images/product/_04_Product_Cut_WangjalkeoSet.png",
+      "alt": "왕잘커 홈쇼핑 세트 구성품: 상자, 4종복합비료 왕잘커 2병, 유기농업자재 왕잘커 2병, 압축 분무기, 계량컵 2개",
+      "bg": "images/product/bg/_04_Product_Bg_scallion.jpg",
+      "tagline": "홈쇼핑 구성 그대로, 텃밭 관리를 한 번에",
+      "summary": "구성: 4종복합비료 왕잘커 2병 + 유기농업자재 왕잘커 2병 + 압축 분무기 1개 + 계량컵 2개",
+      "wide": true
+    },
+    {
+      "id": "wangjalto-set",
+      "name": "왕잘토 홈쇼핑 세트",
+      "group": "텃밭 입문",
+      "audience": "garden",
+      "image": "images/product/_04_Product_Cut_WangjaltoSet.png",
+      "alt": "왕잘토 500g 8봉과 계량컵",
+      "bg": "images/product/bg/_04_Product_Bg_strawberry-field.jpg",
+      "tagline": "당도 업! 수확량 증가! 각종 작물과 화분에 필수!",
+      "summary": "구성: 김일호의 왕잘토 (500g ×8개) + 20ml 손잡이형 계량컵 1개",
+      "wide": true
+    },
+    {
+      "id": "wangjalto",
+      "name": "왕잘토",
+      "group": "텃밭 입문",
+      "audience": "garden",
+      "image": "images/product/_04_Product_Cut_Wangjalto.png",
+      "alt": "김일호의 왕잘토 500g 봉투",
+      "bg": "images/product/bg/_04_Product_Bg_radish.jpg",
+      "tagline": "초고속분해 콜로이드유황, 토양개량 및 작물생육용",
+      "summary": "유기농업자재 · 500g"
+    },
+    {
+      "id": "sprayer-video",
+      "name": "분무기 사용법",
+      "group": "텃밭 입문",
+      "audience": "garden",
+      "video": "QjLZZW0yGRQ",
+      "tagline": "왕잘커 분무기 사용법과 계량컵 계량 방법"
     }
   ]
 }

@@ -31,6 +31,8 @@
 .product-item__photo::before { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(22 38 30 / 10%) 0%, rgb(22 38 30 / 35%) 100%); backdrop-filter: blur(2px); content: ""; }
 .product-item__photo::after { position: absolute; right: 18%; bottom: 0; left: 18%; height: 18px; border-radius: 50%; background: rgb(0 0 0 / 35%); filter: blur(10px); content: ""; }
 .product-item__photo img { position: relative; z-index: 1; display: block; width: auto; max-width: 92%; height: 96%; object-fit: contain; object-position: center bottom; filter: drop-shadow(0 10px 16px rgb(0 0 0 / 35%)); transition: transform .3s ease; }
+/* 세트처럼 가로로 넓은 사진: 너비 기준으로 채움 */
+.product-item__photo.is-wide img { width: 94%; max-width: none; height: auto; max-height: 92%; margin-bottom: 6px; }
 .product-item:hover .product-item__photo img { transform: translateY(-6px) scale(1.03); }
 .product-item__body { display: flex; flex: 1; flex-direction: column; gap: 10px; padding: 22px 24px 24px; }
 .product-item__group { color: var(--c-olive); font: 700 14px/1.4 var(--f-title); }
@@ -79,3 +81,14 @@
   .product-consult__actions { width: 100%; flex-direction: column; }
   .product-consult__actions a { text-align: center; }
 }
+
+/* 영상 카드 (products.json의 video): 썸네일 + 재생 표시, 누르면 유튜브 */
+.product-item--video { color: inherit; }
+.product-video__thumb { position: relative; display: block; aspect-ratio: 16 / 11; overflow: hidden; background: #000; }
+.product-video__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
+.product-item--video:hover .product-video__thumb img { transform: scale(1.04); }
+.product-video__play { position: absolute; top: 50%; left: 50%; display: grid; width: 68px; height: 48px; place-items: center; border-radius: 12px; background: #cf1015; color: #fff; font-size: 22px; transform: translate(-50%, -50%); box-shadow: 0 6px 18px rgb(0 0 0 / 35%); }
+.product-item--video:hover .product-video__play { background: #e3262b; }
+.product-video__title { color: var(--c-forest); font: 700 24px/1.35 var(--f-title); }
+.product-video__go { margin-top: auto; padding-top: 8px; color: #cf1015; font: 700 15px/1.4 var(--f-title); }
+.product-item--video:hover .product-video__title { text-decoration: underline; text-underline-offset: 4px; }

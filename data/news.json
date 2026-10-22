@@ -1,0 +1,27 @@
+{
+  "_comment": "공지 · 뉴스 게시판에 직접 쓰는 글. 주간농사정보·병해충 발생정보·모두싹TV 영상은 data/weekly.json, pest.json, tv.json에서 자동으로 합쳐서 보여줌(js/news.js). date는 'YYYY-MM-DD' 또는 날짜를 모르면 'YYYY-MM'. category: 공지 / 회사 소식 / 방송 · 홈쇼핑 / 영농정보 / 모두싹TV. 회사 소식은 회사 연혁(data/txt/회사연혁_텍스트.txt) 원문 그대로",
+  "posts": [
+    { "date": "2022-05", "category": "회사 소식", "title": "군산시 유망 강소기업 선정, 입제 제형 생산 자동화라인 구축", "link": "company.html#history" },
+    { "date": "2022-04", "category": "회사 소식", "title": "중소벤처기업부 메인비즈 선정", "link": "company.html#history" },
+    { "date": "2022-01", "category": "회사 소식", "title": "군산시 일자리창출 우수중소기업 표창장 수상", "link": "company.html#history" },
+    { "date": "2021-12", "category": "회사 소식", "title": "입제비료 자동화 설비 구축 (일 100톤, 50억원 투자)", "link": "company.html#history" },
+    { "date": "2021-11", "category": "회사 소식", "title": "나라바이오(주) 전주지점 설립 (영업 마케팅 본부, 홈쇼핑 스튜디오)", "link": "company.html#history" },
+    { "date": "2021-11", "category": "회사 소식", "title": "유황 4종 복합비료 액상제품 자동화 설비라인 구축 (분당 60병, 12억원 투자)", "link": "company.html#history" },
+    { "date": "2021-06", "category": "회사 소식", "title": "베트남 수출(6.4) / 베트남 50만 달러 수출 MOU 체결(6.4)", "link": "company.html#history" },
+    { "date": "2021-06", "category": "회사 소식", "title": "멕시코 수출·총판 계약 체결 (6.1)", "link": "company.html#history" },
+    { "date": "2021-05", "category": "회사 소식", "title": "미량요소복합비료 '모두싹 규산왕' 출시", "link": "company.html#history" },
+    { "date": "2021-04", "category": "회사 소식", "title": "창립 3주년 기념행사 (군산새만금컨벤션센터)", "link": "company.html#history" },
+    { "date": "2021-02", "category": "회사 소식", "title": "미량요소복합비료 '모두싹 딱풀' 출시", "link": "company.html#history" },
+    { "date": "2021-01", "category": "회사 소식", "title": "미량요소복합비료 '모두싹 아미플', 유기농업자재(병해충관리용) '모두싹 균' 출시", "link": "company.html#history" },
+    { "date": "2020-09", "category": "회사 소식", "title": "공장 이전 (전주→군산), 면적 14,000평 (건평 2,500평)", "link": "company.html#history" },
+    { "date": "2020-08", "category": "회사 소식", "title": "미량요소복합비료 '모두싹 칼마' 출시", "link": "company.html#history" },
+    { "date": "2020-07", "category": "회사 소식", "title": "유기농업자재(병해충관리용) '더쎔' 출시", "link": "company.html#history" },
+    { "date": "2019-11", "category": "회사 소식", "title": "'모사모(모두싹을 사랑하는 사람들의 모임)' 창단", "link": "company.html#history" },
+    { "date": "2019-10", "category": "회사 소식", "title": "뉴질랜드 '모두싹' 해외 수출", "link": "company.html#history" },
+    { "date": "2019-05", "category": "회사 소식", "title": "액상석회 비료 등록", "link": "company.html#history" },
+    { "date": "2018-12", "category": "회사 소식", "title": "미생물 유황 제조업 특허 등록 (제10-1926732호) / 기업부설연구소 설립", "link": "company.html#history" },
+    { "date": "2018-11", "category": "회사 소식", "title": "4종복합 엽면시비용 비료 등록", "link": "company.html#history" },
+    { "date": "2018-08", "category": "회사 소식", "title": "유기농업자재공시(작물생육용) '땅부자' / 유기농업자재공시(병해충관리용) '모두싹'", "link": "company.html#history" },
+    { "date": "2018-04", "category": "회사 소식", "title": "나라바이오㈜ 설립", "link": "company.html#history" }
+  ]
+}

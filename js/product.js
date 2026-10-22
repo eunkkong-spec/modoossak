@@ -26,13 +26,26 @@
     });
   };
 
+  // 영상 카드(products.json의 video): 유튜브 썸네일, 누르면 유튜브로 바로가기
+  const videoCard = (product) => `
+      <a class="product-item product-item--video" id="${esc(product.id)}" href="https://www.youtube.com/watch?v=${esc(product.video)}" target="_blank" rel="noopener">
+        <span class="product-video__thumb"><img src="https://i.ytimg.com/vi/${esc(product.video)}/hqdefault.jpg" alt="" loading="lazy"><span class="product-video__play" aria-hidden="true">▶</span></span>
+        <span class="product-item__body">
+          <span class="product-item__group">${esc(product.group)} · 영상</span>
+          <span class="product-video__title">${esc(product.name)}</span>
+          ${product.tagline ? `<span class="product-item__tagline">${esc(product.tagline)}</span>` : ''}
+          <span class="product-video__go">유튜브에서 보기 ↗</span>
+        </span>
+      </a>`;
+
   const card = (product) => {
+    if (product.video) return videoCard(product);
     const found = uses[product.id] || [];
     const crops = [...new Set(found.map((use) => use.crop))];
     const name = new RegExp(product.match || '$^', 'g');
     return `
       <article class="product-item" id="${esc(product.id)}">
-        <figure class="product-item__photo"${product.bg ? ` style="background-image: url('${esc(product.bg)}')"` : ''}>
+        <figure class="product-item__photo${product.wide ? ' is-wide' : ''}"${product.bg ? ` style="background-image: url('${esc(product.bg)}')"` : ''}>
           <img src="${esc(product.image)}" alt="${esc(product.alt || product.name)}" loading="lazy">
         </figure>
         <div class="product-item__body">
