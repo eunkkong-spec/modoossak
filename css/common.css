@@ -200,6 +200,10 @@ html:has(.site-header--sub) { scroll-padding-top: var(--header-h); }
   .sub-hero__lead { font-size: 16px; }
 }
 
+/* 소식 · 고객지원 히어로 (news.html · post.html · tv.html 공통): 황금빛 논과 태블릿을 든 농부 사진을 꽉 채우고 왼쪽 글자 쪽만 그늘 */
+.sub-hero.sub-hero--news .sub-hero__bg { right: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 65%; -webkit-mask-image: none; mask-image: none; }
+.sub-hero.sub-hero--news::after { background: linear-gradient(90deg, rgb(22 38 30 / 70%) 0%, rgb(22 38 30 / 40%) 40%, rgb(22 38 30 / 0%) 70%); }
+
 /* 푸터 (전 페이지 공통) */
 .site-footer { background: #1e2b24; color: #fff; }
 .footer-main { display: flex; align-items: center; gap: 40px; padding-top: 36px; padding-bottom: 36px; }

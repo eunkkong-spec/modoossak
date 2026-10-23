@@ -1,13 +1,6 @@
 /* 모두싹TV (tv.html) */
 
-/* 서브 히어로: 황금빛 논 사진(오른쪽에 농부)을 꽉 채우고 왼쪽 글자 쪽만 그늘 (공통 스타일은 common.css) */
-.sub-hero--tv .sub-hero__bg { right: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 65%; -webkit-mask-image: none; mask-image: none; }
-.sub-hero--tv { background: #17231c; }
-.sub-hero--tv::after { background: linear-gradient(90deg, rgb(22 38 30 / 70%) 0%, rgb(22 38 30 / 40%) 40%, rgb(22 38 30 / 0%) 70%); }
-
 /* 모두싹TV 로고 (images/tv/_05_TV_Logo.png, 투명 PNG). 어두운 배경에선 빨간 TV가 묻혀 얇은 흰 테두리를 둘러 줌 */
-.tv-hero__title { margin: 6px 0 8px; line-height: 0; }
-.tv-hero__title img { width: auto; height: 72px; filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px #fff) drop-shadow(0 4px 14px rgb(0 0 0 / 45%)); }
 .tv-player__logo { display: block; width: auto; height: 56px; margin-bottom: 14px; filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px #fff); }
 .tv-list__title { display: flex; align-items: center; gap: 12px; }
 .tv-list__title img { width: auto; height: 40px; }
@@ -62,7 +55,6 @@
 }
 
 @media (max-width: 640px) {
-  .tv-hero__title img { height: 46px; }
   .tv-player__logo { height: 40px; }
   .tv-list__title img { height: 32px; }
   .tv-body { gap: 40px; padding-top: 24px; padding-bottom: 64px; }
