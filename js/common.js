@@ -12,20 +12,27 @@
     menuItems.forEach((item, itemIndex) => item.setAttribute('aria-expanded', String(itemIndex === index)));
   };
 
-  // Desktop: shrink the panel to its content-width columns (equal spacing comes from
-  // .is-aligned group padding) and start the first column's text under the first nav button.
+  // 데스크톱: 서브메뉴 각 칸의 가운데가 위 메뉴 글자의 가운데와 일치하도록 맞춤
+  // (칸 경계 = 이웃한 두 메뉴 가운데의 중간 지점, 양 끝 칸은 옆 칸과 같은 폭으로)
   const alignMegaMenu = () => {
     const inner = megaMenu?.querySelector('.mega-menu__inner');
     if (!inner || !menuGroups.length) return;
     inner.style.margin = '';
+    inner.style.gridTemplateColumns = '';
     megaMenu.classList.remove('is-aligned');
-    if (!menuItems.length || menuItems[0].offsetWidth === 0) return;
+    if (menuItems.length !== menuGroups.length || menuItems.length < 2 || menuItems[0].offsetWidth === 0) return;
     megaMenu.classList.add('is-aligned');
-    const menuRect = megaMenu.getBoundingClientRect();
-    const padLeft = parseFloat(getComputedStyle(menuGroups[0]).paddingLeft) || 0;
-    const maxLeft = Math.max(0, menuRect.width - inner.offsetWidth);
-    const left = menuItems[0].getBoundingClientRect().left - menuRect.left - padLeft;
-    inner.style.margin = `0 0 0 ${Math.min(Math.max(0, left), maxLeft)}px`;
+    const menuLeft = megaMenu.getBoundingClientRect().left;
+    const centers = menuItems.map((item) => {
+      const r = item.getBoundingClientRect();
+      return r.left + r.width / 2 - menuLeft;
+    });
+    const n = centers.length;
+    const bounds = [centers[0] - (centers[1] - centers[0]) / 2];
+    for (let i = 1; i < n; i += 1) bounds.push((centers[i - 1] + centers[i]) / 2);
+    bounds.push(centers[n - 1] + (centers[n - 1] - centers[n - 2]) / 2);
+    inner.style.gridTemplateColumns = bounds.slice(1).map((b, i) => `${Math.round(b - bounds[i])}px`).join(' ');
+    inner.style.margin = `0 0 0 ${Math.max(0, Math.round(bounds[0]))}px`;
   };
 
   const openMegaMenu = (index = -1) => {

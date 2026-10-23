@@ -14,8 +14,6 @@ html:has(body.page-main) { scroll-padding-top: var(--header-h); }
 .site-header__inner { display: flex; align-items: center; justify-content: space-between; width: min(1280px, calc(100% - 48px)); height: 100%; margin: auto; }
 .primary-nav { display: flex; flex: 1; align-items: center; justify-content: flex-end; gap: calc(clamp(18px, 3.2vw, 48px) + 1em); font: 700 15px/1.2 var(--f-title); }
 .primary-nav__item { position: relative; padding: 14px 0; color: inherit; font: inherit; white-space: nowrap; }
-.primary-nav__item::after { position: absolute; right: 0; bottom: 3px; left: 0; height: 2px; background: var(--c-gold); content: ""; transform: scaleX(0); transition: transform .18s ease; }
-.primary-nav__item:hover::after, .primary-nav__item:focus-visible::after, .primary-nav__item[aria-expanded="true"]::after { transform: scaleX(1); }
 .menu-toggle { display: grid; width: 34px; height: 34px; flex: 0 0 auto; align-content: center; justify-items: center; gap: 6px; margin-left: 28px; border: 1px solid rgb(255 255 255 / 55%); border-radius: 50%; color: inherit; }
 .menu-toggle span { display: block; width: 20px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .2s ease; }
 .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(4px) rotate(45deg); }
