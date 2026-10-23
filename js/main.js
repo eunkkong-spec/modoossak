@@ -119,3 +119,24 @@
 
   if (videos.length) showSlide(0);
 })();
+
+// 히어로 문구 칸 높이를 평소(가장 긴 문구) 기준으로 고정: 검색창에 마우스를 올려 문구가 작아져도 검색창이 제자리에 있게
+(() => {
+  const inner = document.querySelector('.hero__inner');
+  const messages = [...document.querySelectorAll('.hero__message')];
+  if (!inner || !messages.length) return;
+  const measure = () => {
+    inner.style.removeProperty('--hero-msg-h');
+    const heights = messages.map((m) => {
+      const was = m.style.cssText;
+      m.style.cssText = 'display:block;position:absolute;visibility:hidden;width:' + inner.clientWidth + 'px';
+      const h = m.offsetHeight;
+      m.style.cssText = was;
+      return h;
+    });
+    inner.style.setProperty('--hero-msg-h', Math.max(...heights) + 'px');
+  };
+  measure();
+  window.addEventListener('resize', measure);
+  document.fonts?.ready.then(measure);
+})();
