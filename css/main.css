@@ -26,18 +26,8 @@ html:has(body.page-main) { scroll-padding-top: var(--header-h); }
 .hero__video.is-active { opacity: 1; }
 .hero__shade { background: linear-gradient(90deg, rgb(7 21 18 / 68%) 0%, rgb(10 22 19 / 40%) 38%, rgb(12 23 19 / 5%) 80%), linear-gradient(0deg, rgb(8 18 14 / 45%), transparent 38%); }
 /* 모두싹 마크: 히어로 안, 헤더 나라바이오 로고 바로 아래에서 빙글빙글(세로축) 회전 */
-/* 모두싹 마크: 히어로 안, 헤더 나라바이오 로고 바로 아래. 여섯 면에 로고를 붙인 주사위가 360도 굴러가듯 회전 */
-.hero__mark { --dice: clamp(80px, 6.5vw, 100px); position: absolute; z-index: 3; top: calc(var(--header-h) + 26px); left: max(24px, calc((100% - 1280px) / 2)); width: var(--dice); height: var(--dice); perspective: 600px; }
-.hero__dice { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; animation: hero-dice-roll 6s linear infinite; }
-.hero__dice-face { position: absolute; inset: 0; display: grid; place-items: center; border: 1px solid #e3ddd0; border-radius: 16%; background: #fff; box-shadow: inset 0 0 12px rgb(0 0 0 / 12%); backface-visibility: hidden; }
-.hero__dice-face img { width: 80%; height: 80%; object-fit: contain; }
-.hero__dice-face:nth-child(1) { transform: translateZ(calc(var(--dice) / 2)); }
-.hero__dice-face:nth-child(2) { transform: rotateY(180deg) translateZ(calc(var(--dice) / 2)); }
-.hero__dice-face:nth-child(3) { transform: rotateY(90deg) translateZ(calc(var(--dice) / 2)); }
-.hero__dice-face:nth-child(4) { transform: rotateY(-90deg) translateZ(calc(var(--dice) / 2)); }
-.hero__dice-face:nth-child(5) { transform: rotateX(90deg) translateZ(calc(var(--dice) / 2)); }
-.hero__dice-face:nth-child(6) { transform: rotateX(-90deg) translateZ(calc(var(--dice) / 2)); }
-@keyframes hero-dice-roll { from { transform: rotateX(-20deg) rotateY(0deg) rotateZ(0deg); } to { transform: rotateX(340deg) rotateY(360deg) rotateZ(360deg); } }
+.hero__mark { position: absolute; z-index: 3; top: calc(var(--header-h) + 18px); left: max(24px, calc((100% - 1280px) / 2)); width: clamp(96px, 8vw, 124px); height: auto; filter: drop-shadow(0 6px 14px rgb(0 0 0 / 35%)); animation: hero-mark-spin 4s linear infinite; }
+@keyframes hero-mark-spin { to { transform: rotateY(360deg); } }
 .hero__inner { position: relative; z-index: 3; width: min(1280px, calc(100% - 48px)); margin: 78px auto 0; padding-bottom: 28px; }
 .hero__message { display: none; opacity: 0; }
 .hero__message.is-active { display: block; opacity: 1; }
@@ -187,7 +177,7 @@ html:has(body.page-main) { scroll-padding-top: var(--header-h); }
 	.hero { min-height: 100svh; }
 	.hero__shade { background: linear-gradient(90deg, rgb(7 21 18 / 62%), rgb(10 22 19 / 18%)), linear-gradient(0deg, rgb(8 18 14 / 45%), transparent 45%); }
 	.hero__inner { margin-top: 45px; }
-	.hero__mark { --dice: 62px; left: 20px; top: calc(var(--header-h) + 22px); }
+	.hero__mark { left: 20px; top: calc(var(--header-h) + 14px); width: 76px; }
 	.hero h1 { font-size: clamp(29px, 8.4vw, 41px); }
 	.hero__lead { font-size: 16px; }
 	.hero__pagination { margin-top: 52px; }
@@ -243,18 +233,14 @@ html:has(body.page-main) { scroll-padding-top: var(--header-h); }
 	.mobile-bottom-nav a { color: var(--c-forest); font: 700 12px/1.4 var(--f-title); text-align: center; }
 	body.page-main { padding-bottom: 48px; }
 }
-/* 작은 휴대폰(세로 740px 이하): 돌아가는 주사위가 글과 닿지 않게 글을 조금 아래로 */
-@media (max-width: 640px) and (max-height: 740px) {
-	.hero__inner { margin-top: 95px; }
-}
 /* 낮은 PC 화면(노트북 등): 모두싹 마크가 히어로 글과 겹치지 않게 조금 작게, 글은 살짝 아래로 */
 @media (min-width: 641px) and (max-height: 820px) {
-	.hero__mark { --dice: 72px; }
-	.hero__inner { margin-top: 200px; }
+	.hero__mark { width: 88px; }
+	.hero__inner { margin-top: 150px; }
 }
 @media (prefers-reduced-motion: reduce) {
 	*, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
-	.hero__dice { animation: none; transform: rotateX(-18deg) rotateY(-28deg); }
+	.hero__mark { animation: none; }
 }
 
 /* Larger, more comfortable type for the primary 50+ audience. */
