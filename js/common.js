@@ -68,9 +68,11 @@
       if (event.pointerType === 'mouse') openMegaMenu(index);
     });
     item.addEventListener('focus', () => openMegaMenu(index));
+    // 헤더 메뉴를 누르면 그 메뉴의 첫 서브페이지로 바로 이동 (예: 제품 → product.html#all)
     item.addEventListener('click', () => {
-      if (menuToggle?.getAttribute('aria-expanded') === 'true' && item.getAttribute('aria-expanded') === 'true') closeMegaMenu();
-      else openMegaMenu(index);
+      const first = menuGroups[index]?.querySelector('a[href]');
+      if (first) { location.href = first.href; return; }
+      openMegaMenu(index);
     });
   });
 
