@@ -171,13 +171,13 @@ html:has(.site-header--sub) { scroll-padding-top: var(--header-h); }
 /* 떠 있는 버튼 '뒤로' · 'TOP' (전 페이지 공통, js/common.js가 만듦) */
 .float-actions { position: fixed; z-index: 19; right: 24px; bottom: 24px; display: grid; gap: 8px; opacity: 0; transform: translateY(12px); visibility: hidden; transition: opacity .25s ease, transform .25s ease, visibility .25s; }
 .float-actions.is-visible { opacity: 1; transform: none; visibility: visible; }
-.float-actions__btn { display: grid; width: 56px; height: 56px; place-content: center; justify-items: center; gap: 1px; border: 1px solid var(--c-forest); border-radius: 50%; background: #fff; color: var(--c-forest); font: 700 12px/1.1 var(--f-title); box-shadow: 0 6px 16px rgb(25 42 31 / 14%); transition: background-color .18s ease, color .18s ease; }
-.float-actions__btn span { font-size: 16px; line-height: 1; }
-.float-actions__btn--top { background: var(--c-forest); color: #fff; }
-.float-actions__btn:hover, .float-actions__btn:focus-visible { border-color: var(--c-gold); background: var(--c-gold); color: var(--c-charcoal); }
+.float-actions__btn { display: block; width: 96px; height: auto; padding: 0; border: 0; background: none; filter: drop-shadow(0 6px 12px rgb(25 42 31 / 30%)); transition: transform .18s ease; }
+.float-actions__btn img { display: block; width: 100%; height: auto; }
+.float-actions__btn:hover, .float-actions__btn:focus-visible { transform: translateY(-4px) scale(1.06); }
+.float-actions__btn:focus-visible { outline: 3px solid var(--c-gold); outline-offset: 4px; border-radius: 8px; }
 @media (max-width: 640px) {
   .float-actions { right: 14px; bottom: 16px; }
-  .float-actions__btn { width: 48px; height: 48px; font-size: 11px; }
+  .float-actions__btn { width: 72px; }
   /* 메인 모바일 하단 메뉴 바 위로 띄움 */
   body:has(.mobile-bottom-nav) .float-actions { bottom: calc(76px + env(safe-area-inset-bottom)); }
 }

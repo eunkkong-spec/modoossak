@@ -118,21 +118,15 @@
   window.addEventListener('load', () => { toTop(); setTimeout(toTop, 50); }, { once: true });
 })();
 
-// 떠 있는 버튼(전 페이지 공통): 히어로를 지나 내려가면 오른쪽 아래에 '뒤로'와 '위로'가 나타남
+// 떠 있는 버튼(전 페이지 공통): 히어로를 지나 내려가면 오른쪽 아래에 '위로싹' 로고 버튼이 나타남
+// (모두싹 로고의 '모두'를 '위로'로 바꾼 그림: images/common/_00_Top_Wiro_Ssak.png)
 (() => {
   const box = document.createElement('div');
   box.className = 'float-actions';
   box.innerHTML = `
-    <button type="button" class="float-actions__btn" data-float-back aria-label="이전 페이지로 돌아가기"><span aria-hidden="true">←</span>뒤로</button>
-    <button type="button" class="float-actions__btn float-actions__btn--top" data-float-top aria-label="맨 위로 가기"><span aria-hidden="true">↑</span>위로</button>`;
+    <button type="button" class="float-actions__btn float-actions__btn--top" data-float-top aria-label="맨 위로 가기"><img src="images/common/_00_Top_Wiro_Ssak.png" alt=""></button>`;
   document.body.append(box);
 
-  // 같은 사이트에서 넘어왔으면 이전 페이지로, 아니면(바로 들어온 경우) 홈으로
-  box.querySelector('[data-float-back]').addEventListener('click', () => {
-    const fromSite = document.referrer && new URL(document.referrer).origin === location.origin;
-    if (fromSite && history.length > 1) history.back();
-    else location.href = 'index.html';
-  });
   box.querySelector('[data-float-top]').addEventListener('click', () => window.scrollTo({ top: 0 }));
 
   // 메인은 히어로, 서브는 서브 히어로를 지나면 보임 (히어로가 없으면 화면 절반쯤 내려갔을 때)
