@@ -303,14 +303,15 @@ html:has(body.page-main) { scroll-padding-top: var(--header-h); }
 	.mobile-bottom-nav a { font-size: 14px; }
 }
 
-/* 히어로 검색창에 마우스를 올리거나 입력하려고 누르면: 검색창이 커져 글자 위계 2순위가 되고,
-   위 문구(제목·설명)는 반대로 작아짐. 문구 칸 높이는 그대로 두고 글자만 아래(검색창 쪽)로 붙여 검색창 위치가 흔들리지 않게 함 */
+/* 히어로 검색창에 마우스를 올리거나 입력하려고 누르면: 검색창이 커져 글자 위계 2순위가 됨.
+   (비교용 A안: 주소에 ?hero=shrink 를 붙이면 위 문구(제목·설명)가 반대로 작아짐 — body.hero-shrink)
+   문구 칸 높이는 그대로 두고 글자만 아래(검색창 쪽)로 붙여 검색창 위치가 흔들리지 않게 함 */
 .hero__message.is-active { display: flex; min-height: var(--hero-msg-h, auto); flex-direction: column; justify-content: flex-end; }
 .hero__eyebrow, .hero h1, .hero__lead { transition: font-size .35s ease, margin .35s ease, opacity .35s ease; }
 .hero-search, .hero-search input, .hero-search button { transition: width .35s ease, border-color .35s ease, border-width .35s ease, font-size .35s ease, padding .35s ease; }
-.hero__inner:has(.hero-search:hover, .hero-search:focus-within) .hero__eyebrow { margin-bottom: 10px; font-size: 13px; opacity: .7; }
-.hero__inner:has(.hero-search:hover, .hero-search:focus-within) h1 { margin-bottom: 10px; font-size: clamp(24px, 2.6vw, 34px); }
-.hero__inner:has(.hero-search:hover, .hero-search:focus-within) .hero__lead { margin-bottom: 22px; font-size: 15px; opacity: .85; }
+.hero-shrink .hero__inner:has(.hero-search:hover, .hero-search:focus-within) .hero__eyebrow { margin-bottom: 10px; font-size: 13px; opacity: .7; }
+.hero-shrink .hero__inner:has(.hero-search:hover, .hero-search:focus-within) h1 { margin-bottom: 10px; font-size: clamp(24px, 2.6vw, 34px); }
+.hero-shrink .hero__inner:has(.hero-search:hover, .hero-search:focus-within) .hero__lead { margin-bottom: 22px; font-size: 15px; opacity: .85; }
 .hero-search:hover, .hero-search:focus-within { width: min(760px, 100%); border-bottom: 2px solid #fff; }
 .hero-search:hover input, .hero-search:focus-within input { padding: 12px 4px; font-size: clamp(22px, 2.1vw, 28px); font-weight: 700; }
 .hero-search:hover button, .hero-search:focus-within button { font-size: 36px; }
