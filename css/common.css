@@ -186,6 +186,10 @@ html:has(.site-header--sub) { scroll-padding-top: var(--header-h); }
 .sub-hero { position: relative; height: var(--sub-hero-h); flex: none; overflow: hidden; background: var(--c-forest); color: #fff; }
 .sub-hero::after { position: absolute; inset: 0; background: linear-gradient(90deg, rgb(22 38 30 / 45%) 0%, rgb(22 38 30 / 22%) 40%, rgb(22 38 30 / 0%) 65%); content: ""; }
 .sub-hero__bg { position: absolute; right: 0; bottom: 0; width: auto; max-width: none; height: 130%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%); mask-image: linear-gradient(90deg, transparent, #000 18%); }
+/* 모두싹 마크: 메인 히어로와 같이 오른쪽 햄버거(☰) 버튼 아래에서 빙글빙글(세로축) 회전 */
+.sub-hero__mark { position: absolute; z-index: 2; top: 28px; right: max(var(--gutter), calc((100% - var(--inner)) / 2)); width: clamp(84px, 7vw, 108px); height: auto; filter: drop-shadow(0 6px 14px rgb(0 0 0 / 35%)); animation: sub-hero-mark-spin 4s linear infinite; }
+@keyframes sub-hero-mark-spin { to { transform: rotateY(360deg); } }
+@media (prefers-reduced-motion: reduce) { .sub-hero__mark { animation: none; } }
 .sub-hero__inner { position: relative; z-index: 1; display: flex; height: 100%; flex-direction: column; justify-content: center; text-shadow: 0 1px 3px rgb(10 20 15 / 45%), 0 2px 12px rgb(10 20 15 / 35%); }
 .breadcrumb ol { display: flex; flex-wrap: wrap; color: rgb(255 255 255 / 85%); font: 400 15px/1.4 var(--f-title); }
 .breadcrumb li + li::before { margin: 0 8px; content: "›"; }
@@ -197,6 +201,7 @@ html:has(.site-header--sub) { scroll-padding-top: var(--header-h); }
   .sub-hero__bg { right: -60px; height: 120%; }
   .sub-hero::after { background: linear-gradient(90deg, rgb(22 38 30 / 55%) 0%, rgb(22 38 30 / 25%) 70%, rgb(22 38 30 / 10%) 100%); }
   .sub-hero h1 { margin: 6px 0 8px; font-size: 32px; }
+  .sub-hero__mark { top: 16px; width: 64px; }
   .sub-hero__lead { font-size: 16px; }
 }
 
