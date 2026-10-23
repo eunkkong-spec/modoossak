@@ -26,7 +26,7 @@ html:has(body.page-main) { scroll-padding-top: var(--header-h); }
 .hero__video.is-active { opacity: 1; }
 .hero__shade { background: linear-gradient(90deg, rgb(7 21 18 / 68%) 0%, rgb(10 22 19 / 40%) 38%, rgb(12 23 19 / 5%) 80%), linear-gradient(0deg, rgb(8 18 14 / 45%), transparent 38%); }
 /* 모두싹 마크: 히어로 안, 헤더 햄버거(☰) 버튼 바로 아래 오른쪽 끝에서 빙글빙글(세로축) 회전 */
-.hero__mark { position: absolute; z-index: 3; top: calc(var(--header-h) + 18px); right: max(24px, calc((100% - 1280px) / 2)); width: clamp(96px, 8vw, 124px); height: auto; filter: drop-shadow(0 6px 14px rgb(0 0 0 / 35%)); animation: hero-mark-spin 4s linear infinite; }
+.hero__mark { position: absolute; z-index: 3; top: calc(var(--header-h) + 18px); right: max(24px, calc((100% - 1280px) / 2)); width: clamp(192px, 16vw, 248px); height: auto; filter: drop-shadow(0 6px 14px rgb(0 0 0 / 35%)); animation: hero-mark-spin 4s linear infinite; }
 @keyframes hero-mark-spin { to { transform: rotateY(360deg); } }
 .hero__inner { position: relative; z-index: 3; width: min(1280px, calc(100% - 48px)); margin: 78px auto 0; padding-bottom: 28px; }
 .hero__message { display: none; opacity: 0; }
@@ -177,7 +177,7 @@ html:has(body.page-main) { scroll-padding-top: var(--header-h); }
 	.hero { min-height: 100svh; }
 	.hero__shade { background: linear-gradient(90deg, rgb(7 21 18 / 62%), rgb(10 22 19 / 18%)), linear-gradient(0deg, rgb(8 18 14 / 45%), transparent 45%); }
 	.hero__inner { margin-top: 45px; }
-	.hero__mark { right: 20px; top: calc(var(--header-h) + 14px); width: 76px; }
+	.hero__mark { right: 20px; top: calc(var(--header-h) + 14px); width: 152px; }
 	.hero h1 { font-size: clamp(29px, 8.4vw, 41px); }
 	.hero__lead { font-size: 16px; }
 	.hero__pagination { margin-top: 52px; }
