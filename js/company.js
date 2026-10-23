@@ -20,10 +20,10 @@
     history.replaceState(null, '', tab.hash);
     showTab(tab.hash.slice(1));
   }));
-  // 메뉴의 '회사소개 · 연혁' 등으로 같은 페이지 안에서 옮기면 탭 줄이 보이게 올려 줌
+  // 메뉴의 '회사소개 · 연혁' 등으로 같은 페이지 안에서 옮기면 서브 히어로부터 보이게 맨 위로
   window.addEventListener('hashchange', () => {
     showTab(location.hash.slice(1));
-    document.querySelector('.company-tabs')?.scrollIntoView({ block: 'start' });
+    window.scrollTo({ top: 0 });
   });
   showTab(location.hash.slice(1));
 })();

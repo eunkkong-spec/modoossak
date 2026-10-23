@@ -20,10 +20,10 @@
     history.replaceState(null, '', tab.hash);
     showTab(tab.hash.slice(1));
   }));
-  // 메뉴에서 같은 페이지의 다른 탭으로 옮기면 탭 줄이 보이게 올려 줌
+  // 메뉴에서 같은 페이지의 다른 탭으로 옮기면 서브 히어로부터 보이게 맨 위로
   window.addEventListener('hashchange', () => {
     showTab(location.hash.slice(1));
-    document.querySelector('.page-tabs')?.scrollIntoView({ block: 'start' });
+    window.scrollTo({ top: 0 });
   });
   showTab(location.hash.slice(1));
 })();

@@ -85,10 +85,10 @@
         </section>`).join('');
   };
 
-  // 탭을 바꾸면 탭 줄이 보이게 올려 줌 (처음 열 때는 그대로)
+  // 메뉴 등으로 탭을 바꾸면 서브 히어로부터 보이게 맨 위로
   window.addEventListener('hashchange', () => {
     render();
-    document.querySelector('.product-tabs')?.scrollIntoView({ block: 'start' });
+    window.scrollTo({ top: 0 });
   });
 
   Promise.all([loadJson('data/products.json'), loadJson('data/calendar.json').catch(() => ({ crops: [] }))])

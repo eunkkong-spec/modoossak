@@ -98,6 +98,17 @@
   });
 })();
 
+// 서브페이지를 '#탭' 주소로 열어도(헤더 메뉴·서브메뉴·메인 카드 등) 브라우저가 탭 내용으로 내려가지 않고
+// 맨 위 서브 히어로부터 보이게 함. 뒤로/앞으로 가기와 새로고침은 원래 보던 위치 그대로
+(() => {
+  if (!location.hash || !document.querySelector('.sub-hero')) return;
+  if (performance.getEntriesByType('navigation')[0]?.type !== 'navigate') return;
+  const toTop = () => window.scrollTo({ top: 0, behavior: 'instant' });
+  toTop();
+  requestAnimationFrame(toTop);
+  window.addEventListener('load', () => { toTop(); setTimeout(toTop, 50); }, { once: true });
+})();
+
 // 떠 있는 버튼(전 페이지 공통): 히어로를 지나 내려가면 오른쪽 아래에 '뒤로'와 '위로'가 나타남
 (() => {
   const box = document.createElement('div');

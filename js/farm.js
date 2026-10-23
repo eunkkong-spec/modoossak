@@ -34,10 +34,10 @@
     history.replaceState(null, '', tab.hash);
     showTab(tab.hash.slice(1));
   }));
-  // 본문 안 '#calendar' 같은 링크로 탭을 옮기면 탭 줄이 보이게 올려 줌
+  // 메뉴나 본문 안 '#calendar' 같은 링크로 탭을 옮기면 서브 히어로부터 보이게 맨 위로
   window.addEventListener('hashchange', () => {
     showTab(location.hash.slice(1));
-    document.querySelector('.farm-tabs')?.scrollIntoView({ block: 'start' });
+    window.scrollTo({ top: 0 });
   });
   showTab(location.hash.slice(1));
 
@@ -537,14 +537,8 @@
           const found = issues.findIndex((issue) => issue.items.some(inGroup));
           if (found >= 0) index = found;
         }
+        // 메인 '작물별 병해충 정보'에서 들어와도 서브 히어로부터 보이게 둠 (common.js가 맨 위로)
         render();
-        // 메인 '작물별 병해충 정보'에서 들어오면 결과 목록이 바로 보이게
-        // (브라우저가 #pests로 먼저 이동한 뒤에도 덮어쓰도록 페이지 로드가 끝난 다음 한 번 더)
-        if (pestParam && location.hash === '#pests') {
-          const toList = () => panel.querySelector('.pest-detail')?.scrollIntoView({ block: 'start' });
-          requestAnimationFrame(toList);
-          if (document.readyState === 'complete') setTimeout(toList, 300); else window.addEventListener('load', () => setTimeout(toList, 50), { once: true });
-        }
       })
       .catch(() => {});
   })();
