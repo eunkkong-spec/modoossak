@@ -141,5 +141,5 @@
   document.fonts?.ready.then(measure);
 })();
 
-// 비교용: index.html?hero=shrink 로 열면 검색창에 마우스를 올릴 때 위 문구가 작아지는 A안
-if (new URLSearchParams(location.search).get('hero') === 'shrink') document.body.classList.add('hero-shrink');
+// 보관한 B안: index.html?hero=keep 으로 열면 검색창에 마우스를 올려도 위 문구 크기가 그대로
+if (new URLSearchParams(location.search).get('hero') === 'keep') document.body.classList.add('hero-keep');

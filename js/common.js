@@ -5,7 +5,6 @@
   const megaMenu = document.querySelector('.mega-menu');
   const menuItems = [...document.querySelectorAll('.primary-nav__item')];
   const menuGroups = [...document.querySelectorAll('.mega-menu__group')];
-  let menuCloseTimer;
 
   const setActiveMenu = (index = -1) => {
     menuGroups.forEach((group, groupIndex) => group.classList.toggle('is-active', groupIndex === index));
@@ -37,7 +36,6 @@
 
   const openMegaMenu = (index = -1) => {
     if (!megaMenu) return;
-    window.clearTimeout(menuCloseTimer);
     megaMenu.hidden = false;
     alignMegaMenu();
     megaMenu.classList.add('is-open');
@@ -83,11 +81,7 @@
     group.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMegaMenu));
   });
 
-  header?.addEventListener('pointerleave', (event) => {
-    if (event.pointerType !== 'mouse') return;
-    menuCloseTimer = window.setTimeout(closeMegaMenu, 120);
-  });
-  header?.addEventListener('pointerenter', () => window.clearTimeout(menuCloseTimer));
+  // 한 번 내려온 서브메뉴는 마우스가 헤더 밖으로 나가도 그대로 둠 → ☰(X)를 누르거나 Esc, 메뉴 링크를 눌러야 닫힘
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closeMegaMenu();
   });

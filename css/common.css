@@ -124,10 +124,12 @@ address { font-style: normal; }
 .site-header--sub .primary-nav__item.is-current { color: var(--c-forest); }
 /* 지금 보고 있는 메뉴만 금색 밑줄 (마우스를 올릴 때 생기던 밑줄은 없앰) */
 .site-header--sub .primary-nav__item.is-current::after { position: absolute; right: 0; bottom: 3px; left: 0; height: 2px; background: var(--c-gold); content: ""; }
-.site-header--sub .menu-toggle { display: grid; width: 34px; height: 34px; flex: none; align-content: center; justify-items: center; gap: 6px; border: 1px solid var(--c-line); border-radius: 50%; }
-.site-header--sub .menu-toggle span { display: block; width: 20px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .2s ease; }
-.site-header--sub .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(4px) rotate(45deg); }
-.site-header--sub .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-4px) rotate(-45deg); }
+.site-header--sub .menu-toggle { display: grid; width: 34px; height: 34px; flex: none; align-content: center; justify-items: center; gap: 4px; border: 1px solid var(--c-line); border-radius: 50%; }
+.site-header--sub .menu-toggle span { display: block; width: 18px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .2s ease, opacity .2s ease; }
+/* 세 줄 → X: 가운데 줄은 사라지고 위·아래 줄이 엇갈림 */
+.site-header--sub .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(6px) rotate(45deg); }
+.site-header--sub .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.site-header--sub .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-6px) rotate(-45deg); }
 /* 페이지 안 이동(#weekly 등) 때 고정 헤더에 제목이 가리지 않게 */
 html:has(.site-header--sub) { scroll-padding-top: var(--header-h); }
 .mega-menu[hidden] { display: none; }

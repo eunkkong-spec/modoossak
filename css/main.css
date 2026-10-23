@@ -14,10 +14,12 @@ html:has(body.page-main) { scroll-padding-top: var(--header-h); }
 .site-header__inner { display: flex; align-items: center; justify-content: space-between; width: min(1280px, calc(100% - 48px)); height: 100%; margin: auto; }
 .primary-nav { display: flex; flex: 1; align-items: center; justify-content: flex-end; gap: calc(clamp(18px, 3.2vw, 48px) + 1em); font: 700 15px/1.2 var(--f-title); }
 .primary-nav__item { position: relative; padding: 14px 0; color: inherit; font: inherit; white-space: nowrap; }
-.menu-toggle { display: grid; width: 34px; height: 34px; flex: 0 0 auto; align-content: center; justify-items: center; gap: 6px; margin-left: 28px; border: 1px solid rgb(255 255 255 / 55%); border-radius: 50%; color: inherit; }
-.menu-toggle span { display: block; width: 20px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .2s ease; }
-.menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(4px) rotate(45deg); }
-.menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-4px) rotate(-45deg); }
+.menu-toggle { display: grid; width: 34px; height: 34px; flex: 0 0 auto; align-content: center; justify-items: center; gap: 4px; margin-left: 28px; border: 1px solid rgb(255 255 255 / 55%); border-radius: 50%; color: inherit; }
+.menu-toggle span { display: block; width: 18px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .2s ease, opacity .2s ease; }
+/* 세 줄 → X: 가운데 줄은 사라지고 위·아래 줄이 엇갈림 */
+.menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(6px) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-6px) rotate(-45deg); }
 .hero { position: relative; display: flex; min-height: max(700px, 100svh); align-items: center; overflow: hidden; background: #20372e; color: #fff; }
 .hero__slides, .hero__video, .hero__shade { position: absolute; inset: 0; width: 100%; height: 100%; }
 .hero__video { object-fit: cover; opacity: 0; transition: opacity 1.2s ease-in-out; }
@@ -303,15 +305,15 @@ html:has(body.page-main) { scroll-padding-top: var(--header-h); }
 	.mobile-bottom-nav a { font-size: 14px; }
 }
 
-/* 히어로 검색창에 마우스를 올리거나 입력하려고 누르면: 검색창이 커져 글자 위계 2순위가 됨.
-   (비교용 A안: 주소에 ?hero=shrink 를 붙이면 위 문구(제목·설명)가 반대로 작아짐 — body.hero-shrink)
+/* 히어로 검색창에 마우스를 올리거나 입력하려고 누르면(A안, 기본): 검색창이 커져 글자 위계 2순위가 되고 위 문구(제목·설명)는 반대로 작아짐.
+   (보관한 B안: 주소에 ?hero=keep 을 붙이면 제목 크기는 그대로, 검색창만 커짐 — body.hero-keep)
    문구 칸 높이는 그대로 두고 글자만 아래(검색창 쪽)로 붙여 검색창 위치가 흔들리지 않게 함 */
 .hero__message.is-active { display: flex; min-height: var(--hero-msg-h, auto); flex-direction: column; justify-content: flex-end; }
 .hero__eyebrow, .hero h1, .hero__lead { transition: font-size .35s ease, margin .35s ease, opacity .35s ease; }
 .hero-search, .hero-search input, .hero-search button { transition: width .35s ease, border-color .35s ease, border-width .35s ease, font-size .35s ease, padding .35s ease; }
-.hero-shrink .hero__inner:has(.hero-search:hover, .hero-search:focus-within) .hero__eyebrow { margin-bottom: 10px; font-size: 13px; opacity: .7; }
-.hero-shrink .hero__inner:has(.hero-search:hover, .hero-search:focus-within) h1 { margin-bottom: 10px; font-size: clamp(24px, 2.6vw, 34px); }
-.hero-shrink .hero__inner:has(.hero-search:hover, .hero-search:focus-within) .hero__lead { margin-bottom: 22px; font-size: 15px; opacity: .85; }
+body:not(.hero-keep) .hero__inner:has(.hero-search:hover, .hero-search:focus-within) .hero__eyebrow { margin-bottom: 10px; font-size: 13px; opacity: .7; }
+body:not(.hero-keep) .hero__inner:has(.hero-search:hover, .hero-search:focus-within) h1 { margin-bottom: 10px; font-size: clamp(24px, 2.6vw, 34px); }
+body:not(.hero-keep) .hero__inner:has(.hero-search:hover, .hero-search:focus-within) .hero__lead { margin-bottom: 22px; font-size: 15px; opacity: .85; }
 .hero-search:hover, .hero-search:focus-within { width: min(760px, 100%); border-bottom: 2px solid #fff; }
 .hero-search:hover input, .hero-search:focus-within input { padding: 12px 4px; font-size: clamp(22px, 2.1vw, 28px); font-weight: 700; }
 .hero-search:hover button, .hero-search:focus-within button { font-size: 36px; }
