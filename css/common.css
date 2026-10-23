@@ -134,10 +134,10 @@ address { font-style: normal; }
 html:has(.site-header--sub) { scroll-padding-top: var(--header-h); }
 .mega-menu[hidden] { display: none; }
 /* 메가메뉴 (전 페이지 공통): 헤더 메뉴에 마우스를 올리거나 ☰를 누르면 내려옴 — js/common.js */
-.mega-menu { position: absolute; z-index: 11; top: 100%; right: 0; left: 0; border-top: 1px solid rgb(47 74 58 / 12%); background: rgb(255 255 255 / 70%); color: var(--c-text); box-shadow: 0 16px 24px rgb(25 42 31 / 12%); }
+.mega-menu { position: absolute; z-index: 11; top: 100%; right: 0; left: 0; border-top: 1px solid rgb(47 74 58 / 12%); background: rgb(255 255 255 / 99%); color: var(--c-text); box-shadow: 0 16px 24px rgb(25 42 31 / 12%); }
 .mega-menu__inner { display: grid; width: min(1280px, calc(100% - 48px)); grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0 auto; border-bottom: 1px solid var(--c-line); }
 .mega-menu.is-aligned { border-top: 0; background: transparent; box-shadow: none; pointer-events: none; }
-.mega-menu.is-aligned .mega-menu__inner { border-top: 1px solid rgb(47 74 58 / 12%); background: rgb(255 255 255 / 70%); box-shadow: 0 16px 24px rgb(25 42 31 / 12%); pointer-events: auto; }
+.mega-menu.is-aligned .mega-menu__inner { border-top: 1px solid rgb(47 74 58 / 12%); background: rgb(255 255 255 / 99%); box-shadow: 0 16px 24px rgb(25 42 31 / 12%); pointer-events: auto; }
 .mega-menu.is-aligned .mega-menu__inner { width: max-content; }
 .mega-menu.is-aligned .mega-menu__group { align-items: center; padding-right: 6px; padding-left: 6px; text-align: center; white-space: nowrap; }
 .mega-menu.is-aligned .mega-menu__group:first-child { border-left: 0; }
