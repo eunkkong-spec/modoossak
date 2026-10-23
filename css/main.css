@@ -260,8 +260,8 @@ html:has(body.page-main) { scroll-padding-top: var(--header-h); }
 .technology__feature p:not(.section-eyebrow) { font-size: 18px; }
 .technology-stats span { font-size: 16px; }
 .technology-stats b { font-size: 14px; }
-.product-card__category { font-size: 22px; } /* 제품명 아래 두 번째 줄은 강조해 크게 */
-.product-card h3 { font-size: 26px; }
+.product-card__category { font-size: 28px; } /* 두 번째 줄(병해충 관리라인 등)을 가장 크게, 위 제품명은 작게 */
+.product-card h3 { font-size: 20px; }
 .product-card p:last-child { font-size: 18px; }
 .products-section .section-eyebrow { font-size: 18px; }
 .products-section .section-heading h2 { font-size: clamp(30px, 3.2vw, 40px); }
@@ -295,8 +295,8 @@ html:has(body.page-main) { scroll-padding-top: var(--header-h); }
 	.technology__feature p:not(.section-eyebrow) { font-size: 17px; }
 	.technology-stats span { font-size: 15px; }
 	.technology-stats b { font-size: 13px; }
-	.product-card__category { font-size: 18px; }
-	.product-card h3 { font-size: 23px; }
+	.product-card__category { font-size: 23px; }
+	.product-card h3 { font-size: 17px; }
 	.product-card p:last-child { font-size: 16px; }
 	.story-card span { font-size: 14px; }
 	.story-card h3 { font-size: 20px; }

@@ -86,12 +86,12 @@
     group.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMegaMenu));
   });
 
-  // 한 번 내려온 서브메뉴는 마우스가 헤더 밖으로 나가도 그대로 둠 → ☰(X)를 누르거나 Esc, 메뉴 링크를 누르거나, 아래로 스크롤하면 닫힘
+  // 한 번 내려온 서브메뉴는 마우스가 헤더 밖으로 나가도 그대로 둠 → ☰(X)를 누르거나 Esc, 메뉴 링크를 누르거나, 아래로 한 화면 넘게 스크롤하면 닫힘
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closeMegaMenu();
   });
   window.addEventListener('scroll', () => {
-    if (megaMenu && !megaMenu.hidden && window.scrollY - openScrollY > 40) closeMegaMenu();
+    if (megaMenu && !megaMenu.hidden && window.scrollY - openScrollY > window.innerHeight) closeMegaMenu();
   }, { passive: true });
   window.addEventListener('resize', () => {
     if (megaMenu && !megaMenu.hidden) alignMegaMenu();
