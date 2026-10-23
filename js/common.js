@@ -92,13 +92,13 @@
   });
 })();
 
-// 떠 있는 버튼(전 페이지 공통): 히어로를 지나 내려가면 오른쪽 아래에 '뒤로'와 'TOP'이 나타남
+// 떠 있는 버튼(전 페이지 공통): 히어로를 지나 내려가면 오른쪽 아래에 '뒤로'와 '위로'가 나타남
 (() => {
   const box = document.createElement('div');
   box.className = 'float-actions';
   box.innerHTML = `
     <button type="button" class="float-actions__btn" data-float-back aria-label="이전 페이지로 돌아가기"><span aria-hidden="true">←</span>뒤로</button>
-    <button type="button" class="float-actions__btn float-actions__btn--top" data-float-top aria-label="맨 위로 가기"><span aria-hidden="true">↑</span>TOP</button>`;
+    <button type="button" class="float-actions__btn float-actions__btn--top" data-float-top aria-label="맨 위로 가기"><span aria-hidden="true">↑</span>위로</button>`;
   document.body.append(box);
 
   // 같은 사이트에서 넘어왔으면 이전 페이지로, 아니면(바로 들어온 경우) 홈으로
