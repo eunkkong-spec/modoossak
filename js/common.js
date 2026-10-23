@@ -86,7 +86,16 @@
     group.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMegaMenu));
   });
 
-  // 한 번 내려온 서브메뉴는 마우스가 헤더 밖으로 나가도 그대로 둠 → ☰(X)를 누르거나 Esc, 메뉴 링크를 누르거나, 아래로 한 화면 넘게 스크롤하면 닫힘
+  // 마우스: 헤더·서브메뉴 영역을 벗어나면 닫힘 (잠깐 스쳐 나가도 바로 닫히지 않게 0.2초 여유, 다시 들어오면 취소)
+  let leaveTimer;
+  header?.addEventListener('pointerleave', (event) => {
+    if (event.pointerType !== 'mouse') return;
+    clearTimeout(leaveTimer);
+    leaveTimer = setTimeout(closeMegaMenu, 200);
+  });
+  header?.addEventListener('pointerenter', () => clearTimeout(leaveTimer));
+
+  // 그 밖에 ☰(X)를 누르거나 Esc, 메뉴 링크를 누르거나, 아래로 한 화면 넘게 스크롤해도 닫힘 (터치 화면은 이쪽으로만 닫힘)
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closeMegaMenu();
   });
