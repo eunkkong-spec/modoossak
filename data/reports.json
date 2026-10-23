@@ -1,0 +1,6 @@
+{
+  "_comment": "기술 > 시험성적서 목록 (tech.html#reports, js/tech-reports.js). total: 위쪽에 크게 보이는 전체 건수(메인 '45개의 시험 성적서'와 같게). categories: 분류 버튼 순서. reports: 성적서 한 건씩 — title(제목), category(분류), crop(작물, 없으면 빈칸), org(시험 기관), date('YYYY-MM-DD' 또는 'YYYY-MM'), file(PDF·이미지 경로, 예: files/reports/모두싹_고추_탄저병.pdf, 없으면 빈칸). reports가 비어 있으면 '정리 중' 카드가 보임.",
+  "total": 45,
+  "categories": ["약효 · 약해 시험", "성분 분석", "작물별 시험"],
+  "reports": []
+}

@@ -29,7 +29,7 @@
     <nav class="mega-menu" id="sitemap-panel" aria-label="전체 사이트 메뉴" hidden>
       <div class="mega-menu__inner">
         <section class="mega-menu__group" data-menu-group="0"><h2>회사소개</h2><a href="company.html#greeting">인사말 · 비전</a><a href="company.html#history">회사 연혁</a><a href="company.html#cert">인증 · 특허</a><a href="company.html#location">오시는 길</a></section>
-        <section class="mega-menu__group" data-menu-group="1"><h2>기술</h2><a href="tech.html#sulfur">제독 유황이란</a><a href="tech.html#proof">현장 검증</a><a href="tech.html#carbon">저탄소 농업</a></section>
+        <section class="mega-menu__group" data-menu-group="1"><h2>기술</h2><a href="tech.html#sulfur">제독 유황이란</a><a href="tech.html#proof">현장 검증</a><a href="tech.html#carbon">저탄소 농업</a><a href="tech.html#reports">시험성적서</a></section>
         <section class="mega-menu__group" data-menu-group="2"><h2>제품</h2><a href="product.html#all">전체 제품</a><a href="product.html#pro">전문 농가용</a><a href="product.html#garden">텃밭 입문용</a></section>
         <section class="mega-menu__group" data-menu-group="3"><h2>영농정보</h2><a href="farm.html#weekly">주간농사정보</a><a href="farm.html#calendar">작물재배력</a><a href="farm.html#pests">병해충 정보</a></section>
         <section class="mega-menu__group" data-menu-group="4"><h2>소식 · 고객지원</h2><a href="news.html#notice">공지 · 뉴스</a><a href="tv.html">모두싹TV</a><a href="news.html#dealer">대리점 찾기</a><a href="news.html#consult">상담 · FAQ</a></section>
@@ -55,8 +55,8 @@
       <div class="inner page-tabs__inner" role="tablist">
         <a class="page-tabs__item" href="#sulfur" role="tab" id="tab-sulfur" aria-controls="sulfur" aria-selected="true">제독 유황이란</a>
         <a class="page-tabs__item" href="#proof" role="tab" id="tab-proof" aria-controls="proof" aria-selected="false">현장 검증</a>
-        <a class="page-tabs__item" href="#reports" role="tab" id="tab-reports" aria-controls="reports" aria-selected="false">시험성적서</a>
         <a class="page-tabs__item" href="#carbon" role="tab" id="tab-carbon" aria-controls="carbon" aria-selected="false">저탄소 농업</a>
+        <a class="page-tabs__item" href="#reports" role="tab" id="tab-reports" aria-controls="reports" aria-selected="false">시험성적서</a>
       </div>
     </nav>
 
@@ -83,18 +83,7 @@
         </div>
       </section>
 
-      <!-- ③ 시험성적서 (메인 '45개의 시험 성적서'에서 바로 옴) -->
-      <section class="section-panel" id="reports" role="tabpanel" aria-labelledby="tab-reports" hidden>
-        <h2 class="section-title">시험성적서</h2>
-        <p class="section-desc">공인 기관에서 받은 45개의 시험성적서로 모두싹의 효과와 안전성을 확인하세요.</p>
-        <div class="section-slot">
-          <strong>시험성적서 목록이 들어갈 자리입니다</strong>
-          <ul><li>약효 · 약해 시험</li><li>성분 분석</li><li>작물별 시험 결과</li></ul>
-          <p>시험성적서 파일(PDF · 이미지)을 주시면 목록과 미리보기로 정리해 넣습니다.</p>
-        </div>
-      </section>
-
-      <!-- ④ 저탄소 농업 -->
+      <!-- ③ 저탄소 농업 -->
       <section class="section-panel" id="carbon" role="tabpanel" aria-labelledby="tab-carbon" hidden>
         <h2 class="section-title">저탄소 농업</h2>
         <p class="section-desc">환경을 생각하는 친환경 농업을 소개합니다.</p>
@@ -104,6 +93,36 @@
           <p>관련 자료를 주시면 정리해 넣습니다.</p>
         </div>
       </section>
+
+      <!-- ④ 시험성적서 (메인 '45개의 시험 성적서'에서 바로 옴). 목록은 data/reports.json → js/tech-reports.js -->
+      <section class="section-panel reports" id="reports" role="tabpanel" aria-labelledby="tab-reports" hidden>
+        <h2 class="section-title">시험성적서</h2>
+        <p class="section-desc">공인 기관에서 받은 시험성적서로 모두싹의 효과와 안전성을 확인하세요.</p>
+
+        <div class="reports-summary">
+          <p class="reports-summary__total"><strong data-reports-total>45</strong><span>건의 공인 시험성적서</span></p>
+          <ul class="reports-summary__kinds" data-reports-kinds>
+            <li><b>약효 · 약해 시험</b>작물에 쓴 효과와 피해 여부</li>
+            <li><b>성분 분석</b>유효 성분과 유해 물질 검사</li>
+            <li><b>작물별 시험</b>작물마다 확인한 시험 결과</li>
+          </ul>
+        </div>
+
+        <div class="reports-tools">
+          <div class="news-filter" role="group" aria-label="시험성적서 분류" data-reports-filter></div>
+          <form class="news-search" role="search" data-reports-search><label class="blind" for="reports-q">시험성적서 검색</label><input id="reports-q" name="q" type="search" placeholder="작물·병해충·기관 이름으로 검색"><button type="submit">검색</button></form>
+        </div>
+        <p class="reports-count" data-reports-count></p>
+        <ul class="reports-grid" data-reports-list></ul>
+
+        <aside class="reports-ask">
+          <div>
+            <strong>시험성적서 원본이 필요하신가요?</strong>
+            <p>대리점 · 농가 · 기관에서 원본 사본이 필요하시면 고객센터로 말씀해 주세요.</p>
+          </div>
+          <a href="tel:15227008">고객센터 1522-7008</a>
+        </aside>
+      </section>
     </div>
   </main>
 
@@ -111,5 +130,6 @@
 
   <script src="js/common.js"></script>
   <script src="js/sub-tabs.js"></script>
+  <script src="js/tech-reports.js"></script>
 </body>
 </html>
