@@ -119,7 +119,7 @@
 })();
 
 // 떠 있는 버튼(전 페이지 공통): 히어로를 지나 내려가면 오른쪽 아래에 '위로싹' 로고 버튼이 나타남
-// (모두싹 로고의 '모두'를 '위로'로 바꾼 그림: images/common/_00_Top_Wiro_Ssak.png)
+// (사용자가 만든 위로싹 로고: images/common/_00_Top_Wiro_Ssak.png)
 (() => {
   const box = document.createElement('div');
   box.className = 'float-actions';
