@@ -143,3 +143,13 @@
 
 // 보관한 B안: index.html?hero=keep 으로 열면 검색창에 마우스를 올려도 위 문구 크기가 그대로
 if (new URLSearchParams(location.search).get('hero') === 'keep') document.body.classList.add('hero-keep');
+
+// 히어로 검색창: 사이트 전체 검색(search.html, js/search.js)으로 보냄. 비어 있으면 보내지 않음
+(() => {
+  const form = document.querySelector('.hero-search');
+  form?.addEventListener('submit', (event) => {
+    if (form.elements.q.value.trim()) return;
+    event.preventDefault();
+    form.elements.q.focus();
+  });
+})();

@@ -148,3 +148,38 @@ a.report-card:hover, a.report-card:focus-visible { box-shadow: 0 10px 24px rgb(2
   .reports-ask { padding: 20px; }
   .reports-ask a { width: 100%; text-align: center; }
 }
+
+/* 사이트 전체 검색 (search.html, js/search.js) */
+.search-box { display: flex; gap: 8px; max-width: 720px; margin-bottom: 20px; }
+.search-box input { flex: 1; min-width: 0; height: 52px; padding: 0 22px; border: 1px solid var(--c-line); border-radius: 999px; background: #fff; font: 400 17px/1.4 var(--f-title); }
+.search-box button { flex: none; padding: 0 28px; border-radius: 999px; background: var(--c-forest); color: #fff; font: 700 16px/1.2 var(--f-title); }
+.search-box button:hover { background: var(--c-green-3); }
+.search-count { margin-bottom: 20px; color: var(--c-text-muted); font: 500 16px/1.5 var(--f-title); }
+.search-group { margin-bottom: 36px; }
+.search-group h2 { margin-bottom: 12px; padding-bottom: 10px; border-bottom: 2px solid var(--c-forest); color: var(--c-forest); font: 700 22px/1.4 var(--f-title); }
+.search-group h2 span { margin-left: 6px; color: var(--c-olive); font-size: 16px; }
+.search-group ul { display: grid; gap: 8px; }
+.search-item { display: block; padding: 16px 20px; border: 1px solid var(--c-line); border-radius: 10px; background: #fff; transition: border-color .15s ease, box-shadow .15s ease; }
+.search-item:hover, .search-item:focus-visible { border-color: var(--c-forest); box-shadow: 0 6px 16px rgb(25 42 31 / 8%); }
+.search-item strong { display: block; color: var(--c-text); font: 700 18px/1.45 var(--f-title); }
+.search-item:hover strong { color: var(--c-forest); text-decoration: underline; text-underline-offset: 3px; }
+.search-item p { margin-top: 4px; color: var(--c-text-sub); font: 400 15px/1.6 var(--f-title); }
+.search-item mark { padding: 0 2px; border-radius: 3px; background: #fbe7a8; color: inherit; }
+.search-group--top { padding: 22px 24px; border: 1px solid var(--c-line); border-top: 4px solid var(--c-gold); border-radius: var(--radius); background: #fff; }
+.search-group--top h2 { border-bottom: 0; padding-bottom: 0; }
+.search-chips { display: flex !important; flex-wrap: wrap; gap: 8px !important; }
+.search-chips a { display: inline-block; padding: 8px 18px; border: 1px solid var(--c-forest); border-radius: 999px; color: var(--c-forest); font: 700 16px/1.2 var(--f-title); }
+.search-chips a:hover { background: var(--c-forest); color: #fff; }
+.search-more { margin-top: 14px; font: 700 15px/1.4 var(--f-title); }
+.search-more a { color: var(--c-forest); text-decoration: underline; text-underline-offset: 3px; }
+.search-more-btn { margin-top: 10px; padding: 10px 22px; border: 1px solid var(--c-forest); border-radius: 999px; background: #fff; color: var(--c-forest); font: 700 15px/1.2 var(--f-title); }
+.search-more-btn:hover { background: var(--c-forest); color: #fff; }
+.search-none, .search-empty { padding: 20px 24px; border-left: 4px solid var(--c-gold); border-radius: 0 8px 8px 0; background: #fbf3df; color: var(--c-text); font: 400 17px/1.7 var(--f-title); }
+.search-none a { margin-left: 4px; color: var(--c-forest); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 640px) {
+  .search-box input { height: 46px; font-size: 16px; }
+  .search-box button { padding: 0 18px; }
+  .search-group h2 { font-size: 19px; }
+  .search-item { padding: 14px 16px; }
+  .search-item strong { font-size: 16px; }
+}

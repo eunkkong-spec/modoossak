@@ -71,8 +71,44 @@
     selectCrop(cropParam.trim());
     if (cropForm) cropForm.elements.crop.value = cropParam.trim();
   }
-  // 정보가 없을 때 안내 (TODO: 문자 상담 번호를 받으면 sms: 링크 추가)
-  const noInfo = (what) => `${what} 정보가 없습니다. 궁금하신 작물이 있으시면 상담전화나 문자 주시면 상세히 상담해드리겠습니다. <a href="tel:15227008">☎ 1522-7008</a>`;
+
+  // 메인 검색창(farm.html?q=...): 작물 이름만 쓰면 그 작물의 주간농사정보로, 병해충 이름이 섞여 있으면 병해충 정보에서 검색
+  const TYPOS = { 베추: '배추', 배츄: '배추', 마눌: '마늘', 고쭈: '고추' };
+  const CROP_WORDS = ['방울토마토', '결구상추', '고구마', '토마토', '복숭아', '배추', '고추', '마늘', '양파', '대파', '쪽파', '상추', '딸기', '감자', '사과', '인삼', '오이', '수박', '참외', '호박', '가지', '당근', '생강', '포도', '콩', '벼', '쌀', '파', '무'];
+  const fixTypos = (s) => Object.entries(TYPOS).reduce((text, [typo, right]) => text.replaceAll(typo, right), s);
+  // '고추탄저병'처럼 붙여 써도 앞의 작물 이름을 떼어 냄 (한 글자 작물 '무·파' 등은 '무름병'을 자르지 않게 빼고)
+  const splitWords = (s) => fixTypos(s).trim().split(/\s+/).filter(Boolean).flatMap((word) => {
+    const name = CROP_WORDS.find((c) => c.length > 1 && word.length > c.length && word.startsWith(c));
+    return name ? [name, word.slice(name.length)] : [word];
+  });
+  const qParam = (new URLSearchParams(location.search).get('q') || '').trim();
+  const qWords = splitWords(qParam);
+  const qIsCrop = qWords.length > 0 && qWords.every((word) => CROP_WORDS.includes(word));
+  // 어디로 보낼지: 병해충 낱말이 있으면 병해충 정보, 심는·수확·시기·○월 같은 말이면 작물재배력, 작물 이름만이면 주간농사정보
+  const PEST_HINT = /병|충|나방|벌레|진딧물|응애|선충|노린재|멸구|바이러스|곰팡이|매미|바구미|파리/;
+  const CAL_HINT = /심|파종|정식|모종|씨앗|수확|재배력|재배 ?시기|시기|언제|몇 ?월|\d{1,2} ?월/;
+  const qMonth = Number(qParam.match(/(\d{1,2})\s*월/)?.[1] || 0);
+  const qCrop = qWords.find((word) => CROP_WORDS.includes(word)) || '';
+  const qRoute = !qParam ? ''
+    : PEST_HINT.test(qParam) ? 'pests'
+      : CAL_HINT.test(qParam) ? 'calendar'
+        : qIsCrop ? 'weekly' : 'pests';
+  if (qRoute === 'calendar') {
+    if (qCrop) {
+      selectCrop(qCrop);
+      if (cropForm) cropForm.elements.crop.value = qCrop;
+    }
+    showTab('calendar');
+    history.replaceState(null, '', `${location.pathname}${location.search}#calendar`);
+    window.addEventListener('load', () => setTimeout(() => document.getElementById('calendar')?.scrollIntoView({ block: 'start', behavior: 'smooth' }), 300), { once: true });
+  }
+  if (qRoute === 'weekly') {
+    selectCrop(qWords[0]);
+    if (cropForm) cropForm.elements.crop.value = qWords[0];
+    window.addEventListener('load', () => setTimeout(scrollToResult, 300), { once: true });
+  }
+  // 정보가 없을 때 안내: 엉뚱한 내용을 보여 주지 않고 준비 중 + 상담 안내 (TODO: 카카오톡 채널 주소를 받으면 링크 추가)
+  const noInfo = (what) => `${what} 자료는 준비 중입니다. 전화나 카카오톡으로 문의 주시면 상담해 드리겠습니다. <a href="tel:15227008">☎ 1522-7008</a>`;
 
   // ① 주간농사정보: data/weekly.json (scripts/fetch-weekly.ps1이 매주 갱신)
   (() => {
@@ -362,6 +398,37 @@
       form.requestSubmit();
     });
 
+    // 메인 검색 '11월에 심는 작물'·'7월 수확 작물': 그 달에 심는(또는 거두는) 작물을 골라 재배력 위에 보여 줌
+    const spanText = (span) => span.split('-').map((at) => slotLabel(at)).join(' ~ ');
+    const renderMonthPick = (month, harvest) => {
+      const want = harvest ? /수확|출하|수매/ : /파종|정식|아주심기|심기|육묘|씨/;
+      const slots = [1, 2, 3].map((n) => (month - 1) * 3 + n);
+      const found = data.crops.map((c) => {
+        const bars = c.rows.filter((row) => row.kind === 'stage' || row.kind === 'task')
+          .flatMap((row) => row.bars || []).filter(([label, span]) => want.test(label) && slots.some((slot) => covers(span, slot)));
+        return bars.length ? { name: c.name, bars } : null;
+      }).filter(Boolean);
+      const what = harvest ? '수확하는' : '심는(파종 · 정식)';
+      const box = document.createElement('section');
+      box.className = 'cal-month-pick';
+      box.innerHTML = found.length
+        ? `<h3>${month}월에 ${what} 작물 <span>${found.length}종</span></h3>
+          <ul>${found.map((c) => `<li><button type="button" class="crop-chip" aria-pressed="false" data-crop="${esc(c.name)}">${esc(c.name)}</button>
+            <span>${c.bars.map(([label, span]) => `${esc(label)} (${esc(spanText(span))})`).join(', ')}</span></li>`).join('')}</ul>
+          <p>작물을 누르면 아래에 그 작물의 연간 재배력이 나옵니다.</p>`
+        : `<h3>${month}월에 ${what} 작물</h3><p>재배력에 있는 작물 중 ${month}월에 ${what} 작물이 없습니다. ${noInfo('다른 작물')}</p>`;
+      panel.insertBefore(box, els.notice);
+      const mark = (name) => box.querySelectorAll('[data-crop]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.crop === name)));
+      box.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-crop]');
+        if (!button) return;
+        selectCrop(button.dataset.crop);
+        mark(button.dataset.crop);
+        els.body.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      });
+      if (found.length) { selectCrop(found[0].name); mark(found[0].name); }
+    };
+
     cropWatchers.push(() => { if (data.crops.length) render(); });
 
     loadJson('data/calendar.json')
@@ -370,6 +437,7 @@
         els.dilution.innerHTML = `<dt>물 1말(20L) 기준</dt>${(data.dilution || []).map((d) => `<dd><b>${esc(d.rate)}</b> ${esc(d.amount)}</dd>`).join('')}`;
         renderAll();
         render();
+        if (qRoute === 'calendar' && !qCrop && qMonth >= 1 && qMonth <= 12) renderMonthPick(qMonth, /수확|거두/.test(qParam));
       })
       .catch(() => {});
   })();
@@ -415,10 +483,15 @@
       return ed <= 15 ? `${m}월 상반기` : `${m}월`;
     };
     const badge = (level) => `<span class="pest-level pest-level--${LEVELS[level] || 'forecast'}">${esc(level)}</span>`;
-    // 띄어쓰기 없이 비교 (예: '배추 노균병' = '배추노균병')
+    // 띄어쓰기 없이 비교. 검색어는 낱말로 나눠 모두 들어 있는 항목만 (예: '고추 탄저병' → '바이러스·역병·탄저병(고추)')
     const squash = (s) => s.replace(/\s+/g, '');
-    const matchesQuery = (item, q) => [item.title, ...item.situation, ...item.control, ...(item.images || []).map((img) => img.alt)]
-      .some((text) => squash(text).includes(squash(q)));
+    const matchesQuery = (item, q) => {
+      const text = squash([item.title, ...item.situation, ...item.control, ...(item.images || []).map((img) => img.alt)].join(' '));
+      return splitWords(q).every((word) => text.includes(word));
+    };
+    // 요약표에서 강조할 낱말: 작물 이름은 빼고 병해충 이름만
+    const pestWords = (q) => { const words = splitWords(q); const rest = words.filter((w) => !CROP_WORDS.includes(w)); return rest.length ? rest : words; };
+    let asked = '';  // 사용자가 쓴 검색어 그대로 (안내 문구용)
     const bullets = (list) => `<ul class="pest-points">${list.map((text) => `<li>${highlight(text)}</li>`).join('')}</ul>`;
     // PDF에서 잘라 온 증상·해충 사진 (누르면 원본 크기로 열림)
     const photos = (images) => `<div class="pest-photos">${images.map((img) => `
@@ -430,7 +503,7 @@
           <h4>${esc(group.category)}</h4>
           <dl>${[...group.alerts].sort(byLevel).map((alert) => `
             <div><dt>${badge(alert.level)}<span>${esc(alert.type)}</span></dt>
-            <dd>${alert.names.map((name) => `<span class="pest-name${query && squash(name).includes(squash(query)) ? ' is-match' : ''}">${esc(name)}</span>`).join('')}</dd></div>`).join('')}
+            <dd>${alert.names.map((name) => `<span class="pest-name${query && pestWords(query).some((w) => squash(name).includes(w)) ? ' is-match' : ''}">${esc(name)}</span>`).join('')}</dd></div>`).join('')}
           </dl>
         </section>`).join('');
     };
@@ -448,7 +521,9 @@
       if (group) els.desc.textContent = matched.length ? `${group.label} 병해충 ${matched.length}건입니다.` : `이번 호에는 ${group.label} 병해충 정보가 없어 전체를 보여드립니다.`;
       else if (!query) els.desc.textContent = '이번 호 병해충 정보입니다.';
       else if (matched.length) els.desc.textContent = `'${query}' 검색 결과 ${matched.length}건입니다.`;
-      else els.desc.textContent = `'${query}' 검색 결과가 없어 이번 호 전체 병해충 정보를 보여드립니다.`;
+      else els.desc.innerHTML = noInfo(`'${esc(asked || query)}'에 대한`);
+      // 검색 결과가 없으면 상관없는 전체 목록을 보여 주지 않음
+      if (query && !matched.length) { els.filter.innerHTML = ''; els.list.innerHTML = ''; return; }
 
       els.filter.innerHTML = categories.map((name) => `
         <button type="button" class="pest-filter__btn" aria-pressed="${name === category}" data-category="${esc(name)}">${esc(name)}</button>`).join('')
@@ -490,12 +565,15 @@
     };
 
     // 검색: 이번 호에 없으면 지난호 중 가장 최근에 나온 호로 옮겨 보여줌
+    // 결과가 없으면 다른 작물의 비슷한 병으로 바꿔 보여 주지 않고 '준비 중' 안내 (renderList)
     const search = (value) => {
-      query = value.trim();
+      asked = value.trim();
+      query = asked;
       group = null;  // 직접 검색하면 메인에서 넘어온 작물 묶음은 해제
       category = '전체';
-      if (query && !issues[index]?.items.some((item) => matchesQuery(item, query))) {
-        const found = issues.findIndex((issue) => issue.items.some((item) => matchesQuery(item, query)));
+      const hasMatch = (issue, q) => issue?.items.some((item) => matchesQuery(item, q));
+      if (query && !hasMatch(issues[index], query)) {
+        const found = issues.findIndex((issue) => hasMatch(issue, query));
         if (found >= 0) index = found;
       }
       render();
@@ -539,6 +617,15 @@
         }
         // 메인 '작물별 병해충 정보'에서 들어와도 서브 히어로부터 보이게 둠 (common.js가 맨 위로)
         render();
+        // 메인 검색창에서 병해충을 찾아 들어오면(farm.html?q=배추 무름병) 병해충 정보 탭에서 검색하고 결과로 이동
+        if (qRoute === 'pests') {
+          if (searchForm) searchForm.elements.q.value = qParam;
+          showTab('pests');
+          history.replaceState(null, '', `${location.pathname}${location.search}#pests`);
+          search(qParam);
+          const toResult = () => panel.querySelector('.pest-detail')?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+          if (document.readyState === 'complete') setTimeout(toResult, 200); else window.addEventListener('load', () => setTimeout(toResult, 200), { once: true });
+        }
       })
       .catch(() => {});
   })();
